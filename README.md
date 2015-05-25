@@ -1,5 +1,7 @@
 ArmorOverhaul created by lekousin
 
+This is the beta version of the mod. So you are more likely to see a bug or crash. If you encounter one, please report it. It's a beta for a reason.
+
 
 
 <h4>What does it do ?</h4>
@@ -47,11 +49,37 @@ The heavier your armor, the lowest you jump.
 
 4 new armors have been introduced, each having a specialization (each one of them is in a different major skill tree). This meant that some skill trees needed some rework. ICTV has been demoted to Tier 3. 
 
+<h5>10. Custom armor</h5>
+
+An entirely new armor in which you can customize stats. By The Way, you are limited in the way you cannot max every stat, you need to make choices.
+
+<h5>11. Bleeding</h5>
+
+When you take health damage, you have a chance to start bleeding. The odds and bleed rate depend on health loss, with a maximum of 50% chance to bleed and a rate of 10 HP per second for a 100+ HP loss. The bleeding rate decreases when your armor is up. The debleeding rate varies accordingly to your armor and its current armor / max armor ratio. That being said, Thin suit can't stop bleeding, so you may lose all your health. Note that you cannot go into bleedout due to bleeding, and bleeding can be stopped also by using a medic bag.
+
+<h5>12. Difficulty scaling stats</h5>
+
+Some statistics, like armor, vary depending on the difficulty played, to ensure lower difficulties do not become a walk in the park.
+
+<h5>13. Armor reduction on break</h5>
+
+When your armor breaks, its maximum protection decreases by 1% of its base maximum value, with a minimum of 50% of its base max armor. It also grants you a 0.2% speed bonus each time it breaks, up to 10%.
+
+<h5>14. Armor drainer</h5>
+
+To compensate armor reduction on break, a new perk deck has been introduced. When you deal a headshot, you are granted some bonus max armor. It has a 3.5 seconds cooldwon. This bonus is lost when your armor breaks.
+
+<h5>15. Mechanics explanations</h5>
+
+In main menu a new sub menu appeared. It explains how the mechanics introduced by the mod work.
+
 
 
 <h4>Credits to :</h4>
 - hejoro for its localization text script
 - v00d00, 90e, gir489 and 420MuNkEy for the Lua sources
+- Hafatus for its Simple Menu implementation
+- notwa for its menu hijacking
 
 
 
@@ -62,11 +90,8 @@ The heavier your armor, the lowest you jump.
 
 <h4>What to do ?</h4>
 
-<h5>BLT Hook users</h5>
-Put the content of the BLT Hook folder in PAYDAY 2 root folder (usually C:\Program Files (x86)\Steam\SteamApps\common\PAYDAY2\\)
-
 <h5>Non-BLT Hook users (HoxHUD or old Hook)</h5>
-Just put the content of the HoxHUD Hook folder in PAYDAY 2 root folder
+Just put the lib folder in PAYDAY 2 root folder
 
 Note: if you already use DMCWO (or another mod touching to localizationmanager), put the content of the method (all the armortext[...] = ...) into the corresponding script (in realnames.lua for DMCWO e.g.) and rename the armortext accordingly. Even if ArmorOverhaul has a DMCWO support, it seems that DMCWO's localization method overrides ArmorOverhaul one, that's why you need to copy/paste.
 
@@ -74,11 +99,77 @@ Note: if you already use DMCWO (or another mod touching to localizationmanager),
 
 <h4>Known bugs</h4>
 
-In the skill trees, the Ace line of description tweaked skills is blue, even when not buyable.
+- In skill trees, the Ace line of description tweaked skills is blue, even when not buyable.
+- In preplanning, non-vanilla armors aren't properly rendered (nothing in loadout and the missing texture file in crew setup)
+- Primary and Secondary weapon screen have reduced FPS
 
 
 
 <h4>Changelog</h4>
+
+<h5>v0.6b</h5>
+
+<h6>Localization</h6>
+
+- Added multi-language support
+	- Currently only english available
+	- Language changeable in ArmorOverhaul.lua
+	- If selected language isn't available, it automatically switches to default language (english)
+	
+<h6>blackmarketgui.lua</h6>
+
+- Seperated armor stats into different pages
+	- You can switch to a different page via F1 and F2 (can be modified in ArmorOverhaul.lua, the two last lines)
+- Reverted back to the original GUI form
+	- This inherently fixed the spare skill points box overlapping item selection grid
+	
+<h6>HUDTeamate.lua</h6>
+
+- Remove the flash in health bar when losing health
+	- You can now see your health and armor when bleeding
+
+<h6>menus.lua</h6>
+
+- Added mechanics explanations
+- Added custom armor menu
+- Added all the custom armor logic
+
+<h6>blackmarkettweakdata.lua</h6>
+
+- Added Custom Armor
+
+<h6>skilltreetweakdata.lua</h6>
+
+- Added Armor Drainer perk deck
+
+<h6>upgradestweakdata.lua</h6>
+
+- Added difficulty scaling values
+- Added a multiplier for armor regen while suppressed
+	- Multiplies the maximum amount your armor can regen per second while suppressed
+		- Only affects EOD Suit
+		- All armor regeneration while suppressed scales with this multiplier
+- Added bleeding
+
+<h6>playerdamage.lua</h6>
+
+- Added armor reduction on break
+- Added bleeding
+- Added bonus armor on headshot
+- Fixed regeneration sound bug
+	- Your armor can now fully regenerate without periodically hearing the regen sound
+- Added a hint when you start bleeding or your max armor changes
+	- They will be changed later on to visual icons/values
+	
+<h6>default_upgrades.lua</h6>
+
+- Automatically unlocks Custom Armor
+
+<h5>v0.5.1</h5>
+
+<h6>upgradestweakdata.lua</h6>
+
+- Increased all negatively affected armors' jump speed (from Two-piece Suit to ICTV, followed by Lifa Vest, Lightweight Tactical Vest, Thin Suit and EOD Suit) from { 1, 1, 0.96, 0.92, 0.875, 0.8, 0.65, 0.775, 0.85, 1.1, 0.2 } to {1, 1, 0.99, 0.98, 0.97, 0.95, 0.93, 0.94, 0.96, 0.9 }
 
 <h5>v0.5</h5>
 
