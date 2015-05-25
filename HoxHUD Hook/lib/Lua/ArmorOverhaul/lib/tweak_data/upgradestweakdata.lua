@@ -99,7 +99,7 @@ function UpgradesTweakData:_init_pd2_values()
 	-- {min damage, min hdr}, {max damage, max hdr}
 	self.values.player.body_armor.health_damage_reduction = {
 		{
-			{0, 0}, 
+			{0, 0},
 			{0, 0}
 		},
 		{
@@ -135,7 +135,7 @@ function UpgradesTweakData:_init_pd2_values()
 			{5.5, 0.225}
 		},
 		{
-			{0, 0}, 
+			{0, 0},
 			{0, 0}
 		},
 		{
@@ -146,7 +146,7 @@ function UpgradesTweakData:_init_pd2_values()
 	-- {min damage, min deflect chance}, {max damage, max deflect chance}
 	self.values.player.body_armor.deflect = {
 		{
-			{0, 0}, 
+			{0, 0},
 			{0, 0}
 		},
 		{
@@ -182,7 +182,7 @@ function UpgradesTweakData:_init_pd2_values()
 			{3.5, 0.05}
 		},
 		{
-			{0, 0}, 
+			{0, 0},
 			{0, 0}
 		},
 		{
@@ -248,15 +248,15 @@ function UpgradesTweakData:_init_pd2_values()
 	self.values.player.body_armor.jump_speed_multiplier = {
 		1,
 		1,
+		0.99,
+		0.98,
+		0.97,
+		0.95,
+		0.93,
+		0.94,
 		0.96,
-		0.92,
-		0.875,
-		0.8,
-		0.65,
-		0.775,
-		0.85,
 		1.1,
-		0.2
+		0.9
 	}
 	self.values.player.level_8_hp_regen_addend = {0.1}
 	self.values.player.level_9_armor_regen_addend = {1}
