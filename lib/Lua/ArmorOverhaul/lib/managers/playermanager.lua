@@ -90,7 +90,7 @@ function PlayerManager:on_headshot_dealt()
 	local regen_armor_bonus = managers.player:upgrade_value("player", "headshot_regen_armor_bonus", 0)
 	if damage_ext then
 		local old_max = damage_ext:_max_armor()
-		local upgrade = managers.player:upgrade_value("player", "headshot_add_max_armor_bonus", 0)
+		local upgrade = managers.player:upgrade_value("player", "headshot_add_max_armor_bonus", {0, 0})
 		local value = math.min(upgrade[1] * (damage_ext:_max_armor() - damage_ext:armor_bonus()), upgrade[2])
 		damage_ext:change_bonus_armor(value)
 		if regen_armor_bonus > 0 then

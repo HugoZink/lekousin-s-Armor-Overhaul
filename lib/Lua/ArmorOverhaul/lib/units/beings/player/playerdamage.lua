@@ -546,6 +546,7 @@ function PlayerDamage:change_bonus_armor(value)
 	if not self._bonus_armor then
 		self._bonus_armor = 0
 	end
+	if value <= 0 then return end
 	local old_bonus = self._bonus_armor
 	self._bonus_armor = self._bonus_armor + value
 	self:restore_armor(value * self:armor_ratio())
