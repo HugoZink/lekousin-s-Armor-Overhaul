@@ -389,6 +389,7 @@ function UpgradesTweakData:_init_pd2_values()
 		0.93,
 		0.94,
 		0.96,
+		1.1,
 		0.9
 	}
 	self.values.player.body_armor.ap_regen_suppressed_max_multiplier = {
