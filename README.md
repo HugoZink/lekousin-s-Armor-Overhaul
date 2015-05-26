@@ -107,6 +107,42 @@ Note: if you already use DMCWO (or another mod touching to localizationmanager),
 
 <h4>Changelog</h4>
 
+<h5>v0.6b2 - Entropy</h5>
+
+<h6>blackmarketgui.lua</h6>
+
+- Raised dodge cap to 95
+- Added Total Health stat in armor screen
+	- Removed Added Health stat because obsolete
+
+<h6>localizationmanager.lua</h6>
+
+- Renamed some stats
+	- "Ammo multiplier" to "Bonus ammo"
+	- "Jump speed multiplier" to "Bonus jump speed"
+	- Added missing p in "Maximum regen supressed"
+
+<h6>upgradestweakdata.lua</h6>
+
+- Increased dodge chance for most armors
+	- Suit changed from 5 to 20
+	- LBV from -5 to 10
+	- BV from -20 to 5
+	- HBV from -25 to -5
+	- FJ from -30 to -20
+	- CTV from -40 to -35
+	- Lightweight Tactical Vest from -35 to -25
+	- Thin Suit from 30 to 35
+
+<h6>playerdamage.lua</h6>
+
+- Changed function called on hit to check for "grace" at the start of it
+	- This prevents anything damage-related to be proced while you're in "grace"
+- Introduced entropy mechanic
+	- A copy of Path of Exile's Evasion mechanic (explanation <a href="http://pathofexile.gamepedia.com/Evasion#Mechanics">here</a>)
+		- Globally: when you are shot at, a number is increased by the chance you have to be hit (100 - dodge or 100 - deflect). If this value goes above 100 (or hits 100), the player is hit and the value is decreased by 100, otherwise, the bullet is dodged
+	- This makes dodging and deflecting much more consistent (with 50 dodge, you'll be hit every 2 rounds)
+
 <h5>v0.6b</h5>
 
 <h6>Localization</h6>

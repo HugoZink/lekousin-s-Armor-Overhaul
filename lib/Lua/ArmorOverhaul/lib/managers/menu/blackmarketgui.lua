@@ -1341,6 +1341,17 @@ function BlackMarketGui:_get_armor_stats(name)
 			skill_stats[stat.name] = {
 				value = (base_stats[stat.name].value + managers.player:body_armor_skill_addend(name) * tweak_data.gui.stats_present_multiplier) * managers.player:body_armor_skill_multiplier() - base_stats[stat.name].value
 			}
+		elseif stat.name == "health" then
+			local base = tweak_data.player.damage.HEALTH_INIT
+			local mod = managers.player:thick_skin_value()
+			local overhaul_addend = managers.player:body_armor_value("hp_addend", upgrade_level)
+			local overhaul_skill = managers.player:upgrade_value("player", name .. "_hp_addend", 0)
+			base_stats[stat.name] = {
+				value = math.round((base + mod + overhaul_addend + overhaul_skill) * tweak_data.gui.stats_present_multiplier)
+			}
+			skill_stats[stat.name] = {
+				value = math.round(base_stats[stat.name].value * managers.player:health_skill_multiplier() - base_stats[stat.name].value)
+			}
 		elseif stat.name == "concealment" then
 			base_stats[stat.name] = {
 				value = math.round(managers.player:body_armor_value("concealment", upgrade_level))
@@ -1494,15 +1505,6 @@ function BlackMarketGui:_get_armor_stats(name)
 			}
 			skill_stats[stat.name] = {
 				value = base * (skill - 1)
-			}
-		elseif stat.name == "hp_addend" then
-			local base = managers.player:body_armor_value("hp_addend", upgrade_level) * 10
-			local skill = managers.player:upgrade_value("player", name .. "_hp_addend", 0) * 10
-			base_stats[stat.name] = {
-				value = base
-			}
-			skill_stats[stat.name] = {
-				value = skill
 			}
 		elseif stat.name == "jump_speed_multiplier" then
 			local base = managers.player:body_armor_value("jump_speed_multiplier", upgrade_level) * 100 - 100
@@ -1670,15 +1672,15 @@ function BlackMarketGui:show_stats()
 			value = base_stats[stat.name].value + mods_stats[stat.name].value + skill_stats[stat.name].value--math.max(base_stats[stat.name].value + mods_stats[stat.name].value + skill_stats[stat.name].value, 0)
 			local real = value
 			if stat.name == "dodge" then
-				value = math.min(value, 80)
+				value = math.min(value, 95)
 			end
 			local string_value = string.remove_zeros(base_format, value)
 			if self._slot_data.name == equipped_slot then
 				local base = base_stats[stat.name].value
 				local string_base = string.remove_zeros(base_format, base)
 				self._armor_stats_texts[stat.name].equip:set_alpha(1)
-				self._armor_stats_texts[stat.name].equip:set_text(string_value .. ((stat.name == "dodge" and value == 80) and "(max)" or ""))
-				self._armor_stats_texts[stat.name].base:set_text(stat.name == "dodge" and string.remove_zeros(base_format, math.min(base, 80)) or string_base)
+				self._armor_stats_texts[stat.name].equip:set_text(string_value .. ((stat.name == "dodge" and value == 95) and "(max)" or ""))
+				self._armor_stats_texts[stat.name].base:set_text(stat.name == "dodge" and string.remove_zeros(base_format, math.min(base, 95)) or string_base)
 				if skill_stats[stat.name].skill_in_effect then
 				else
 				end
@@ -1697,7 +1699,7 @@ function BlackMarketGui:show_stats()
 			else
 				local equip = equip_base_stats[stat.name].value + equip_mods_stats[stat.name].value + equip_skill_stats[stat.name].value--math.max(equip_base_stats[stat.name].value + equip_mods_stats[stat.name].value + equip_skill_stats[stat.name].value, 0)
 				if stat.name == "dodge" then
-					equip = math.min(equip, 80)
+					equip = math.min(equip, 95)
 				end
 				local string_equip = string.remove_zeros(base_format, equip)
 				self._armor_stats_texts[stat.name].equip:set_alpha(0.75)
@@ -2164,6 +2166,7 @@ function BlackMarketGui:_get_armor_page()
 	if ArmorOverhaul.index == 0 then
 		self._armor_stats_shown = {
 			{name = "armor"},
+			{name = "health"},
 			{
 				name = "concealment",
 				index = true
@@ -2195,8 +2198,7 @@ function BlackMarketGui:_get_armor_page()
 	else
 		self._armor_stats_shown = {
 			{name = "explosion_damage_reduction", procent = true, revert = true},
-			{name = "jump_speed_multiplier"},
-			{name = "hp_addend"},
+			{name = "jump_speed_multiplier"}
 		}
 	end
 	do

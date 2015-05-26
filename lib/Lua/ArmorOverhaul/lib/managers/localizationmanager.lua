@@ -16,10 +16,9 @@ armortext["bm_menu_hdr_min_procent"] = "Min HDR value"
 armortext["bm_menu_hdr_max_dmg"] = "Max HDR dmg"
 armortext["bm_menu_hdr_max_procent"] = "Max HDR value"
 armortext["bm_menu_explosion_damage_reduction"] = "Explosion damage reduction"
-armortext["bm_menu_ammo_mul"] = "Ammo multiplier"
-armortext["bm_menu_hp_addend"] = "Bonus HP"
-armortext["bm_menu_jump_speed_multiplier"] = "Jump speed multiplier"
-armortext["bm_menu_ap_regen_suppressed_max_multiplier"] = "Maximum regen supressed"
+armortext["bm_menu_ammo_mul"] = "Bonus ammo"
+armortext["bm_menu_jump_speed_multiplier"] = "Bonus jump speed"
+armortext["bm_menu_ap_regen_suppressed_max_multiplier"] = "Maximum regen suppressed"
 armortext["bm_menu_bleeding_reduction"] = "Bleeding reduction"
 
 -- Armors

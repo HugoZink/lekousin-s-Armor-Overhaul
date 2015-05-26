@@ -181,6 +181,13 @@ function PlayerDamage:update(unit, t, dt)
 end
 
 function PlayerDamage:damage_bullet(attack_data)
+	if self:_chk_dmg_too_soon(attack_data.damage) then
+		return
+	end
+	self._last_received_dmg = attack_data.damage
+
+
+
 	local damage_info = {
 		result = {type = "hurt", variant = "bullet"},
 		attacker_unit = attack_data.attacker_unit
@@ -193,12 +200,25 @@ function PlayerDamage:damage_bullet(attack_data)
 		dmg_mul = dmg_mul * managers.player:upgrade_value("player", "gangster_damage_dampener", 1)
 	end
 	attack_data.damage = attack_data.damage * dmg_mul
-	local dodge_roll = math.rand(1)
+
+
+	--Dodge mechanic changed to PoE Evasion's entropy mechanic
+
+io.stdout:write(self._last_hit_time and "delay between bullets: " .. (managers.player:player_timer():time() - self._last_hit_time) .. "\n" or "")
+	if not self._dodge_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
+		self._dodge_entropy = math.rand(1)
+	end
+
 	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
 	local armor_dodge_chance = managers.player:body_armor_value("dodge")
 	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-	dodge_value = math.min(dodge_value + armor_dodge_chance + skill_dodge_chance, 0.8)
-	if dodge_roll < dodge_value then
+	dodge_value = math.min(dodge_value + armor_dodge_chance + skill_dodge_chance, 0.95)
+
+	self._dodge_entropy = self._dodge_entropy + 1 - math.max(dodge_value, 0)
+	io.stdout:write("entropy:\n\tdodge: " .. self._dodge_entropy .. " => " .. (self._dodge_entropy >= 1 and "hit" or "dodged") .. "\n")
+	if self._dodge_entropy >= 1 then
+		self._dodge_entropy = self._dodge_entropy - 1
+	else
 		if attack_data.damage > 0 then
 			self:_send_damage_drama(attack_data, 0)
 		end
@@ -207,15 +227,19 @@ function PlayerDamage:damage_bullet(attack_data)
 		self:_hit_direction(attack_data.col_ray)
 		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
 		self._last_received_dmg = attack_data.damage
+		self._last_hit_time = managers.player:player_timer():time()
 		return
 	end
 
 
-	-- Deflection check (if armor > 0)
+	-- Deflection check (if armor > 0), also uses PoE Evasion's entropy
 
 
 	if self:get_real_armor() > 0 then
-		local deflect_roll = math.rand(1)
+		if not self._armor_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
+			self._armor_entropy = math.rand(1)
+		end
+
 		local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
 		local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
 		deflect_chance = deflect_chance + managers.player:upgrade_value("player", armor_data.upgrade_level .. "_deflect_chance_addend", 0)
@@ -227,22 +251,26 @@ function PlayerDamage:damage_bullet(attack_data)
 		else
 			local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
 			deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
-			if deflect_roll < deflect_chance then
-				if attack_data.damage > 0 then
-					self:_send_damage_drama(attack_data, 0)
-				end
-				self:_call_listeners(damage_info)
-				self:play_whizby(attack_data.col_ray.position)
-				self:_hit_direction(attack_data.col_ray)
-				self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
-				self._last_received_dmg = attack_data.damage
-				return
+		end
+		self._armor_entropy = self._armor_entropy + 1 - deflect_chance
+		io.stdout:write("entropy:\n\tarmor: " .. self._armor_entropy .. " => " .. (self._armor_entropy >= 1 and "hit" or "deflected") .. "\n")
+		if self._armor_entropy >= 1 then
+			self._armor_entropy = self._armor_entropy - 1
+		else
+			if attack_data.damage > 0 then
+				self:_send_damage_drama(attack_data, 0)
 			end
+			self:_call_listeners(damage_info)
+			self:play_whizby(attack_data.col_ray.position)
+			self:_hit_direction(attack_data.col_ray)
+			self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
+			self._last_received_dmg = attack_data.damage
+			self._last_hit_time = managers.player:player_timer():time()
+			return
 		end
 	end
 
-
-
+	self._last_hit_time = managers.player:player_timer():time()
 
 
 	if self._god_mode then
@@ -306,7 +334,7 @@ function PlayerDamage:damage_bullet(attack_data)
 	health_subtracted = health_subtracted + self:_calc_health_damage(attack_data)
 	managers.player:activate_temporary_upgrade("temporary", "wolverine_health_regen")
 	self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
-	self._last_received_dmg = potential_damage	--health_subtracted
+	--self._last_received_dmg = potential_damage	--health_subtracted
 												-- Fixes the HDR bug causing health bar to be depleted too quickly, due to HDR fucking up damage values
 	if not self._bleed_out and health_subtracted > 0 then
 		self:_send_damage_drama(attack_data, health_subtracted)
@@ -431,6 +459,7 @@ function PlayerDamage:damage_explosion(attack_data)
 	self:_call_listeners(damage_info)
 end
 
+damage_fall_orig = PlayerDamage.damage_fall
 
 function PlayerDamage:damage_fall(data)
 	local damage_info = {
