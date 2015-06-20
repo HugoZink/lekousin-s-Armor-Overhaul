@@ -107,6 +107,22 @@ Note: if you already use DMCWO (or another mod touching to localizationmanager),
 
 <h4>Changelog</h4>
 
+<h5>v0.6b WIP</h5>
+
+Not a detailed changelog cause too many things in too many files (and some changes are in many files).
+
+- Added localization (only en and fr files are here for now; fr hasn't been translated yet)
+- Revamped custom armor system, now a RPG-ish one (with helmet, chestplate, leggings...)
+- Added a start of crew bonus (which would work only for LAO users). Currently not choosable, only more 10% deflect chance and 20% more health for other LAO users
+- Fixed a huge memory consumption in blackmarket, which made the game crashing if staying for too long on it
+- Reduced LBV, BV, HBV, FJ and CTV dodge by 5%
+- Added percentage to percent stats in blackmarket
+- Added Bleeding reduction stat in blackmarket
+- Reintroduced original dodge and bullet deflection; entropy is still there but only use 10% of dodge and deflect chance
+- Decreased ammo penalty on Two-piece suit and thin suit from -25% and -65% to -20% and -50%
+- Rebalanced deflect chance for most armors
+- Made the mod sysouts less hook dependant; now the same print call should work for both HoxHUD and BLT hook
+
 <h5>v0.6b2 - Entropy</h5>
 
 <h6>blackmarketgui.lua</h6>

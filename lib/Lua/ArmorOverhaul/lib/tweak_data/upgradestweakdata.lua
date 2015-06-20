@@ -165,11 +165,11 @@ function UpgradesTweakData:_init_pd2_values()
 	}
 	self.values.player.body_armor.dodge = {
 		0.2,
-		0.1,
 		0.05,
-		-0.05,
-		-0.2,
-		-0.35,
+		0,
+		-0.1,
+		-0.25,
+		-0.4,
 		-0.5,
 		-0.4,
 		-0.25,
@@ -203,7 +203,7 @@ function UpgradesTweakData:_init_pd2_values()
 		0.1
 	}
 	self.values.player.body_armor.skill_ammo_mul = {
-		0.75,
+		0.8,
 		1,
 		1,
 		1,
@@ -212,7 +212,7 @@ function UpgradesTweakData:_init_pd2_values()
 		1,
 		1,
 		1.4,
-		0.35,
+		0.5,
 		1
 	}
 
@@ -272,43 +272,43 @@ function UpgradesTweakData:_init_pd2_values()
 		},
 		{
 			{0, 0.1},
-			{1.2, 0}
-		},
-		{
-			{0, 0.12},
-			{1.5, 0}
-		},
-		{
-			{0, 0.15},
 			{2, 0}
 		},
 		{
 			{0, 0.2},
-			{3, 0}
+			{2.5, 0}
 		},
 		{
 			{0, 0.25},
+			{3, 0}
+		},
+		{
+			{0, 0.35},
 			{3.5, 0}
 		},
 		{
 			{0, 0.4},
-			{6, 0.05}
+			{4, 0}
 		},
 		{
-			{0, 0.2},
+			{0, 0.5},
+			{6, 0.1}
+		},
+		{
+			{0, 0.3},
 			{3, 0}
 		},
 		{
-			{0, 0.25},
-			{3.5, 0.05}
+			{0, 0.4},
+			{4, 0.05}
 		},
 		{
 			{0, 0},
 			{0, 0}
 		},
 		{
-			{1, 0.5},
-			{4, 0.1}
+			{1, 0.75},
+			{9, 0.25}
 		}
 	}
 	-- Amount of armor regenerated per second
@@ -434,6 +434,16 @@ function UpgradesTweakData:_init_pd2_values()
 		{0.04, 0.35},
 		{0.05, 0.5}
 	}
+
+	self.values.crew = {}
+	self.values.crew.xp = {}
+	self.values.crew.armor = {}
+	self.values.crew.health = {}
+	self.values.crew.deflect_chance = {}
+	self.values.crew.xp.multiplier = {1.1}
+	self.values.crew.armor.multiplier = {1.2}
+	self.values.crew.health.multiplier = {1.2}
+	self.values.crew.deflect_chance.addend = {0.1}
 end
 
 function UpgradesTweakData:_player_definitions()
@@ -587,6 +597,43 @@ function UpgradesTweakData:_player_definitions()
 			category = "player",
 			upgrade = "headshot_add_max_armor_bonus",
 			value = 5
+		}
+	}
+
+	self.definitions.crew_xp_multiplier = {
+		category = "crew",
+		name_id = "menu_crew_xp_multiplier",
+		upgrade = {
+			category = "xp",
+			upgrade = "multiplier",
+			value = 1
+		}
+	}
+	self.definitions.crew_armor_multiplier = {
+		category = "crew",
+		name_id = "menu_crew_armor_multiplier",
+		upgrade = {
+			category = "armor",
+			upgrade = "multiplier",
+			value = 1
+		}
+	}
+	self.definitions.crew_health_multiplier = {
+		category = "crew",
+		name_id = "menu_crew_health_multiplier",
+		upgrade = {
+			category = "health",
+			upgrade = "multiplier",
+			value = 1
+		}
+	}
+	self.definitions.crew_deflect_chance_addend = {
+		category = "crew",
+		name_id = "menu_crew_deflect_chance_addend",
+		upgrade = {
+			category = "deflect_chance",
+			upgrade = "addend",
+			value = 1
 		}
 	}
 end

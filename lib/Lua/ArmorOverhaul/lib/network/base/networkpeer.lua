@@ -15,9 +15,13 @@ Global.spoof_armor = {
     "level_7",
     "level_1"
 }
+---- Updates armor level
+function NetworkPeer:update_custom_armor_level()
+	Global.spood_armor[5] = "level_" .. Global._custom_armor._skin_level
+end
 
 function NetworkPeer:send_after_load(type, arg1, ...)
-    Global.spoof_armor[5] = "level_" .. Global.custom_armor[Global.custom_armor.index].concealment
+    update_custom_armor_level()
     if type == "sync_outfit" then
     	local new_arg, count
         new_arg = arg1

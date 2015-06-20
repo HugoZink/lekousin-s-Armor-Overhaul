@@ -15,6 +15,9 @@ if not armor_skills then
 		"temporary_passive_revive_damage_reduction_2",
 
 		"player_add_armor_stat_skill_ammo_mul",
-		"body_armor11"
+		"body_armor11",
+
+		"crew_deflect_chance_addend",
+		"crew_health_multiplier"
 	}
 end

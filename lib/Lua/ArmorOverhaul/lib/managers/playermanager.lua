@@ -1,6 +1,104 @@
 local armor_regen_orig = PlayerManager.body_armor_regen_multiplier
 local stamina_orig = PlayerManager.stamina_multiplier
 local movement_penalty_orig = PlayerManager.mod_movement_penalty
+local setup_orig = PlayerManager._setup
+local exp_orig = PlayerManager.get_skill_exp_multiplier
+local health_mul_orig = PlayerManager.health_skill_multiplier
+    function table_print(tt, done)
+        local file = io.stdout--io.open("TableDump.txt", "a+")
+        done = done or {}
+        if type(tt) == "table" then
+            for key, value in pairs(tt) do
+                if type(value) == "table" and not done[value] then
+                    done[value] = true
+                    -- Console(string.format("<%s> => table", tostring(key)))
+                    file:write("<"..tostring(key).."> => table\n")
+                    table_print(value, done)
+                else
+                    -- Console(string.format("[%s] => %s", tostring(key), tostring(value)))
+                    file:write("["..tostring(key).."] => "..tostring(value).."\n")
+                end
+            end
+        else 
+            -- Console(tt) 
+            file:write(tostring(tt).."\n")
+        end
+        --file:close()
+    end
+
+function PlayerManager:_setup()
+	setup_orig(self)
+	self._global.crew_bonuses = {}
+	self._global.synced_crew_bonuses = {}
+end
+
+function PlayerManager:aquire_crew_bonus(upgrade)
+	self._global.crew_bonuses[upgrade.category] = self._global.crew_bonuses[upgrade.category] or {}
+	self._global.crew_bonuses[upgrade.category][upgrade.upgrade] = upgrade.value
+end
+
+function PlayerManager:unaquire_crew_bonus(upgrade)
+	if not self._global.crew_bonuses[upgrade.category] then
+		Application:error("[PlayerManager:unaquire_crew_bonus] Can't unaquire crew upgrade of category", upgrade.category)
+		return
+	end
+	if not self._global.crew_bonuses[upgrade.category][upgrade.upgrade] then
+		Application:error("[PlayerManager:unaquire_crew_bonus] Can't unaquire crew upgrade", upgrade.upgrade)
+		return
+	end
+	local val = self._global.crew_bonuses[upgrade.category][upgrade.upgrade]
+	val = val - 1
+	self._global.crew_bonuses[upgrade.category][upgrade.upgrade] = val > 0 and val or nil
+end
+
+function PlayerManager:crew_bonus_value(category, upgrade, default)
+	for peer_id, categories in pairs(self._global.synced_crew_bonuses) do
+		if categories[category] and categories[category][upgrade] then
+			local level = categories[category][upgrade]
+			return tweak_data.upgrades.values.crew[category][upgrade][level]
+		end
+	end
+	return default or 0
+end
+
+function PlayerManager:has_crew_category_bonus(category, upgrade)
+	for peer_id, categories in pairs(self._global.synced_team_upgrades) do
+		if categories[category] and categories[category][upgrade] then
+			return true
+		end
+	end
+	return false
+end
+
+function PlayerManager:update_crew_bonuses_to_peers()
+	for category, upgrades in pairs(self._global.crew_bonuses) do
+		for upgrade, level in pairs(upgrades) do
+			managers.network:session():send_to_peers_synched("add_synced_crew_bonus", category, upgrade, level)
+		end
+	end
+end
+
+function PlayerManager:update_crew_bonuses_to_peer(peer)
+	for category, upgrades in pairs(self._global.crew_bonuses) do
+		for upgrade, level in pairs(upgrades) do
+			peer:send_queued_sync("add_synced_crew_bonus", category, upgrade, level)
+		end
+	end
+end
+
+function PlayerManager:add_synced_crew_bonus(peer_id, category, upgrade, level)
+	self._global.synced_crew_bonuses[peer_id] = self._global.synced_crew_bonuses[peer_id] or {}
+	self._global.synced_crew_bonuses[peer_id][category] = self._global.synced_crew_bonuses[peer_id][category] or {}
+	self._global.synced_crew_bonuses[peer_id][category][upgrade] = level
+end
+
+function PlayerManager:get_skill_exp_multiplier(whisper_mode)
+	local multiplier = exp_orig(self, whisper_mode)
+
+	multiplier = multiplier + self:crew_bonus_value("xp", "multiplier", 1) - 1
+
+	return multiplier
+end
 
 function PlayerManager:body_armor_regen_multiplier(moving)
 	local multiplier = armor_regen_orig(self, moving)
@@ -40,6 +138,14 @@ function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, 
 	if managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier") then
 		multiplier = multiplier * (tweak_data.upgrades.berserker_movement_speed_multiplier or 1)
 	end
+	return multiplier
+end
+
+function PlayerManager:health_skill_multiplier()
+	local multiplier = health_mul_orig(self)
+
+	multiplier = multiplier + self:crew_bonus_value("health", "multiplier", 1) - 1
+
 	return multiplier
 end
 
@@ -100,9 +206,12 @@ function PlayerManager:on_headshot_dealt()
 end
 
 function PlayerManager:body_armor_value(category, override_value, default)
+	Global._custom_armor = Global._custom_armor or CustomArmor:new()
 	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
+	local difficulty = Global.game_settings.difficulty
+	local difficulty_multiplier = tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty] and (tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty][category] or 1) or 1
 	if override_value == -1 or (not override_value and armor_data.upgrade_level == -1) then
-		if category == "health_damage_reduction" then
+		--[[if category == "health_damage_reduction" then
 			local t = {
 				{0, 0},
 				{0, 0}
@@ -124,7 +233,7 @@ function PlayerManager:body_armor_value(category, override_value, default)
 			return t
 		elseif category == "concealment" then
 			return Global.custom_armor.stats.concealment[Global.custom_armor[Global.custom_armor.index][category]]
-		else
+		--[[else
 			local value = Global.custom_armor[Global.custom_armor.index][category]
 			if category == "movement" then
 				value = value / 35
@@ -139,9 +248,26 @@ function PlayerManager:body_armor_value(category, override_value, default)
 			end
 			return value
 		end
-		return Global.custom_armor[Global.custom_armor.index][category]
+		return Global.custom_armor[Global.custom_armor.index][category]]
+		if category == "health_damage_reduction" or category == "deflect" then
+			local t = {
+				{0, 0},
+				{0, 0}
+			}
+			local tmp = Global._custom_armor:calculate_stat(category .. "_min_dmg")
+			t[1][1] = tmp[1] * tmp[2]
+			tmp = Global._custom_armor:calculate_stat(category .. "_min_value")
+			t[1][2] = tmp[1] * tmp[2] * difficulty_multiplier
+			tmp = Global._custom_armor:calculate_stat(category .. "_max_dmg")
+			t[2][1] = tmp[1] * tmp[2]
+			tmp = Global._custom_armor:calculate_stat(category .. "_max_value")
+			t[1][2] = tmp[1] * tmp[2] * difficulty_multiplier
+			return t
+		else
+			local values = Global._custom_armor:calculate_stat(category)
+			return values[1] * values[2] * difficulty_multiplier
+		end
 	end
-	local difficulty = Global.game_settings.difficulty
 	if tweak_data.upgrades.values.player.body_armor[category .. "_" .. difficulty] and tweak_data.upgrades.values.player.body_armor[category .. "_" .. difficulty]["level_" .. (override_value or armor_data.upgrade_level)] then
 		return tweak_data.upgrades.values.player.body_armor[category .. "_" .. difficulty]["level_" .. (override_value or armor_data.upgrade_level)]
 	end

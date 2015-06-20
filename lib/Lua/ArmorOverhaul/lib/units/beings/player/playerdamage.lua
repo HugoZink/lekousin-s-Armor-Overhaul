@@ -202,9 +202,8 @@ function PlayerDamage:damage_bullet(attack_data)
 	attack_data.damage = attack_data.damage * dmg_mul
 
 
-	--Dodge mechanic changed to PoE Evasion's entropy mechanic
+	-- Dodge mechanic changed to PoE Evasion's entropy mechanic (you force dodge <dodge_value * 0.1>% bullets; if you have 50 dodge, you'll force dodge one bullet every 20 one)
 
-io.stdout:write(self._last_hit_time and "delay between bullets: " .. (managers.player:player_timer():time() - self._last_hit_time) .. "\n" or "")
 	if not self._dodge_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
 		self._dodge_entropy = math.rand(1)
 	end
@@ -214,8 +213,8 @@ io.stdout:write(self._last_hit_time and "delay between bullets: " .. (managers.p
 	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
 	dodge_value = math.min(dodge_value + armor_dodge_chance + skill_dodge_chance, 0.95)
 
-	self._dodge_entropy = self._dodge_entropy + 1 - math.max(dodge_value, 0)
-	io.stdout:write("entropy:\n\tdodge: " .. self._dodge_entropy .. " => " .. (self._dodge_entropy >= 1 and "hit" or "dodged") .. "\n")
+	self._dodge_entropy = self._dodge_entropy + 1 - (math.max(dodge_value, 0) * 0.1)
+	Utils.print_log("entropy:\n\tdodge: " .. self._dodge_entropy .. " => " .. (self._dodge_entropy >= 1 and "hit" or "dodged") .. "\n")
 	if self._dodge_entropy >= 1 then
 		self._dodge_entropy = self._dodge_entropy - 1
 	else
@@ -228,6 +227,25 @@ io.stdout:write(self._last_hit_time and "delay between bullets: " .. (managers.p
 		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
 		self._last_received_dmg = attack_data.damage
 		self._last_hit_time = managers.player:player_timer():time()
+		return
+	end
+
+	-- Original dodge, if entropy dodge didn't help you dodge
+
+	local dodge_roll = math.rand(1)
+	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+	local armor_dodge_chance = managers.player:body_armor_value("dodge")
+	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+	dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+	if dodge_roll < dodge_value then
+		if attack_data.damage > 0 then
+			self:_send_damage_drama(attack_data, 0)
+		end
+		self:_call_listeners(damage_info)
+		self:play_whizby(attack_data.col_ray.position)
+		self:_hit_direction(attack_data.col_ray)
+		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
+		self._last_received_dmg = attack_data.damage
 		return
 	end
 
@@ -252,11 +270,41 @@ io.stdout:write(self._last_hit_time and "delay between bullets: " .. (managers.p
 			local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
 			deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
 		end
-		self._armor_entropy = self._armor_entropy + 1 - deflect_chance
-		io.stdout:write("entropy:\n\tarmor: " .. self._armor_entropy .. " => " .. (self._armor_entropy >= 1 and "hit" or "deflected") .. "\n")
+		self._armor_entropy = self._armor_entropy + 1 - (deflect_chance * 0.1)
+		Utils.print_log("entropy:\n\tarmor: " .. self._armor_entropy .. " => " .. (self._armor_entropy >= 1 and "hit" or "deflected") .. "\n")
 		if self._armor_entropy >= 1 then
 			self._armor_entropy = self._armor_entropy - 1
 		else
+			if attack_data.damage > 0 then
+				self:_send_damage_drama(attack_data, 0)
+			end
+			self:_call_listeners(damage_info)
+			self:play_whizby(attack_data.col_ray.position)
+			self:_hit_direction(attack_data.col_ray)
+			self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
+			self._last_received_dmg = attack_data.damage
+			self._last_hit_time = managers.player:player_timer():time()
+			return
+		end
+	end
+
+	-- Deflection check (if armor > 0), clasic system
+
+
+	if self:get_real_armor() > 0 then
+		local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
+		local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
+		deflect_chance = deflect_chance + managers.player:upgrade_value("player", armor_data.upgrade_level .. "_deflect_chance_addend", 0)
+		local armor_deflect = managers.player:body_armor_value("deflect")
+		if attack_data.damage <= armor_deflect[1][1] then
+			deflect_chance = deflect_chance + armor_deflect[1][2]
+		elseif attack_data.damage >= armor_deflect[2][1] then
+			deflect_chance = deflect_chance + armor_deflect[2][2]
+		else
+			local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
+			deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
+		end
+		if deflect_chance > math.rand(1) then
 			if attack_data.damage > 0 then
 				self:_send_damage_drama(attack_data, 0)
 			end
@@ -405,7 +453,8 @@ function PlayerDamage:_calc_health_damage(attack_data)
 	managers.hud:set_player_health({
 		current = self:get_real_health(),
 		total = self:_max_health(),
-		revives = Application:digest_value(self._revives, false)
+		revives = Application:digest_value(self._revives, false),
+		bleeding = self.bleeding > 0
 	})
 	self:_send_set_health()
 	self:_set_health_effect()

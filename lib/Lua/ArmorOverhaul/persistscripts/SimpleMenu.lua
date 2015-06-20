@@ -135,6 +135,7 @@ menus.carrying_bags = SimpleMenu:new(managers.localization:text("Carrying bags")
 menus.interaction = SimpleMenu:new(managers.localization:text("Long Range interaction (Shouting/Highlighting)"), managers.localization:text("description_interaction_desc"), opts)
 
 menus.new = {}
+menus.new.dodge = SimpleMenu:new(managers.localization:text("description_new_dodge_desc_title"), managers.localization:text("description_new_dodge_desc"), opts)
 menus.new.armor_regen = SimpleMenu:new(managers.localization:text("description_new_armor_regen_desc_title"), managers.localization:text("description_new_armor_regen_desc"), opts)
 menus.new.bullet_deflection = SimpleMenu:new(managers.localization:text("description_new_bullet_deflection_desc_title"), managers.localization:text("description_new_bullet_deflection_desc"), opts)
 menus.new.hdr = SimpleMenu:new(managers.localization:text("description_new_hdr_desc_title"), managers.localization:text("description_new_hdr_desc"), opts)

@@ -1,5 +1,3 @@
-mouse_moved_orig = BlackMarketGui.mouse_moved
-
 function string.remove_zeros(base_format, str)
 	local string_value = string.format(base_format, str)
 	while string.sub(string_value, -1) == "0" do
@@ -1515,6 +1513,15 @@ function BlackMarketGui:_get_armor_stats(name)
 			skill_stats[stat.name] = {
 				value = base * (skill - 1)
 			}
+		elseif stat.name == "bleeding_reduction" then
+			local base = managers.player:body_armor_value("bleeding_reduction", upgrade_level)
+			local skill = 1
+			base_stats[stat.name] = {
+				value = base
+			}
+			skill_stats[stat.name] = {
+				value = base * (skill - 1)
+			}
 
 			
 
@@ -1543,6 +1550,7 @@ function BlackMarketGui:show_stats()
 	local category = self._slot_data.category
 	local slot = self._slot_data.slot
 	local value = 0
+	self:_get_armor_page()
 	if tweak_data.weapon[self._slot_data.name] then
 		local equipped_item = managers.blackmarket:equipped_item(category)
 		local equipped_slot = managers.blackmarket:equipped_weapon_slot(category)
@@ -1622,8 +1630,18 @@ function BlackMarketGui:show_stats()
 			end
 		end
 	elseif tweak_data.blackmarket.armors[self._slot_data.name] then
+		local percent_stats = {
+			dodge = true,
+			hdr_min_procent = true,
+			hdr_max_procent = true,
+			deflect_min_procent = true,
+			deflect_max_procent = true,
+			ammo_mul = true,
+			jump_speed_multiplier = true,
+			explosion_damage_reduction = true
+		}
 
-		self:_get_armor_page()
+		--self:_get_armor_page()
 
 		local equipped_item = managers.blackmarket:equipped_item(category)
 		local equipped_slot = managers.blackmarket:equipped_armor_slot()
@@ -1679,13 +1697,13 @@ function BlackMarketGui:show_stats()
 				local base = base_stats[stat.name].value
 				local string_base = string.remove_zeros(base_format, base)
 				self._armor_stats_texts[stat.name].equip:set_alpha(1)
-				self._armor_stats_texts[stat.name].equip:set_text(string_value .. ((stat.name == "dodge" and value == 95) and "(max)" or ""))
-				self._armor_stats_texts[stat.name].base:set_text(stat.name == "dodge" and string.remove_zeros(base_format, math.min(base, 95)) or string_base)
+				self._armor_stats_texts[stat.name].equip:set_text(string_value .. (percent_stats[stat.name] and "%" or "") .. ((stat.name == "dodge" and value == 95) and "(max)" or ""))
+				self._armor_stats_texts[stat.name].base:set_text((stat.name == "dodge" and string.remove_zeros(base_format, math.min(base, 95)) or string_base) .. (percent_stats[stat.name] and "%" or ""))
 				if skill_stats[stat.name].skill_in_effect then
 				else
 				end
 				local v = string.remove_zeros(base_format, (skill_stats[stat.name].value ~= 0 and skill_stats[stat.name].value or 0) - (real - value))
-				self._armor_stats_texts[stat.name].skill:set_text((0 < skill_stats[stat.name].value and "+" or "") .. (v ~= "0" and v or ""))
+				self._armor_stats_texts[stat.name].skill:set_text((0 < skill_stats[stat.name].value and "+" or "") .. (v ~= "0" and v or "") .. (percent_stats[stat.name] and 0 < skill_stats[stat.name].value and "%" or ""))
 				self._armor_stats_texts[stat.name].total:set_text("")
 				self._armor_stats_texts[stat.name].equip:set_color(tweak_data.screen_colors.text)
 				if value ~= 0 and value > base then
@@ -1703,10 +1721,10 @@ function BlackMarketGui:show_stats()
 				end
 				local string_equip = string.remove_zeros(base_format, equip)
 				self._armor_stats_texts[stat.name].equip:set_alpha(0.75)
-				self._armor_stats_texts[stat.name].equip:set_text(string_equip)
+				self._armor_stats_texts[stat.name].equip:set_text(string_equip .. (percent_stats[stat.name] and "%" or ""))
 				self._armor_stats_texts[stat.name].base:set_text("")
 				self._armor_stats_texts[stat.name].skill:set_text("")
-				self._armor_stats_texts[stat.name].total:set_text(string_value)
+				self._armor_stats_texts[stat.name].total:set_text(string_value .. (percent_stats[stat.name] and "%" or ""))
 				if value > equip then
 					self._armor_stats_texts[stat.name].total:set_color((stat.name == "hdr_max_dmg") and tweak_data.screen_colors.stats_negative or tweak_data.screen_colors.stats_positive)
 				elseif value < equip then
@@ -2163,6 +2181,7 @@ function BlackMarketGui:populate_armors(data)
 end
 
 function BlackMarketGui:_get_armor_page()
+	io.stdout:write("_get_armor_page()\n")
 	if ArmorOverhaul.index == 0 then
 		self._armor_stats_shown = {
 			{name = "armor"},
@@ -2198,7 +2217,8 @@ function BlackMarketGui:_get_armor_page()
 	else
 		self._armor_stats_shown = {
 			{name = "explosion_damage_reduction", procent = true, revert = true},
-			{name = "jump_speed_multiplier"}
+			{name = "jump_speed_multiplier"},
+			{name = "bleeding_reduction"}
 		}
 	end
 	do
@@ -2264,14 +2284,12 @@ function BlackMarketGui:_get_armor_page()
 				})
 				local size_mul = 1
 				if column.name == "name" then
-					if stat.name == "ammo_mul" then
-						size_mul = 0.825 
-					elseif stat.name == "regen" then
+					if stat.name == "regen" then
 						size_mul = 0.8
 					elseif stat.name == "deflect_min_dmg" or stat.name == "deflect_min_procent" or stat.name == "deflect_max_dmg" or stat.name == "deflect_max_procent" then
 						size_mul = 0.725
 					elseif stat.name == "jump_speed_multiplier" then
-						size_mul = 0.65
+						size_mul = 0.725
 					elseif stat.name == "explosion_damage_reduction" then
 						size_mul = 0.5
 					elseif stat.name == "hdr_min_dmg" or stat.name == "hdr_min_procent" or stat.name == "hdr_max_dmg" or stat.name == "hdr_max_procent" then
@@ -2294,11 +2312,6 @@ function BlackMarketGui:_get_armor_page()
 			end
 		end
 	end
-end
-
-function BlackMarketGui:mouse_moved(o, x, y)
-	mouse_moved_orig(self, o, x, y)
-	self:show_stats()
 end
 
 function BlackMarketGui:change_armor_page(value)

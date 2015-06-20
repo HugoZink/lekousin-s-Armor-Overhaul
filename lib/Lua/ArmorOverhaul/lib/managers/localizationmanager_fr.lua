@@ -61,7 +61,7 @@ armortext["26"] = 26
 armortext["30"] = 30
 
 -- Mechanic descriptions
-armortext["description_mechanics"] = "Mechanic descriptions"
+armortext["description_mechanics"] = "Description des mécaniques"
 armortext["description_mechanics_help"] = "Explanation of all mechanics of the game"
 
 armortext["description_new"] = "New/Altered mechanics"
