@@ -63,8 +63,8 @@ function LocalizationManager:text( string_id, macros )
 	armortext["30"] = 30
 
 	-- ArmorOverhaul options
-	armortext["armor_overhaul_options"] = "Options ArmorOverhaul"
-	armortext["armor_overhaul_options_help"] = "Options d'ArmorOverhaul"
+	armortext["armor_overhaul_options"] = "ArmorOverhaul"
+	armortext["armor_overhaul_options_help"] = "Changer les options d'ArmorOverhaul"
 	armortext["armor_overhaul_options_lang"] = "Langue"
 	armortext["lang_en"] = "en"
 	armortext["lang_fr"] = "fr"

@@ -413,4 +413,4 @@ m = menu_item{
     next_node = menu_submenu(m)
 }
 
-menu_after('options', m)
+menu_after('mods', m)
