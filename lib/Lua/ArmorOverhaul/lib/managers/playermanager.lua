@@ -255,13 +255,13 @@ function PlayerManager:body_armor_value(category, override_value, default)
 				{0, 0}
 			}
 			local tmp = Global._custom_armor:calculate_stat(category .. "_min_dmg")
-			t[1][1] = tmp[1] * tmp[2]
+			t[1][1] = tmp[1] * tmp[2] * difficulty_multiplier
 			tmp = Global._custom_armor:calculate_stat(category .. "_min_value")
-			t[1][2] = tmp[1] * tmp[2] * difficulty_multiplier
+			t[1][2] = tmp[1] * tmp[2]
 			tmp = Global._custom_armor:calculate_stat(category .. "_max_dmg")
-			t[2][1] = tmp[1] * tmp[2]
+			t[2][1] = tmp[1] * tmp[2] * difficulty_multiplier
 			tmp = Global._custom_armor:calculate_stat(category .. "_max_value")
-			t[1][2] = tmp[1] * tmp[2] * difficulty_multiplier
+			t[1][2] = tmp[1] * tmp[2]
 			return t
 		else
 			local values = Global._custom_armor:calculate_stat(category)

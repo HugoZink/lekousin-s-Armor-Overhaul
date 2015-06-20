@@ -1,5 +1,6 @@
 ------[[Script setup]]------
 ArmorOverhaul = ArmorOverhaul or {}
+ArmorOverhaul.options = {}
 
 ArmorOverhaul.HOOK_HOXHUD = "HoxHUD"
 ArmorOverhaul.HOOK_BLT = "BLT"
@@ -41,21 +42,23 @@ BindKey("VK_F1", "lib/Lua/ArmorOverhaul/keybinds/decrement_page.lua")
 BindKey("VK_F2", "lib/Lua/ArmorOverhaul/keybinds/increment_page.lua")
 
 
+RegisterScript("lib/Lua/ArmorOverhaul/lib/CustomArmor.lua", 2, "lib/tweak_data/upgradestweakdata")
+
 dofile("lib/Lua/ArmorOverhaul/lib/Utils.lua")
 
 if Utils then
-    if Utils.file_exists("lib/Lua/ArmorOverhaul/ArmorOverhaul.ini") then
-        Utils.parse_options("lib/Lua/ArmorOverhaul/ArmorOverhaul.ini")
+    if Utils.file_exists(Utils.options_file) then
+        Utils.parse_options(Utils.options_file)
     end
-    if not ArmorOverhaul.lang then
-        ArmorOverhaul.lang = "en"
+    if not ArmorOverhaul.options.lang then
+        ArmorOverhaul.options.lang = "en"
     end
     
-    RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_" .. ArmorOverhaul.lang .. ".lua", 2, "lib/managers/localizationmanager")
+    RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_" .. ArmorOverhaul.options.lang .. ".lua", 2, "lib/managers/localizationmanager")
 
     Utils.print_log("Initialized ArmorOverhaul " .. ArmorOverhaul.ARMOR_OVERHAUL_STEP .. " " .. ArmorOverhaul.ARMOR_OVERHAUL_VERSION .. " " .. ArmorOverhaul.ARMOR_OVERHAUL_BRANCH .. "for " .. ArmorOverhaul.ARMOR_OVERHAUL_HOOK .. " hook\n")
 else
-    ArmorOverhaul.lang = "en"
+    ArmorOverhaul.options.lang = "en"
     
-    RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_" .. ArmorOverhaul.lang .. ".lua", 2, "lib/managers/localizationmanager")
+    RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_" .. ArmorOverhaul.options.lang .. ".lua", 2, "lib/managers/localizationmanager")
 end

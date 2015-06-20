@@ -3,312 +3,318 @@ Text for new stats
 -code base thanks to hejoro
 ]]
 
-armortext = armortext or {}
-
--- Stats
-armortext["bm_menu_regen"] = "Regen per second"
-armortext["bm_menu_deflect_min_dmg"] = "Dmg max deflect"
-armortext["bm_menu_deflect_min_procent"] = "Max deflect chance"
-armortext["bm_menu_deflect_max_dmg"] = "Dmg min deflect"
-armortext["bm_menu_deflect_max_procent"] = "Min deflect chance"
-armortext["bm_menu_hdr_min_dmg"] = "Min HDR dmg"
-armortext["bm_menu_hdr_min_procent"] = "Min HDR value"
-armortext["bm_menu_hdr_max_dmg"] = "Max HDR dmg"
-armortext["bm_menu_hdr_max_procent"] = "Max HDR value"
-armortext["bm_menu_explosion_damage_reduction"] = "Explosion damage reduction"
-armortext["bm_menu_ammo_mul"] = "Bonus ammo"
-armortext["bm_menu_jump_speed_multiplier"] = "Bonus jump speed"
-armortext["bm_menu_ap_regen_suppressed_max_multiplier"] = "Maximum regen suppressed"
-armortext["bm_menu_bleeding_reduction"] = "Bleeding reduction"
-
--- Armors
-armortext["bm_armor_level_8"] = "Lifa Vest"
-armortext["bm_armor_level_9"] = "Lightweight tactical vest"
-armortext["bm_armor_level_10"] = "Thin vest"
-armortext["bm_armor_level_11"] = "EOD Suit"
-armortext["bm_armor_level_12"] = "Custom Armor"
-
--- Armors required skills
-armortext["bm_menu_skill_locked_level_7"] = "Requires the Tough Guy skill"
-armortext["bm_menu_skill_locked_level_8"] = "Requires the Curaga skill"
-armortext["bm_menu_skill_locked_level_9"] = "Requires the Materia skill"
-armortext["bm_menu_skill_locked_level_10"] = "Requires the Moving Target skill"
-armortext["bm_menu_skill_locked_level_11"] = "Requires the Bomb Disposal Expert skill"
-
--- Skills
-armortext["menu_stockholm_syndrome"] = "Curaga"
-armortext["menu_sentry_targeting_package"] = "Materia"
-armortext["menu_juggernaut"] = "Bomb Disposal Expert"
-
--- New perk deck
-armortext["menu_st_spec_armor_drainer"] = "Armor Drainer"
-armortext["menu_st_spec_armor_drainer_desc"] = "The armor drainer allows the shooter to increases its armor pool by leading headshots.\n\nNote: when leading a headshot, a cooldown starts in which headshots don't increase the bonus."
-armortext["menu_deck_armor_drainer_1"] = "Armor Drainer I"
-armortext["menu_deck_armor_drainer_3"] = "Armor Drainer II"
-armortext["menu_deck_armor_drainer_5"] = "Armor Drainer III"
-armortext["menu_deck_armor_drainer_7"] = "Armor Drainer IV"
-armortext["menu_deck_armor_drainer_9"] = "Armor Drainer V"
-
-armortext["custom_armor"] = "Custom armor"
-
--- Mandatory for the custom armor's concealment values
-armortext["1"] = 1
-armortext["12"] = 12
-armortext["18"] = 18
-armortext["21"] = 21
-armortext["23"] = 23
-armortext["26"] = 26
-armortext["30"] = 30
-
--- Mechanic descriptions
-armortext["description_mechanics"] = "Description des mécaniques"
-armortext["description_mechanics_help"] = "Explanation of all mechanics of the game"
-
-armortext["description_new"] = "New/Altered mechanics"
-armortext["description_new_help"] = "Mechanics introduced or altered by lekousin's Armor Overhaul"
-armortext["description_new_armor_regen"] = "Progressive armor regeneration"
-armortext["description_new_armor_regen_help"] = ""
-armortext["description_new_armor_regen_desc_title"] = "New/Altered mechanics - Armor regeneration"
-armortext["description_new_bullet_deflection"] = "Bullet deflection"
-armortext["description_new_bullet_deflection_help"] = ""
-armortext["description_new_bullet_deflection_desc_title"] = "New/Altered mechanics - Bullet deflection"
-armortext["description_new_hdr"] = "Health Damage Reduction"
-armortext["description_new_hdr_help"] = ""
-armortext["description_new_hdr_desc_title"] = "New/Altered mechanics - HDR"
-armortext["description_new_armor_ammo"] = "Variable Ammo Pool"
-armortext["description_new_armor_ammo_help"] = ""
-armortext["description_new_armor_ammo_desc_title"] = "New/Altered mechanics - Variable Ammo Pool"
-armortext["description_new_edr"] = "Explosion Damage Reduction"
-armortext["description_new_edr_help"] = ""
-armortext["description_new_edr_desc_title"] = "New/Altered mechanics - EDR"
-armortext["description_new_health_armor"] = "Armor Health Bonus"
-armortext["description_new_health_armor_help"] = ""
-armortext["description_new_health_armor_desc_title"] = "New/Altered mechanics - Health Bonus"
-armortext["description_new_health_regen"] = "Health Regen"
-armortext["description_new_health_regen_help"] = ""
-armortext["description_new_health_regen_desc_title"] = "New/Altered mechanics - Health Regen"
-armortext["description_new_jump_armor"] = "Variable jump height"
-armortext["description_new_jump_armor_help"] = ""
-armortext["description_new_jump_armor_desc_title"] = "New/Altered mechanics - Variable Jump Height"
-armortext["description_new_bleeding"] = "Bleeding"
-armortext["description_new_bleeding_help"] = ""
-armortext["description_new_bleeding_desc_title"] = "New/Altered mechanics - Bleeding"
-armortext["description_new_difficulty"] = "Difficulty dependant stats"
-armortext["description_new_difficulty_help"] = ""
-armortext["description_new_difficulty_desc_title"] = "New/Altered mechanics - Variable stats"
-armortext["description_new_armor_reduction"] = "Armor reduction"
-armortext["description_new_armor_reduction_help"] = ""
-armortext["description_new_armor_reduction_desc_title"] = "New/Altered mechanics - Armor reduction"
-armortext["description_new_armor_drainer"] = "Perk deck: Armor Drainer"
-armortext["description_new_armor_drainer_help"] = ""
-armortext["description_new_armor_drainer_desc_title"] = "New/Altered mechanics - Armor Drainer"
-
-armortext["description_long_guide"] = "The Long Guide"
-armortext["description_long_guide_help"] = "A weirdly formatted version of The Long Guide (Work In Progress)"
-
---[[
-	LAO descriptions
-]]
-
-armortext["description_new_armor_regen_desc"] = [[When you are hit, you have to wait some time before your armor starts regenerating.
-When this delay has passed, instead of instanlty regenerating, your armor progressively regenerates, the rate depending on the armor.
-If you are suppressed while your armor is regenerating, its regeneration rate is set at 0, but progressively recovers for 10 seconds (can be lowered by armor regeneration skills), as long as you are not suppressed again.]]
-
-armortext["description_new_bullet_deflection_desc"] = [[When an enemy shoots at you, you have a chance to nullify the bullet.
-The odds depend on your armor (the tougher the better) and on the damage of the bullet (the higher, the fewer the chances).
-If you deflect the projectile, you proc the damage cooldown, like dodge does.
-In blackmarket, interpret the stats as follow:
-Deflection chance up to [deflect min value] (if damage <= [deflect min dmg]) and down to [deflect max value] (if damage > [deflect max dmg])]]
-
-armortext["description_new_hdr_desc"] = [[When you are hit while your armor is down (or when you are hit by a too strong sniper round), your armor can reduce health loss.
-It depends on the armor (the tougher the better) and on the damage received (the higher the better).
-In blackmarket, interpret the stats as follow:
-Health damage reduction down to [HDR min value] (if damage <= [HDR min dmg]) and up to [HDR max value] (if damage > [HDR max dmg])]]
-
-armortext["description_new_armor_ammo_desc"] = [[Some armors alter your ammo pool.
-Suits tend to lower it (by 25% for the Two-piece suit and 65% for the Thin suit), whereas some others increase it (Flak Jacket -> 35%; Lightweight Tactical Vest -> 40%).]]
-
-armortext["description_new_edr_desc"] = [[If you are hit by an explosion, damage can be lowered by the armor, the tougher the higher reduction.]]
-
-armortext["description_new_health_armor_desc"] = [[Some armors alter your health pool. They are a restricted number though.
-Lifa Vest increases your health pool by 30 HP, EOD Suit by 20 with Bomb Disposal Expert aced.]]
-
-armortext["description_new_health_regen_desc"] = [[Each tick (the briefiest part of time), depending on your armor, you might regenerate a bit of your health.
-On normal difficulty, each armor (except Two-piece suit and Thin suit) grants you a tiny health regeneration per second.
-Otherwise, only Lifa Vest grants health regeneration (0.5 HP per second with Curaga basic, 1.5 with Curaga aced).]]
-
-armortext["description_new_jump_armor_desc"] = [[The tougher your armor, the lower your jump will go.
-With this in mind, the jump cooldown has been reduced to 0.05s.]]
-
-armortext["description_new_bleeding_desc"] = [[When you take health damage, you have a chance to start bleeding.
-The odds and bleed rate depend on health loss, with a maximum of 50% chance to bleed and a rate of 10 HP per second for a 100+ HP loss.
-The bleeding rate decreases when your armor is up. The debleeding rate varies accordingly to your armor and its current armor / max armor ratio.
-That being said, Thin suit can't stop bleeding, so you may lose all your health.
-Note that you cannot go into bleedout due to bleeding, and bleeding can be stopped also by using a medic bag.]]
-
-armortext["description_new_difficulty_desc"] = [[Your armor stats are not static. They may depend on the difficulty.
-There is a list of the stats affected by difficulty and their ratio (from normal to deathwish):
-Armor (1, 1.25, 1.5, 2, 2.5)
-Health Damage Reduction (0.4, 0.5, 0.6, 0.8, 1)
-Bullet Deflection (0.4, 0.5, 0.6, 0.8, 1)
-Armor Regeneration (0.6, 0.65, 0.75, 0.9, 1)
-Note that when in main menu, armor stats are those of your last difficulty played in the session (normal if no mission has been played).]]
-
-armortext["description_new_armor_reduction_desc"] = [[When your armor breaks, your armor loses 1% of its base max armor, with a minimum of 50% remaining max armor.
-To compensate for this loss, you are granted a 0.2% speed bonus each time it breaks (with a maximum of 10% bonus).]]
-
-armortext["description_new_armor_drainer_desc"] = [[A new perk deck has been introduced: Armor drainer.
-When you deal a headshot, you are granted some bonus max armor. It has a 3.5 seconds cooldwon.
-This bonus is lost when your armor breaks.]]
-
---[[
-	The Long Guide descriptions
-]]
-
-armortext["description_hurt_animation_intro_desc"] = [[When an enemy takes damage, the game calculates the reaction (animation) he is supposed to show. There are 6 different reactions possible:
-No reaction: The enemy does indeed play no animation at all.
-Light hurt: An animation is shown only if the enemy isn't busy already; he flinches very slightly, virtually unnoticeable.
-Moderate hurt: The enemy staggers for 0.9 to 2.5 seconds before regaining composure.
-Heavy hurt: The enemy usually falls to the ground or at least goes on his knees and takes between 0.9 to 4.8 seconds to get up again.
-Explode hurt: The enemy is thrown into the air, falls on the ground and takes between 2.7 to 6.1 seconds to start fighting again. Shields are stunned for 1.5 to 2.5 seconds. Bulldozers are stunned for 3.5 seconds.
-Fire hurt: The enemy is set on fire for 4.3 seconds. This reaction itself does not deal damage over time however. The fire reaction is not calculated like the other reactions and thus explained together with fire weapons in Weapon Stats - Advanced Concepts.
-Death
-The death reaction is always shown when the enemy dies. There are additional reactions not related to taking damage, e.g. melee against shield with Iron Man aced, countertasing, ECM feedback, panic.
-
-Cloakers show no hurt reactions other than fire hurt or death (incidentally, they are also immune to ECM feedback). The remaining special enemies (except the Taser) and Deathwish Murkywaters/GenSec Elites (they are basically reskinned versions of each other) have only light or no reactions against bullets and melee but a 100% chance for explode hurt vs explosions.
-
-The remaining enemies look at the fraction damage/currentHitpoints, with currentHitpoints being the current hitpoints of the enemy before the damage is applied, to decide which of the following tables to pick, which in turn define the chances for each type of reaction. 
-
-Bullets vs law enforcers (except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser):
-If fraction < 0.3: 20% no reaction, 70% light hurt, 5% moderate hurt, 5% heavy hurt
-If 0.3 <= fraction < 0.6: 40% light hurt, 40% moderate hurt, 20% heavy hurt
-If 0.6 <= fraction < 0.9: 20% light hurt, 20% moderate hurt, 60% heavy hurt
-If fraction >= 0.9: 100% heavy hurt
-Bullets vs gangsters:
-If fraction < 0.4: 30% no reaction, 60% light hurt, 10% moderate hurt
-If 0.4 <= fraction < 0.7: 10% no reaction, 70% light hurt, 20% moderate hurt
-If fraction >= 0.7: 10% no reaction, 50% light hurt, 30% moderate hurt, 10% heavy hurt
-Basically, gangsters are a lot sturdier than law enforcers. Before update 31, this table was used for all enemies. As a result, update 31 increased the chance of hurt animations on law enforcers.
-
-Explosions vs anyone except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser:
-If fraction < 0.2: 60% no reaction, 40% heavy hurt
-If 0.2 <= fraction < 0.5: 60% heavy hurt, 40% explode hurt
-If fraction >= 0.5: 20% heavy hurt, 80% explode hurt
-Melee vs anyone except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser:
-If fraction < 0.3: 30% no reaction, 70% light hurt
-If 0.3 <= fraction < 0.8: 100% light hurt
-If 0.8 <= fraction < 0.9: 60% light hurt, 20% moderate hurt, 20% heavy hurt
-If fraction >= 0.9: 100% heavy hurt
-Melee weapons do not use their actual damage value for the calculation of the fraction, but the knockdown value seen in the inventory. Martial Arts basic delivers a 1.5 multiplier to this value, making it easier to reach the stronger animations. In this manner, the fraction may even exceed 1 (technically, the game clamps it at 1 though), yet the enemy survives the attack and plays the heavy hurt animation unless he is one of the exceptions mentioned above. Pumping Iron aced has no effect on the knockdown value despite the inventory claiming otherwise (Pumping Iron basic is not reflected in the inventory at all). As indicated by the melee table, if the knockdown doesn't reach at least 80% of the remaining hitpoints, the enemy only shows light reactions or none at all. To reliably utilize the knockdown of a weapon, it is mandatory to have a knockdown value of at least 90% of the remaining hitpoints. Things would've been easier to comprehend if the last fraction requirement was fraction >= 1.0. You might want to divide your knockdown by 0.9 to obtain the maximum allowed current enemy hitpoints to have a 100% heavy hurt chance. Thus the bat with 240 knockdown can reliably cause heavy hurt when the current enemy hitpoints are less than 267.
-
-If there is a reaction and it is not light hurt, the victim screams (range can be reduced with Shinobi aced). If the victim was a Taser, he will be interrupted.
-
-If the reaction is moderate hurt, heavy hurt or death and the victim has been uncool for 3 seconds and has a weapon which has not been dropped, he additionally has a 10% chance to accidentally fire his gun, potentially harming other enemies and killing civilians close by. Enemies affected by the explosion reaction do not fire, though they will still play the death reaction when dying. Single-fire weapons shoot only 0.2 to 0.4 seconds after the reaction, whereas auto-fire weapons have no delay. The victim will not fire if he has dropped his weapon, which happens when he is affected by forced ragdoll, which in turn always happens after roughly 0.3 to 0.8 seconds after the death reaction. Basically, when an enemy is killed in a single hit, there is a small chance that he drops his weapon before using his single-fire weapon. Additionally, when enemies die due to explosions or a shotgun blast from less than 5 m away (so they experience some sort of physics push and thus ragdoll), they drop their weapons instantly (instead of the 0.3-0.8 seconds) so that not even auto-fire weapons get a shot off. Enemies do not drop their weapon before death: If the enemies don't die with a single explosion or shotgun attack, there is the risk that they show moderate or heavy hurt and thus shoot. Shotguns with slug ammo do not cause a physics push. Shotguns with HE rounds also lose their original 5 m physics push and gain a push due to the explosion (without the range requirement) instead. While ordinary bullets do slightly push bodies while they are dropping to the floor, this does not count as a forced ragdoll and does not prevent enemies from firing their gun upon death.
-
-Example 1:
-It is day 1 of Big Oil and a biker has been uncool for 3 seconds. Your submachine gun only deals 35% damage of his total hitpoints with each hit. What is the chance that he fires his gun due to hurt?
-The first fraction is 35%/100%, so on the first hit there is a 10% chance for moderate hurt, which means a 1% chance to shoot. The second hit has the fraction 35%/65% = 0.54, which means another 2% chance to shoot. The third shot ends in death, which means another 10% chance. The chance for the biker not to shoot is 0.99*0.98*0.9 = 87.3%, so there is a 12.7% chance that he will shoot due to hurt.
-
-Example 2:
-Using a weapon with 150 knockdown but only 30 damage against a Tan with 200 hitpoints, what are the reactions each time?
-The first fraction is 150/200 = 0.75, so the enemy has a 100% chance for light hurt. The enemy then takes 30 damage. The second fraction is 150/170 = 0.88, so there is a 20% chance for moderate hurt and a 20% chance for heavy hurt. The enemy takes damage again. The knockdown now exceeds his hitpoints, so he will always show heavy hurt on subsequent hits.
-
-Example 3:
-Using an M1014 with HE rounds (assume that it deals constant 35 damage including damage falloff and a 0.8 damage multiplier for explosives) against a Murkywater soldier who has been uncool for 3 seconds, compare the results on non-Deathwish (130 hitpoints) and Deathwish difficulty (240 hitpoints).
-The non-Deathwish Murkywater has a fraction of 35/130 = 0.27 on the first hit and thus has a 60% heavy hurt chance, meaning a 6% chance to shoot due to hurt. The fraction is 35/95 = 0.37 on the second hit, meaning another 6% chance to shoot. The third hit has a 20% heavy hurt chance, meaning a 2% chance to shoot. The Murkywater dies on the fourth hit and drops his weapon instantly, so there is no chance to shoot. The chance for the Murkywater not to shoot is 0.94*0.94*0.98 = 86.6%, so there is a 13.4% chance for him to shoot due to hurt. The Deathwish Murkywater has a 0% chance to shoot as he never shows anything but the explode reaction. However, as HE rounds make explosion noise on impact, this example only serves to illustrate the mechanics but does not have any actual application.]]
-
-armortext["description_hurt_animation_duration_desc"] = [[A reaction usually does not have just one possible animation; instead, there are different animations depending on the direction of the attack and whether the person was stationary or moving and hit above or below the center of mass (center of the chest) and on the enemy type. Finally, usually there are several animation variations even if the attack direction, etc. are the same, so the game randomly picks one variation. 
-
-For the direction of the attack, "front" shall mean that the attacker (center of the explosion or the player himself) is located in front of the enemy, facing him. Similarly, "left" means that the attacker is located to the left of the enemy, and so on. Every direction covers an angle of 90°. In the following lists, I present the minimum and maximum durations of the different animations, as well as the arithmetic mean.
-
-Bulldozers have only one explode hurt animation, lasting 3.5 seconds.
-
-Explode hurt animations of Shields (only 2 explode reactions for each direction, hence "or"):
-Front: 1.6 or 1.7 seconds, mean 1.7 seconds
-Back: 1.9 or 2.5 seconds, mean 2.2 seconds
-Left: 1.7 or 2.0 seconds, mean 1.8 seconds
-Right: 1.5 or 1.8 seconds, mean 1.7 seconds
-Explode hurt animations of the other enemies (many variations, hence "to"):
-Front: 3.2 to 4.6 seconds, mean 4.1 seconds
-Back: 3.5 to 6.1 seconds, mean 4.5 seconds
-Left: 2.7 to 4.1 seconds, mean 3.4 seconds
-Right: 3.2 to 4.4 seconds, mean 3.7 seconds
-Moderate hurt animations when hit above center of mass:
-Front: 1.1 to 2.5 seconds, mean 1.7 seconds
-Back: 0.9 or 1.1 seconds, mean 1.0 seconds
-Left: 1.0 to 2.0 seconds, mean 1.4 seconds
-Right: 1.1 to 1.6 seconds, mean 1.3 seconds
-Moderate hurt animations when hit below center of mass:
-1.3 seconds
-Heavy hurt animations when running:
-1.2 to 4.7 seconds, mean 2.8 seconds
-Heavy hurt animations when hit above center of mass:
-Front: 1.5 to 4.8 seconds, mean 3.1 seconds
-Back: 0.9 to 2.8 seconds, mean 2.1 seconds
-Left: 1.8 to 3.1 seconds, mean 2.6 seconds
-Right: 1.0 to 3.4 seconds, mean 2.7 seconds
-Heavy hurt animations when hit below center of mass:
-Front: 2.0 to 3.3 seconds, mean 2.7 seconds
-Back: 1.9 or 3.1 seconds, mean 2.5 seconds
-Left: 1.5 or 3.0 seconds, mean 2.2 seconds
-Right: 2.3 or 3.0 seconds, mean 2.8 seconds
-
-It follows that explosions cause the longest explode hurt animations when detonating in the back of the enemy (except against Bulldozers). Heavy hurt, on average, lasts over 3 seconds when hitting the enemy above the center of mass from the front. If you intend to go on a killing spree with melee weapons, engaging enemies from the front and aiming above their center of mass knocks down the enemies for the longest possible duration. These 3 seconds also leave the player enough time to fully wait out the violence timeout when trying to dominate the enemy.]]
-
-armortext["description_carrying_bags_desc"] = [[The different types of bags are classified into 4 categories:
-Light (e.g. coke, paintings): No movement penalty. Can sprint while carrying and throw far. 
-Medium (e.g. money, drill): 75% movement speed. Can't sprint, but can throw as far as light bags.
-Heavy (e.g. weapons, gold, body bag): 50% movement speed. Can't sprint and can throw only a short distance.
-Very heavy (e.g. engine, artifact): 25% movement speed. Basically just drops to the ground when thrown.
-The movement speed is multiplied by 1.5 if you have the Transporter skill (it is capped at 100% however). Thus if you have the skill, medium bags are carried at 100% speed (as 0.75*1.5=1.125 which is then capped at 1). Heavy bags are carried at 75% movement speed and very heavy ones at 37.5%.
-
-When throwing bags, there are a few things to keep in mind:
-Picking up a bag takes a moment (more so without Fast Hands).
-After throwing a bag, there's a cooldown of 1.2-1.5 seconds before you can pick up another bag.
-In really laggy rounds it might take several seconds before a bag you want to throw is actually thrown.
-If you don't have Fast Hands or the game is laggy, it is usually a better idea to carry things directly instead of throwing.
-
-I personally use the following guidelines to decide whether to carry the bags or to throw them:
-As you can sprint while carrying light bags, you don't gain too much throwing them around. Keep them on your back if you are lazy and stamina is not an issue. Otherwise mix sprinting and throwing.
-Medium bags always benefit from throwing them around, sprinting after them and picking them up again. The speed gain is minimal in the suit, but very noticeable when wearing heavy armor. Too much lag may make throwing not viable however.
-Throwing heavy bags doesn't speed up your progress, but (if you manage the cooldown of picking up bags correctly) also doesn't slow you down. Keep them on your back to save yourself the hassle of repeatedly picking up bags.
-There is no benefit to throwing (or rather, dropping) very heavy bags. Carry them on your back.
-Sometimes it is necessary to keep a large bunch of bags together to keep the cops off of them. Keep the aforementioned rules in mind while moving the bags from one point to another. If there are no cops involved, there is no point dropping weapon bags after carrying them halfway. Move them to the van and be done with it. To avoid the issue of several players attempting to grab the same bag which potentially slows down the heist, consider moving your share of bags only. E.g. if there are 8 bags of cash on day 2 of Framing Frame, focus on 2 bags and move them to the van as fast as possible. Afterwards help with the remaining 6 bags, which the other 3 players in whatever inefficient manner have carried only halfway to the van. Note that if both bags are at initially at the same spot, then if you picked up the first and threw it towards your destination without yourself moving at all, you will now need to wait more than a second before you can pick up the next bag. If instead you moved a couple of steps towards your destination before throwing the first bag, you could use that second to walk back towards the next bag, fully utilizing the time caused by the interaction cooldown. Another efficient way to carry 2 (or more) medium bags is to have one bag in front of the other. Pick up one bag and throw it past the other one, then move up to the other (during the interaction cooldown) and throw it past the first one.
-
-If you carry a bag while escaping, you will get the full amount of money for it. Bain's commentary afterwards will not reflect this. However, merely throwing bags into the escape zone on the other hand (without any "loot secured" message) does not count. 
-
-XP rewards and achievements that require players to secure a certain amount of loot do not count bags carried into the escape. Essentially, if you worry about gaining experience or achievements, carrying bags into the escape has some severe disadvantages. If you care about money only, carrying bags directly may often save a second or two depending on the circumstances.
-
-Bags are not affected by your personal momentum when thrown. Regardless, you can slightly increase your throwing range by jumping before throwing.]]
-
-armortext["description_interaction_desc"] = [[You can shout at the following things:
-Uncool civilians (range: 10 m)
-Uncool non-special enemies (range: 10 m)
-Crew members (unrestricted range to merely call them; 7 m range for Inspire)
-You can also highlight/mark the following things:
-Cameras during stealth (range: 20 m)
-SWAT turrets (range: 20 m)
-Special enemies and cool enemies (range: 30 m)
-Interaction requires clear line of sight to a the target except when targeting crew members. More precisely, there must be no obstacles between the location of the first-person camera and a single point associated with the target. If your target is a security camera, the interaction point is the camera lens. Otherwise, the interaction point is located 30 cm above the head point, which itself is located at the back of the neck. Thus the interaction point is actually located about 10 cm above the top of the head. If you have clear line of sight to this point, the shout/mark will succeed.
-
-The Crew Chief perk deck and Dominator aced are multipliers for the range to highlight enemies and to shout at civilians and enemies. With both skills, your range to highlight becomes 30 * 1.25 * 1.5 = 56.25 meters and your intimidation range becomes 18.75 meters. Cameras and SWAT turrets are not affected, so their range remains at 20 m.
-
-Long range interactions have a cooldown of 1.5 seconds before they can be used again. Inspire basic has a cooldown of 3.5 seconds. If you shout at a teammate every 2 seconds, only every other shout speeds him up. Your voice will indicate whether you have called him or inspired him.
-
-Enemies in stealth are highlighted for 13.5 seconds. Special enemies and cameras are highlighted for 4.5 seconds. SWAT turrets are highlighted for 9 seconds.
-
-Spotter basic changes the color of highlighted enemies from pink (no damage bonus) to red (damage bonus). 
-
-If you shout at an unintimidated civilian, he will randomly be given a maximum intimidation time between 60 and 120 seconds. His current intimidation time is filled up by repeatedly shouting at him (until it reaches the maximum intimidation time). If the current intimidation time reaches 0, the civilian will lose his intimidated state and flee. It often takes several shouts to get a civilian to drop on the ground. If a civilian was moving at the time of the shout, he will merely stop. 
-
-Even if your shout does not make the civilian drop on the ground, the intimidation time will build up normally. You can just leave him standing there with his hands raised for 1-2 minutes and he will not call the cops or flee. Shouting a single time at a civilian (or shooting a single time in hearing range with Control Freak basic) intimidates him, no matter the animation. Intimidation and dropping to the ground are two different things.
-
-Make sure to distinguish between civilians lying on the ground and crouching civilians. Crouching civilians are extremely dangerous and will try to call the police as soon as possible.
-
-Shouting at a civilian once will at most add 60 seconds to the time (90 seconds with Control Freak basic). The civilian you are looking at directly will gain the full 60/90 seconds, whereas the other civilians in intimidation range may get less depending on distance and angle. The system is extremely wonky however (refer to the appendix for more details). If there is a group of civilians, some close, some far away, it is a bad idea to target the close ones. Your best bet is to either target the civilian furthest away or aim at the crowd without looking at anyone in particular. Civilians hiding behind counters or furniture are not affected at all as line of sight is required.]]
-
 LocalizationManager_text = LocalizationManager_text or LocalizationManager.text
 function LocalizationManager:text( string_id, macros )
+	local armortext = {}
+
+	-- Stats
+	armortext["bm_menu_regen"] = "Regen per second"
+	armortext["bm_menu_deflect_min_dmg"] = "Dmg max deflect"
+	armortext["bm_menu_deflect_min_procent"] = "Max deflect chance"
+	armortext["bm_menu_deflect_max_dmg"] = "Dmg min deflect"
+	armortext["bm_menu_deflect_max_procent"] = "Min deflect chance"
+	armortext["bm_menu_hdr_min_dmg"] = "Min HDR dmg"
+	armortext["bm_menu_hdr_min_procent"] = "Min HDR value"
+	armortext["bm_menu_hdr_max_dmg"] = "Max HDR dmg"
+	armortext["bm_menu_hdr_max_procent"] = "Max HDR value"
+	armortext["bm_menu_explosion_damage_reduction"] = "Explosion damage reduction"
+	armortext["bm_menu_ammo_mul"] = "Bonus ammo"
+	armortext["bm_menu_jump_speed_multiplier"] = "Bonus jump speed"
+	armortext["bm_menu_ap_regen_suppressed_max_multiplier"] = "Maximum regen suppressed"
+	armortext["bm_menu_bleeding_reduction"] = "Bleeding reduction"
+
+	-- Armors
+	armortext["bm_armor_level_8"] = "Lifa Vest"
+	armortext["bm_armor_level_9"] = "Lightweight tactical vest"
+	armortext["bm_armor_level_10"] = "Thin vest"
+	armortext["bm_armor_level_11"] = "EOD Suit"
+	armortext["bm_armor_level_12"] = "Custom Armor"
+
+	-- Armors required skills
+	armortext["bm_menu_skill_locked_level_7"] = "Requires the Tough Guy skill"
+	armortext["bm_menu_skill_locked_level_8"] = "Requires the Curaga skill"
+	armortext["bm_menu_skill_locked_level_9"] = "Requires the Materia skill"
+	armortext["bm_menu_skill_locked_level_10"] = "Requires the Moving Target skill"
+	armortext["bm_menu_skill_locked_level_11"] = "Requires the Bomb Disposal Expert skill"
+
+	-- Skills
+	armortext["menu_stockholm_syndrome"] = "Curaga"
+	armortext["menu_sentry_targeting_package"] = "Materia"
+	armortext["menu_juggernaut"] = "Bomb Disposal Expert"
+
+	-- New perk deck
+	armortext["menu_st_spec_armor_drainer"] = "Armor Drainer"
+	armortext["menu_st_spec_armor_drainer_desc"] = "The armor drainer allows the shooter to increases its armor pool by leading headshots.\n\nNote: when leading a headshot, a cooldown starts in which headshots don't increase the bonus."
+	armortext["menu_deck_armor_drainer_1"] = "Armor Drainer I"
+	armortext["menu_deck_armor_drainer_3"] = "Armor Drainer II"
+	armortext["menu_deck_armor_drainer_5"] = "Armor Drainer III"
+	armortext["menu_deck_armor_drainer_7"] = "Armor Drainer IV"
+	armortext["menu_deck_armor_drainer_9"] = "Armor Drainer V"
+
+	armortext["custom_armor"] = "Custom armor"
+
+	-- Mandatory for the custom armor's concealment values
+	armortext["1"] = 1
+	armortext["12"] = 12
+	armortext["18"] = 18
+	armortext["21"] = 21
+	armortext["23"] = 23
+	armortext["26"] = 26
+	armortext["30"] = 30
+
+	-- ArmorOverhaul options
+	armortext["armor_overhaul_options"] = "Options ArmorOverhaul"
+	armortext["armor_overhaul_options_help"] = "Options d'ArmorOverhaul"
+	armortext["armor_overhaul_options_lang"] = "Langue"
+	armortext["lang_en"] = "en"
+	armortext["lang_fr"] = "fr"
+
+	-- Mechanic descriptions
+	armortext["description_mechanics"] = "Mechanic descriptions"
+	armortext["description_mechanics_help"] = "Explanation of all mechanics of the game"
+
+	armortext["description_new"] = "New/Altered mechanics"
+	armortext["description_new_help"] = "Mechanics introduced or altered by lekousin's Armor Overhaul"
+	armortext["description_new_armor_regen"] = "Progressive armor regeneration"
+	armortext["description_new_armor_regen_help"] = ""
+	armortext["description_new_armor_regen_desc_title"] = "New/Altered mechanics - Armor regeneration"
+	armortext["description_new_bullet_deflection"] = "Bullet deflection"
+	armortext["description_new_bullet_deflection_help"] = ""
+	armortext["description_new_bullet_deflection_desc_title"] = "New/Altered mechanics - Bullet deflection"
+	armortext["description_new_hdr"] = "Health Damage Reduction"
+	armortext["description_new_hdr_help"] = ""
+	armortext["description_new_hdr_desc_title"] = "New/Altered mechanics - HDR"
+	armortext["description_new_armor_ammo"] = "Variable Ammo Pool"
+	armortext["description_new_armor_ammo_help"] = ""
+	armortext["description_new_armor_ammo_desc_title"] = "New/Altered mechanics - Variable Ammo Pool"
+	armortext["description_new_edr"] = "Explosion Damage Reduction"
+	armortext["description_new_edr_help"] = ""
+	armortext["description_new_edr_desc_title"] = "New/Altered mechanics - EDR"
+	armortext["description_new_health_armor"] = "Armor Health Bonus"
+	armortext["description_new_health_armor_help"] = ""
+	armortext["description_new_health_armor_desc_title"] = "New/Altered mechanics - Health Bonus"
+	armortext["description_new_health_regen"] = "Health Regen"
+	armortext["description_new_health_regen_help"] = ""
+	armortext["description_new_health_regen_desc_title"] = "New/Altered mechanics - Health Regen"
+	armortext["description_new_jump_armor"] = "Variable jump height"
+	armortext["description_new_jump_armor_help"] = ""
+	armortext["description_new_jump_armor_desc_title"] = "New/Altered mechanics - Variable Jump Height"
+	armortext["description_new_bleeding"] = "Bleeding"
+	armortext["description_new_bleeding_help"] = ""
+	armortext["description_new_bleeding_desc_title"] = "New/Altered mechanics - Bleeding"
+	armortext["description_new_difficulty"] = "Difficulty dependant stats"
+	armortext["description_new_difficulty_help"] = ""
+	armortext["description_new_difficulty_desc_title"] = "New/Altered mechanics - Variable stats"
+	armortext["description_new_armor_reduction"] = "Armor reduction"
+	armortext["description_new_armor_reduction_help"] = ""
+	armortext["description_new_armor_reduction_desc_title"] = "New/Altered mechanics - Armor reduction"
+	armortext["description_new_armor_drainer"] = "Perk deck: Armor Drainer"
+	armortext["description_new_armor_drainer_help"] = ""
+	armortext["description_new_armor_drainer_desc_title"] = "New/Altered mechanics - Armor Drainer"
+
+	armortext["description_long_guide"] = "The Long Guide"
+	armortext["description_long_guide_help"] = "A weirdly formatted version of The Long Guide (Work In Progress)"
+
+	--[[
+		LAO descriptions
+	]]
+
+	armortext["description_new_armor_regen_desc"] = [[When you are hit, you have to wait some time before your armor starts regenerating.
+	When this delay has passed, instead of instanlty regenerating, your armor progressively regenerates, the rate depending on the armor.
+	If you are suppressed while your armor is regenerating, its regeneration rate is set at 0, but progressively recovers for 10 seconds (can be lowered by armor regeneration skills), as long as you are not suppressed again.]]
+
+	armortext["description_new_bullet_deflection_desc"] = [[When an enemy shoots at you, you have a chance to nullify the bullet.
+	The odds depend on your armor (the tougher the better) and on the damage of the bullet (the higher, the fewer the chances).
+	If you deflect the projectile, you proc the damage cooldown, like dodge does.
+	In blackmarket, interpret the stats as follow:
+	Deflection chance up to [deflect min value] (if damage <= [deflect min dmg]) and down to [deflect max value] (if damage > [deflect max dmg])]]
+
+	armortext["description_new_hdr_desc"] = [[When you are hit while your armor is down (or when you are hit by a too strong sniper round), your armor can reduce health loss.
+	It depends on the armor (the tougher the better) and on the damage received (the higher the better).
+	In blackmarket, interpret the stats as follow:
+	Health damage reduction down to [HDR min value] (if damage <= [HDR min dmg]) and up to [HDR max value] (if damage > [HDR max dmg])]]
+
+	armortext["description_new_armor_ammo_desc"] = [[Some armors alter your ammo pool.
+	Suits tend to lower it (by 25% for the Two-piece suit and 65% for the Thin suit), whereas some others increase it (Flak Jacket -> 35%; Lightweight Tactical Vest -> 40%).]]
+
+	armortext["description_new_edr_desc"] = [[If you are hit by an explosion, damage can be lowered by the armor, the tougher the higher reduction.]]
+
+	armortext["description_new_health_armor_desc"] = [[Some armors alter your health pool. They are a restricted number though.
+	Lifa Vest increases your health pool by 30 HP, EOD Suit by 20 with Bomb Disposal Expert aced.]]
+
+	armortext["description_new_health_regen_desc"] = [[Each tick (the briefiest part of time), depending on your armor, you might regenerate a bit of your health.
+	On normal difficulty, each armor (except Two-piece suit and Thin suit) grants you a tiny health regeneration per second.
+	Otherwise, only Lifa Vest grants health regeneration (0.5 HP per second with Curaga basic, 1.5 with Curaga aced).]]
+
+	armortext["description_new_jump_armor_desc"] = [[The tougher your armor, the lower your jump will go.
+	With this in mind, the jump cooldown has been reduced to 0.05s.]]
+
+	armortext["description_new_bleeding_desc"] = [[When you take health damage, you have a chance to start bleeding.
+	The odds and bleed rate depend on health loss, with a maximum of 50% chance to bleed and a rate of 10 HP per second for a 100+ HP loss.
+	The bleeding rate decreases when your armor is up. The debleeding rate varies accordingly to your armor and its current armor / max armor ratio.
+	That being said, Thin suit can't stop bleeding, so you may lose all your health.
+	Note that you cannot go into bleedout due to bleeding, and bleeding can be stopped also by using a medic bag.]]
+
+	armortext["description_new_difficulty_desc"] = [[Your armor stats are not static. They may depend on the difficulty.
+	There is a list of the stats affected by difficulty and their ratio (from normal to deathwish):
+	Armor (1, 1.25, 1.5, 2, 2.5)
+	Health Damage Reduction (0.4, 0.5, 0.6, 0.8, 1)
+	Bullet Deflection (0.4, 0.5, 0.6, 0.8, 1)
+	Armor Regeneration (0.6, 0.65, 0.75, 0.9, 1)
+	Note that when in main menu, armor stats are those of your last difficulty played in the session (normal if no mission has been played).]]
+
+	armortext["description_new_armor_reduction_desc"] = [[When your armor breaks, your armor loses 1% of its base max armor, with a minimum of 50% remaining max armor.
+	To compensate for this loss, you are granted a 0.2% speed bonus each time it breaks (with a maximum of 10% bonus).]]
+
+	armortext["description_new_armor_drainer_desc"] = [[A new perk deck has been introduced: Armor drainer.
+	When you deal a headshot, you are granted some bonus max armor. It has a 3.5 seconds cooldwon.
+	This bonus is lost when your armor breaks.]]
+
+	--[[
+		The Long Guide descriptions
+	]]
+
+	armortext["description_hurt_animation_intro_desc"] = [[When an enemy takes damage, the game calculates the reaction (animation) he is supposed to show. There are 6 different reactions possible:
+	No reaction: The enemy does indeed play no animation at all.
+	Light hurt: An animation is shown only if the enemy isn't busy already; he flinches very slightly, virtually unnoticeable.
+	Moderate hurt: The enemy staggers for 0.9 to 2.5 seconds before regaining composure.
+	Heavy hurt: The enemy usually falls to the ground or at least goes on his knees and takes between 0.9 to 4.8 seconds to get up again.
+	Explode hurt: The enemy is thrown into the air, falls on the ground and takes between 2.7 to 6.1 seconds to start fighting again. Shields are stunned for 1.5 to 2.5 seconds. Bulldozers are stunned for 3.5 seconds.
+	Fire hurt: The enemy is set on fire for 4.3 seconds. This reaction itself does not deal damage over time however. The fire reaction is not calculated like the other reactions and thus explained together with fire weapons in Weapon Stats - Advanced Concepts.
+	Death
+	The death reaction is always shown when the enemy dies. There are additional reactions not related to taking damage, e.g. melee against shield with Iron Man aced, countertasing, ECM feedback, panic.
+
+	Cloakers show no hurt reactions other than fire hurt or death (incidentally, they are also immune to ECM feedback). The remaining special enemies (except the Taser) and Deathwish Murkywaters/GenSec Elites (they are basically reskinned versions of each other) have only light or no reactions against bullets and melee but a 100% chance for explode hurt vs explosions.
+
+	The remaining enemies look at the fraction damage/currentHitpoints, with currentHitpoints being the current hitpoints of the enemy before the damage is applied, to decide which of the following tables to pick, which in turn define the chances for each type of reaction. 
+
+	Bullets vs law enforcers (except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser):
+	If fraction < 0.3: 20% no reaction, 70% light hurt, 5% moderate hurt, 5% heavy hurt
+	If 0.3 <= fraction < 0.6: 40% light hurt, 40% moderate hurt, 20% heavy hurt
+	If 0.6 <= fraction < 0.9: 20% light hurt, 20% moderate hurt, 60% heavy hurt
+	If fraction >= 0.9: 100% heavy hurt
+	Bullets vs gangsters:
+	If fraction < 0.4: 30% no reaction, 60% light hurt, 10% moderate hurt
+	If 0.4 <= fraction < 0.7: 10% no reaction, 70% light hurt, 20% moderate hurt
+	If fraction >= 0.7: 10% no reaction, 50% light hurt, 30% moderate hurt, 10% heavy hurt
+	Basically, gangsters are a lot sturdier than law enforcers. Before update 31, this table was used for all enemies. As a result, update 31 increased the chance of hurt animations on law enforcers.
+
+	Explosions vs anyone except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser:
+	If fraction < 0.2: 60% no reaction, 40% heavy hurt
+	If 0.2 <= fraction < 0.5: 60% heavy hurt, 40% explode hurt
+	If fraction >= 0.5: 20% heavy hurt, 80% explode hurt
+	Melee vs anyone except Deathwish Murkywaters/GenSec Elites and all specials but including the Taser:
+	If fraction < 0.3: 30% no reaction, 70% light hurt
+	If 0.3 <= fraction < 0.8: 100% light hurt
+	If 0.8 <= fraction < 0.9: 60% light hurt, 20% moderate hurt, 20% heavy hurt
+	If fraction >= 0.9: 100% heavy hurt
+	Melee weapons do not use their actual damage value for the calculation of the fraction, but the knockdown value seen in the inventory. Martial Arts basic delivers a 1.5 multiplier to this value, making it easier to reach the stronger animations. In this manner, the fraction may even exceed 1 (technically, the game clamps it at 1 though), yet the enemy survives the attack and plays the heavy hurt animation unless he is one of the exceptions mentioned above. Pumping Iron aced has no effect on the knockdown value despite the inventory claiming otherwise (Pumping Iron basic is not reflected in the inventory at all). As indicated by the melee table, if the knockdown doesn't reach at least 80% of the remaining hitpoints, the enemy only shows light reactions or none at all. To reliably utilize the knockdown of a weapon, it is mandatory to have a knockdown value of at least 90% of the remaining hitpoints. Things would've been easier to comprehend if the last fraction requirement was fraction >= 1.0. You might want to divide your knockdown by 0.9 to obtain the maximum allowed current enemy hitpoints to have a 100% heavy hurt chance. Thus the bat with 240 knockdown can reliably cause heavy hurt when the current enemy hitpoints are less than 267.
+
+	If there is a reaction and it is not light hurt, the victim screams (range can be reduced with Shinobi aced). If the victim was a Taser, he will be interrupted.
+
+	If the reaction is moderate hurt, heavy hurt or death and the victim has been uncool for 3 seconds and has a weapon which has not been dropped, he additionally has a 10% chance to accidentally fire his gun, potentially harming other enemies and killing civilians close by. Enemies affected by the explosion reaction do not fire, though they will still play the death reaction when dying. Single-fire weapons shoot only 0.2 to 0.4 seconds after the reaction, whereas auto-fire weapons have no delay. The victim will not fire if he has dropped his weapon, which happens when he is affected by forced ragdoll, which in turn always happens after roughly 0.3 to 0.8 seconds after the death reaction. Basically, when an enemy is killed in a single hit, there is a small chance that he drops his weapon before using his single-fire weapon. Additionally, when enemies die due to explosions or a shotgun blast from less than 5 m away (so they experience some sort of physics push and thus ragdoll), they drop their weapons instantly (instead of the 0.3-0.8 seconds) so that not even auto-fire weapons get a shot off. Enemies do not drop their weapon before death: If the enemies don't die with a single explosion or shotgun attack, there is the risk that they show moderate or heavy hurt and thus shoot. Shotguns with slug ammo do not cause a physics push. Shotguns with HE rounds also lose their original 5 m physics push and gain a push due to the explosion (without the range requirement) instead. While ordinary bullets do slightly push bodies while they are dropping to the floor, this does not count as a forced ragdoll and does not prevent enemies from firing their gun upon death.
+
+	Example 1:
+	It is day 1 of Big Oil and a biker has been uncool for 3 seconds. Your submachine gun only deals 35% damage of his total hitpoints with each hit. What is the chance that he fires his gun due to hurt?
+	The first fraction is 35%/100%, so on the first hit there is a 10% chance for moderate hurt, which means a 1% chance to shoot. The second hit has the fraction 35%/65% = 0.54, which means another 2% chance to shoot. The third shot ends in death, which means another 10% chance. The chance for the biker not to shoot is 0.99*0.98*0.9 = 87.3%, so there is a 12.7% chance that he will shoot due to hurt.
+
+	Example 2:
+	Using a weapon with 150 knockdown but only 30 damage against a Tan with 200 hitpoints, what are the reactions each time?
+	The first fraction is 150/200 = 0.75, so the enemy has a 100% chance for light hurt. The enemy then takes 30 damage. The second fraction is 150/170 = 0.88, so there is a 20% chance for moderate hurt and a 20% chance for heavy hurt. The enemy takes damage again. The knockdown now exceeds his hitpoints, so he will always show heavy hurt on subsequent hits.
+
+	Example 3:
+	Using an M1014 with HE rounds (assume that it deals constant 35 damage including damage falloff and a 0.8 damage multiplier for explosives) against a Murkywater soldier who has been uncool for 3 seconds, compare the results on non-Deathwish (130 hitpoints) and Deathwish difficulty (240 hitpoints).
+	The non-Deathwish Murkywater has a fraction of 35/130 = 0.27 on the first hit and thus has a 60% heavy hurt chance, meaning a 6% chance to shoot due to hurt. The fraction is 35/95 = 0.37 on the second hit, meaning another 6% chance to shoot. The third hit has a 20% heavy hurt chance, meaning a 2% chance to shoot. The Murkywater dies on the fourth hit and drops his weapon instantly, so there is no chance to shoot. The chance for the Murkywater not to shoot is 0.94*0.94*0.98 = 86.6%, so there is a 13.4% chance for him to shoot due to hurt. The Deathwish Murkywater has a 0% chance to shoot as he never shows anything but the explode reaction. However, as HE rounds make explosion noise on impact, this example only serves to illustrate the mechanics but does not have any actual application.]]
+
+	armortext["description_hurt_animation_duration_desc"] = [[A reaction usually does not have just one possible animation; instead, there are different animations depending on the direction of the attack and whether the person was stationary or moving and hit above or below the center of mass (center of the chest) and on the enemy type. Finally, usually there are several animation variations even if the attack direction, etc. are the same, so the game randomly picks one variation. 
+
+	For the direction of the attack, "front" shall mean that the attacker (center of the explosion or the player himself) is located in front of the enemy, facing him. Similarly, "left" means that the attacker is located to the left of the enemy, and so on. Every direction covers an angle of 90°. In the following lists, I present the minimum and maximum durations of the different animations, as well as the arithmetic mean.
+
+	Bulldozers have only one explode hurt animation, lasting 3.5 seconds.
+
+	Explode hurt animations of Shields (only 2 explode reactions for each direction, hence "or"):
+	Front: 1.6 or 1.7 seconds, mean 1.7 seconds
+	Back: 1.9 or 2.5 seconds, mean 2.2 seconds
+	Left: 1.7 or 2.0 seconds, mean 1.8 seconds
+	Right: 1.5 or 1.8 seconds, mean 1.7 seconds
+	Explode hurt animations of the other enemies (many variations, hence "to"):
+	Front: 3.2 to 4.6 seconds, mean 4.1 seconds
+	Back: 3.5 to 6.1 seconds, mean 4.5 seconds
+	Left: 2.7 to 4.1 seconds, mean 3.4 seconds
+	Right: 3.2 to 4.4 seconds, mean 3.7 seconds
+	Moderate hurt animations when hit above center of mass:
+	Front: 1.1 to 2.5 seconds, mean 1.7 seconds
+	Back: 0.9 or 1.1 seconds, mean 1.0 seconds
+	Left: 1.0 to 2.0 seconds, mean 1.4 seconds
+	Right: 1.1 to 1.6 seconds, mean 1.3 seconds
+	Moderate hurt animations when hit below center of mass:
+	1.3 seconds
+	Heavy hurt animations when running:
+	1.2 to 4.7 seconds, mean 2.8 seconds
+	Heavy hurt animations when hit above center of mass:
+	Front: 1.5 to 4.8 seconds, mean 3.1 seconds
+	Back: 0.9 to 2.8 seconds, mean 2.1 seconds
+	Left: 1.8 to 3.1 seconds, mean 2.6 seconds
+	Right: 1.0 to 3.4 seconds, mean 2.7 seconds
+	Heavy hurt animations when hit below center of mass:
+	Front: 2.0 to 3.3 seconds, mean 2.7 seconds
+	Back: 1.9 or 3.1 seconds, mean 2.5 seconds
+	Left: 1.5 or 3.0 seconds, mean 2.2 seconds
+	Right: 2.3 or 3.0 seconds, mean 2.8 seconds
+
+	It follows that explosions cause the longest explode hurt animations when detonating in the back of the enemy (except against Bulldozers). Heavy hurt, on average, lasts over 3 seconds when hitting the enemy above the center of mass from the front. If you intend to go on a killing spree with melee weapons, engaging enemies from the front and aiming above their center of mass knocks down the enemies for the longest possible duration. These 3 seconds also leave the player enough time to fully wait out the violence timeout when trying to dominate the enemy.]]
+
+	armortext["description_carrying_bags_desc"] = [[The different types of bags are classified into 4 categories:
+	Light (e.g. coke, paintings): No movement penalty. Can sprint while carrying and throw far. 
+	Medium (e.g. money, drill): 75% movement speed. Can't sprint, but can throw as far as light bags.
+	Heavy (e.g. weapons, gold, body bag): 50% movement speed. Can't sprint and can throw only a short distance.
+	Very heavy (e.g. engine, artifact): 25% movement speed. Basically just drops to the ground when thrown.
+	The movement speed is multiplied by 1.5 if you have the Transporter skill (it is capped at 100% however). Thus if you have the skill, medium bags are carried at 100% speed (as 0.75*1.5=1.125 which is then capped at 1). Heavy bags are carried at 75% movement speed and very heavy ones at 37.5%.
+
+	When throwing bags, there are a few things to keep in mind:
+	Picking up a bag takes a moment (more so without Fast Hands).
+	After throwing a bag, there's a cooldown of 1.2-1.5 seconds before you can pick up another bag.
+	In really laggy rounds it might take several seconds before a bag you want to throw is actually thrown.
+	If you don't have Fast Hands or the game is laggy, it is usually a better idea to carry things directly instead of throwing.
+
+	I personally use the following guidelines to decide whether to carry the bags or to throw them:
+	As you can sprint while carrying light bags, you don't gain too much throwing them around. Keep them on your back if you are lazy and stamina is not an issue. Otherwise mix sprinting and throwing.
+	Medium bags always benefit from throwing them around, sprinting after them and picking them up again. The speed gain is minimal in the suit, but very noticeable when wearing heavy armor. Too much lag may make throwing not viable however.
+	Throwing heavy bags doesn't speed up your progress, but (if you manage the cooldown of picking up bags correctly) also doesn't slow you down. Keep them on your back to save yourself the hassle of repeatedly picking up bags.
+	There is no benefit to throwing (or rather, dropping) very heavy bags. Carry them on your back.
+	Sometimes it is necessary to keep a large bunch of bags together to keep the cops off of them. Keep the aforementioned rules in mind while moving the bags from one point to another. If there are no cops involved, there is no point dropping weapon bags after carrying them halfway. Move them to the van and be done with it. To avoid the issue of several players attempting to grab the same bag which potentially slows down the heist, consider moving your share of bags only. E.g. if there are 8 bags of cash on day 2 of Framing Frame, focus on 2 bags and move them to the van as fast as possible. Afterwards help with the remaining 6 bags, which the other 3 players in whatever inefficient manner have carried only halfway to the van. Note that if both bags are at initially at the same spot, then if you picked up the first and threw it towards your destination without yourself moving at all, you will now need to wait more than a second before you can pick up the next bag. If instead you moved a couple of steps towards your destination before throwing the first bag, you could use that second to walk back towards the next bag, fully utilizing the time caused by the interaction cooldown. Another efficient way to carry 2 (or more) medium bags is to have one bag in front of the other. Pick up one bag and throw it past the other one, then move up to the other (during the interaction cooldown) and throw it past the first one.
+
+	If you carry a bag while escaping, you will get the full amount of money for it. Bain's commentary afterwards will not reflect this. However, merely throwing bags into the escape zone on the other hand (without any "loot secured" message) does not count. 
+
+	XP rewards and achievements that require players to secure a certain amount of loot do not count bags carried into the escape. Essentially, if you worry about gaining experience or achievements, carrying bags into the escape has some severe disadvantages. If you care about money only, carrying bags directly may often save a second or two depending on the circumstances.
+
+	Bags are not affected by your personal momentum when thrown. Regardless, you can slightly increase your throwing range by jumping before throwing.]]
+
+	armortext["description_interaction_desc"] = [[You can shout at the following things:
+	Uncool civilians (range: 10 m)
+	Uncool non-special enemies (range: 10 m)
+	Crew members (unrestricted range to merely call them; 7 m range for Inspire)
+	You can also highlight/mark the following things:
+	Cameras during stealth (range: 20 m)
+	SWAT turrets (range: 20 m)
+	Special enemies and cool enemies (range: 30 m)
+	Interaction requires clear line of sight to a the target except when targeting crew members. More precisely, there must be no obstacles between the location of the first-person camera and a single point associated with the target. If your target is a security camera, the interaction point is the camera lens. Otherwise, the interaction point is located 30 cm above the head point, which itself is located at the back of the neck. Thus the interaction point is actually located about 10 cm above the top of the head. If you have clear line of sight to this point, the shout/mark will succeed.
+
+	The Crew Chief perk deck and Dominator aced are multipliers for the range to highlight enemies and to shout at civilians and enemies. With both skills, your range to highlight becomes 30 * 1.25 * 1.5 = 56.25 meters and your intimidation range becomes 18.75 meters. Cameras and SWAT turrets are not affected, so their range remains at 20 m.
+
+	Long range interactions have a cooldown of 1.5 seconds before they can be used again. Inspire basic has a cooldown of 3.5 seconds. If you shout at a teammate every 2 seconds, only every other shout speeds him up. Your voice will indicate whether you have called him or inspired him.
+
+	Enemies in stealth are highlighted for 13.5 seconds. Special enemies and cameras are highlighted for 4.5 seconds. SWAT turrets are highlighted for 9 seconds.
+
+	Spotter basic changes the color of highlighted enemies from pink (no damage bonus) to red (damage bonus). 
+
+	If you shout at an unintimidated civilian, he will randomly be given a maximum intimidation time between 60 and 120 seconds. His current intimidation time is filled up by repeatedly shouting at him (until it reaches the maximum intimidation time). If the current intimidation time reaches 0, the civilian will lose his intimidated state and flee. It often takes several shouts to get a civilian to drop on the ground. If a civilian was moving at the time of the shout, he will merely stop. 
+
+	Even if your shout does not make the civilian drop on the ground, the intimidation time will build up normally. You can just leave him standing there with his hands raised for 1-2 minutes and he will not call the cops or flee. Shouting a single time at a civilian (or shooting a single time in hearing range with Control Freak basic) intimidates him, no matter the animation. Intimidation and dropping to the ground are two different things.
+
+	Make sure to distinguish between civilians lying on the ground and crouching civilians. Crouching civilians are extremely dangerous and will try to call the police as soon as possible.
+
+	Shouting at a civilian once will at most add 60 seconds to the time (90 seconds with Control Freak basic). The civilian you are looking at directly will gain the full 60/90 seconds, whereas the other civilians in intimidation range may get less depending on distance and angle. The system is extremely wonky however (refer to the appendix for more details). If there is a group of civilians, some close, some far away, it is a bad idea to target the close ones. Your best bet is to either target the civilian furthest away or aim at the crowd without looking at anyone in particular. Civilians hiding behind counters or furniture are not affected at all as line of sight is required.]]
 
 	if managers.money then
 	

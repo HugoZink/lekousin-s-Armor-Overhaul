@@ -95,10 +95,6 @@ menu_after('options', useless_item)--]]
 
 
 
-dofile("lib/Lua/ArmorOverhaul/lib/CustomArmor.lua")
-Global._custom_armor = Global._custom_armor or CustomArmor:new()
-Global._custom_armor:load()
-
 
 
 local m = {}
@@ -388,3 +384,33 @@ local mechanics = menu_item{
 }
 
 menu_after('safehouse', mechanics)
+
+local m = {}
+
+m[#m+1] = menu_item{
+    type = "MenuItemMultiChoice",
+    text_id = "armor_overhaul_options_lang",
+    help_id = "armor_overhaul_options_lang_help",
+    {
+        _meta = "option",
+        text_id = "lang_en",
+        value = 0
+    },
+    {
+        _meta = "option",
+        text_id = "lang_fr",
+        value = 1
+    },
+    callback = function(self, item)
+        Utils.change_option("lang", item:value())
+        Utils.save_options()
+    end
+}
+
+m = menu_item{
+    text_id = "armor_overhaul_options",
+    help_id = "armor_overhaul_options_help",
+    next_node = menu_submenu(m)
+}
+
+menu_after('options', m)

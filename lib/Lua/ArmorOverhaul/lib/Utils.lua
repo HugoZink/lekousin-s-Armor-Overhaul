@@ -1,5 +1,7 @@
 Utils = {}
 
+Utils.options_file = "lib/Lua/ArmorOverhaul/ArmorOverhaul.ini"
+
 function Utils.table_print(tt, done)
     if ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_HOXHUD then
         Utils.table_print_HoxHUD(tt, done)
@@ -60,12 +62,12 @@ function Utils.file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 
-function Utils.parse_options(filename)
-    local f = io and io.open(filename, "r") or nil
+function Utils.parse_options()
+    local f = io and io.open(Utils.options_file, "r") or nil
     if f == nil then return false end
 
-    for line in io.lines(filename) do
-        ArmorOverhaul[line:sub(1, line:find("=") - 1)] = line:sub(line:find("=") + 1)
+    for line in io.lines(Utils.options_file) do
+        ArmorOverhaul.options[line:sub(1, line:find("=") - 1)] = line:sub(line:find("=") + 1)
     end
 
     io.close(f)
@@ -73,4 +75,28 @@ function Utils.parse_options(filename)
     return true
 end
 
-Utils.print_log("[ArmorOverhaul] Util functions initialized\n")
+---- Bug: new text is shown after a screen reload (when entering in another menu)
+function Utils.save_options()
+    local f = io and io.open(Utils.options_file, "w") or nil
+    if f == nil then return false end
+
+    for option, value in pairs(ArmorOverhaul.options) do
+        f:write(option .. "=" .. value .. "\n")
+    end
+    dofile("lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_" .. ArmorOverhaul.options.lang .. ".lua")
+    return true
+end
+
+function Utils.change_option(option, value)
+    if option == "lang" then
+        local lang
+        if value == 0 then
+            lang = "en"
+        elseif value == 1 then
+            lang = "fr"
+        end
+        ArmorOverhaul.options.lang = lang
+    else
+        ArmorOverhaul.options[option] = value
+    end
+end
