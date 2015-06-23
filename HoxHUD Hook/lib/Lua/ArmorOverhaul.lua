@@ -5,7 +5,7 @@ RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/playermanager.lua", 2, "lib/m
 RegisterScript("lib/Lua/ArmorOverhaul/lib/units/beings/player/playerdamage.lua", 2, "lib/units/beings/player/playerdamage")
 RegisterScript("lib/Lua/ArmorOverhaul/lib/tweak_data/skilltreetweakdata.lua", 2, "lib/tweak_data/skilltreetweakdata")
 RegisterScript("lib/Lua/ArmorOverhaul/lib/tweak_data/blackmarkettweakdata.lua", 2, "lib/tweak_data/blackmarkettweakdata")
-RegisterScript("lib/Lua/ArmorOverhaul/lib/network/base/networkpeer.lua", 2, "lib/network/base/networkpeer")
+RegisterScript("lib/Lua/ArmorOverhaul/lib/managers/blackmarketmanager.lua", 2, "lib/managers/blackmarketmanager")
 RegisterScript("lib/Lua/ArmorOverhaul/lib/units/beings/player/states/playerstandard.lua", 2, "lib/units/beings/player/states/playerstandard")
 
 --[[OPTIONAL POSTREQUIRE SCRIPTS (but recommended)]]
