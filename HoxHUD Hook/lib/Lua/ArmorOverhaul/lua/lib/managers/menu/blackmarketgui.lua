@@ -1344,12 +1344,8 @@ function BlackMarketGui:_get_armor_stats(name)
 			local base = tweak_data.player.damage.HEALTH_INIT
 			local mod = managers.player:thick_skin_value()
 			local overhaul_addend = managers.player:body_armor_value("hp_addend", upgrade_level)
-<<<<<<< HEAD:lib/Lua/ArmorOverhaul/lib/managers/menu/blackmarketgui.lua
-			local overhaul_skill = managers.player:upgrade_value("player", name .. "_hp_addend", 0)
-=======
 			local hp_addend_mul = tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty] and (tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty].hp_addend or 1) or 1
 			local overhaul_skill = managers.player:upgrade_value("player", name .. "_hp_addend", 0) * hp_addend_mul
->>>>>>> master:BLT Hook/mods/ArmorOverhaul/lua/lib/managers/menu/blackmarketgui.lua
 			base_stats[stat.name] = {
 				value = math.round((base + mod + overhaul_addend + overhaul_skill) * tweak_data.gui.stats_present_multiplier)
 			}
@@ -2187,10 +2183,6 @@ function BlackMarketGui:populate_armors(data)
 end
 
 function BlackMarketGui:_get_armor_page()
-<<<<<<< HEAD:lib/Lua/ArmorOverhaul/lib/managers/menu/blackmarketgui.lua
-	io.stdout:write("_get_armor_page()\n")
-=======
->>>>>>> master:BLT Hook/mods/ArmorOverhaul/lua/lib/managers/menu/blackmarketgui.lua
 	if ArmorOverhaul.index == 0 then
 		self._armor_stats_shown = {
 			{name = "armor"},

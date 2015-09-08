@@ -44,16 +44,15 @@ function BlackMarketTweakData:_init_armors()
 	self.armors.level_11.name_id = "bm_armor_level_11"
 	self.armors.level_11.sequence = "var_model_07"
 	self.armors.level_11.upgrade_level = 11
-<<<<<<< HEAD:lib/Lua/ArmorOverhaul/lib/tweak_data/blackmarkettweakdata.lua
-	self.armors.level_12 = {}
-	self.armors.level_12.name_id = "bm_armor_level_12"
-	self.armors.level_12.sequence = "var_model_07"
-	self.armors.level_12.upgrade_level = -1
-=======
 	--[[self.armors.level_12 = {}
 	self.armors.level_12.name_id = "bm_armor_level_12"
 	self.armors.level_12.sequence = "var_model_07"
 	self.armors.level_12.upgrade_level = -1]]
->>>>>>> master:BLT Hook/mods/ArmorOverhaul/lua/lib/tweak_data/blackmarkettweakdata.lua
+	if not ArmorOverhaul.options.localize then
+		self.armors.level_8.name_id = "Lifa Vest"
+		self.armors.level_9.name_id = "Lightweight Tactical Vest"
+		self.armors.level_10.name_id = "Thin Suit"
+		self.armors.level_11.name_id = "EOD Suit"
+	end
 	self:_add_desc_from_name_macro(self.armors)
 end

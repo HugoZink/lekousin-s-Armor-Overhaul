@@ -1,3 +1,4 @@
+<<<<<<< HEAD:lib/Lua/ArmorOverhaul/lib/managers/localizationmanager_fr.lua
 --[[
 Text for new stats
 -code base thanks to hejoro
@@ -1596,3 +1597,6 @@ function comma_value(amount)
   end
   return formatted
 end
+=======
+LocalizationManager:load_localization_file("lang/localizationmanager_" .. ArmorOverhaul.options.lang .. ".lua")
+>>>>>>> master:BLT Hook/mods/ArmorOverhaul/lua/lib/managers/localizationmanager.lua
