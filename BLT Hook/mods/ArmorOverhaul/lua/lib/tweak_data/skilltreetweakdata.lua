@@ -148,4 +148,97 @@ function SkillTreeTweakData:init()
 		"sentry_targeting_package",
 		"iron_man"
 	}
+
+	local armor_drainer = {
+		name_id = "menu_st_spec_armor_drainer",
+		desc_id = "menu_st_spec_armor_drainer_desc",
+		{
+			upgrades = {
+				"player_headshot_add_max_armor_bonus_1"
+			},
+			cost = 200,
+			icon_xy = {0, 0},
+			name_id = "menu_deck_armor_drainer_1",
+			desc_id = "menu_deck_armor_drainer_1_desc"
+		},
+		{
+			upgrades = {
+				"weapon_passive_headshot_damage_multiplier"
+			},
+			cost = 300,
+			icon_xy = {1, 0},
+			name_id = "menu_deck1_2",
+			desc_id = "menu_deck1_2_desc"
+		},
+		{
+			upgrades = {
+				"player_headshot_add_max_armor_bonus_2"
+			},
+			cost = 400,
+			icon_xy = {2, 0},
+			name_id = "menu_deck_armor_drainer_3",
+			desc_id = "menu_deck_armor_drainer_3_desc"
+		},
+		{
+			upgrades = {
+				"passive_player_xp_multiplier",
+				"player_passive_suspicion_bonus",
+				"player_passive_armor_movement_penalty_multiplier"
+			},
+			cost = 600,
+			icon_xy = {3, 0},
+			name_id = "menu_deck1_4",
+			desc_id = "menu_deck1_4_desc"
+		},
+		{
+			upgrades = {
+				"player_headshot_add_max_armor_bonus_3"
+			},
+			cost = 1000,
+			icon_xy = {4, 0},
+			name_id = "menu_deck_armor_drainer_5",
+			desc_id = "menu_deck_armor_drainer_5_desc"
+		},
+		{
+			upgrades = {
+				"armor_kit",
+				"player_pick_up_ammo_multiplier"
+			},
+			cost = 1600,
+			icon_xy = {5, 0},
+			name_id = "menu_deck1_6",
+			desc_id = "menu_deck1_6_desc"
+		},
+		{
+			upgrades = {
+				"player_headshot_add_max_armor_bonus_4"
+			},
+			cost = 2400,
+			icon_xy = {6, 0},
+			name_id = "menu_deck_armor_drainer_7",
+			desc_id = "menu_deck_armor_drainer_7_desc"
+		},
+		{
+			upgrades = {
+				"weapon_passive_damage_multiplier",
+				"passive_doctor_bag_interaction_speed_multiplier"
+			},
+			cost = 3200,
+			icon_xy = {7, 0},
+			name_id = "menu_deck1_8",
+			desc_id = "menu_deck1_8_desc"
+		},
+		{
+			upgrades = {
+				"player_headshot_add_max_armor_bonus_5"
+			},
+			cost = 4000,
+			icon_xy = {0, 1},
+			name_id = "menu_deck_armor_drainer_9",
+			desc_id = "menu_deck_armor_drainer_9_desc"
+		}
+	}
+
+	self.specializations[#self.specializations + 1] = armor_drainer
+	Global.spec_length = #self.specializations
 end
