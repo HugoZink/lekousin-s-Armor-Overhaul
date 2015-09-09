@@ -430,7 +430,7 @@ function PlayerDamage:_calc_armor_damage(attack_data)
 				self._unit:sound():play("player_sniper_hit_armor_gone")
 			end
 		end
-		fully_regened = 0
+		self.fully_regened = 0
 	end
 
 	if old_armor > 0 and self:get_real_armor() <= 0 then
@@ -633,7 +633,7 @@ function PlayerDamage:restore_armor(armor_restored)
 	self:_send_set_armor()
 	if self._unit:sound() and new_armor ~= armor and new_armor == max_armor then
 		self._unit:sound():play("shield_full_indicator")
-		fully_regened = 1
+		self.fully_regened = 1
 	end
 	managers.hud:set_player_armor({
 		current = self:get_real_armor(),
