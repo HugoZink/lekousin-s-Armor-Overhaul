@@ -1427,7 +1427,7 @@ function BlackMarketGui:_get_armor_stats(name)
 			}
 		elseif stat.name == "deflect_min_procent" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[1][2] * 100
-			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0)
+			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
@@ -1445,7 +1445,7 @@ function BlackMarketGui:_get_armor_stats(name)
 			}
 		elseif stat.name == "deflect_max_procent" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[2][2] * 100
-			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0)
+			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
