@@ -291,7 +291,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 			local hp_text = radial_health_panel:text({
 				name = "hp_text",
 				visible = true,
-				text = "230",
+				text = "",
 				layer = 5,
 				color = Color.green,
 				y = 16,
@@ -306,7 +306,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 			local armor_text = radial_health_panel:text({
 				name = "armor_text",
 				visible = true,
-				text = "20",
+				text = "",
 				layer = 5,
 				color = Color.blue,
 				y = 32,
@@ -845,8 +845,8 @@ function HUDTeammate:set_health(data)
 
 	if ArmorOverhaul.options.gui_health then
 
-		local cur_health = string.remove_zeros("%0.3f", data.current)
-		local max_health = string.remove_zeros("%0.3f", data.total)
+		local cur_health = string.remove_zeros("%0.2f", data.current*10)
+		local max_health = string.remove_zeros("%0.2f", data.total*10)
 		if radial_health_panel:child("hp_text") then
 			radial_health_panel:child("hp_text"):set_text(cur_health .. " / " .. max_health)
 		end
@@ -870,8 +870,8 @@ function HUDTeammate:set_armor(data)
 
 	if ArmorOverhaul.options.gui_armor then
 
-		local cur_armor = string.remove_zeros("%0.3f", data.current)
-		local max_armor = string.remove_zeros("%0.3f", data.total)
+		local cur_armor = string.remove_zeros("%0.2f", data.current*10)
+		local max_armor = string.remove_zeros("%0.2f", data.total*10)
 		if radial_health_panel:child("armor_text") then
 			radial_health_panel:child("armor_text"):set_text(cur_armor .. " / " .. max_armor)
 		end
