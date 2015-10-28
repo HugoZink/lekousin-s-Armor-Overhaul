@@ -1543,7 +1543,7 @@ function BlackMarketGui:_get_armor_stats(name)
 				value = base * (skill - 1)
 			}
 		elseif stat.name == "doom_absorption" then
-			local base = managers.player:body_armor_value("doom_absorption", upgrade_level) * 100
+			local base = managers.player:body_armor_value("doom_absorption", upgrade_level)[1][2] * 100
 			local skill = 1
 			base_stats[stat.name] = {
 				value = base

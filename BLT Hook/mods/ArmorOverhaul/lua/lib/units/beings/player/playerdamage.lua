@@ -788,7 +788,7 @@ function PlayerDamage:doom_armor_ratio()
 end
 
 function PlayerDamage:doom_damage_mitigation()
-	local ratio = self:doom_armor_ratio()
+	--[[local ratio = self:doom_armor_ratio()
 	local doom_multiplier = managers.player:body_armor_value("doom_absorption")
 	if ratio <= 0 then
 		return 0
@@ -804,7 +804,14 @@ function PlayerDamage:doom_damage_mitigation()
 		return 0.9 * doom_multiplier
 	else
 		return 1 * doom_multiplier
+	end]]
+	local doom_absorb = managers.player:body_armor_value("doom_absorption")
+	for i = 1, #doom_absorb do
+		if self._doom_armor > doom_absorb[i][1] then
+			return doom_absorb[i][2]
+		end
 	end
+	return self.doom_armor > 0 and doom_absorb[#doom_absorb][2] or 0
 end
 
 function PlayerDamage:restore_doom(value, relative)

@@ -1029,7 +1029,7 @@ function UpgradesTweakData:_init_pd2_values()
 		0,
 		10
 	}
-	self.values.player.body_armor.doom_absorption = {
+	--[[self.values.player.body_armor.doom_absorption = {
 		0,
 		0.1,
 		0.15,
@@ -1041,8 +1041,8 @@ function UpgradesTweakData:_init_pd2_values()
 		0.25,
 		0,
 		0.75
-	}
-	--[[self.values.player.body_armor.doom_absorption = {
+	}]]
+	self.values.player.body_armor.doom_absorption = {
 		{
 			{0, 0}
 		},
@@ -1052,10 +1052,59 @@ function UpgradesTweakData:_init_pd2_values()
 			{8, 0.075},
 			{6, 0.06},
 			{4, 0.04},
-			{2, 0.02}
+			{2, 0.02},
+			{0, 0.01}
+		},
+		{
+			{20, 0.15},
+			{15, 0.1},
+			{10, 0.05},
+			{0, 0.01}
+		},
+		{
+			{20, 0.2},
+			{15, 0.15},
+			{10, 0.1},
+			{5, 0.05},
+			{0, 0.02}
+		},
+		{
+			{25, 0.25},
+			{20, 0.2},
+			{12.5, 0.15},
+			{5, 0.1},
+			{0, 0.05}
+		},
+		{
+			{30, 0.4},
+			{25, 0.35},
+			{20, 0.3},
+			{0, 0.2}
+		},
+		{
+			{30, 0.5},
+			{25, 0.4},
+			{15, 0.35},
+			{0, 0.25}
+		},
+		{
+			{10, 0.3},
+			{0, 0.1}
+		},
+		{
+			{20, 0.25},
+			{10, 0.2},
+			{0, 0.1}
+		},
+		{
+			{0, 0}
+		},
+		{
+			{7.5, 0.75},
+			{0, 0.5}
 		}
 	}
-	]]
+	
 
 	self:set_normal()
 	self:set_hard()
