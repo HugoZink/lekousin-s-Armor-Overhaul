@@ -17,7 +17,13 @@ if not armor_skills then
 		"player_add_armor_stat_skill_ammo_mul",
 		"body_armor11",
 
-		"crew_deflect_chance_addend",
-		"crew_health_multiplier"
+		"player_all_dodge_addend",
+		"player_all_ammo_addend",
+		"player_all_deflect_addend",
+		"player_all_hdr_addend",
+		"player_all_edr_addend",
+		"player_all_jump_addend",
+
+		"player_headshot_add_max_armor_bonus_2"
 	}
 end

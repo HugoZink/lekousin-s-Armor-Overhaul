@@ -4,27 +4,29 @@ local movement_penalty_orig = PlayerManager.mod_movement_penalty
 local setup_orig = PlayerManager._setup
 local exp_orig = PlayerManager.get_skill_exp_multiplier
 local health_mul_orig = PlayerManager.health_skill_multiplier
-    function table_print(tt, done)
-        local file = io.stdout--io.open("TableDump.txt", "a+")
-        done = done or {}
-        if type(tt) == "table" then
-            for key, value in pairs(tt) do
-                if type(value) == "table" and not done[value] then
-                    done[value] = true
-                    -- Console(string.format("<%s> => table", tostring(key)))
-                    file:write("<"..tostring(key).."> => table\n")
-                    table_print(value, done)
-                else
-                    -- Console(string.format("[%s] => %s", tostring(key), tostring(value)))
-                    file:write("["..tostring(key).."] => "..tostring(value).."\n")
-                end
+local dodge_orig = PlayerManager.skill_dodge_chance
+
+function table_print(tt, done)
+    local file = io.stdout--io.open("TableDump.txt", "a+")
+    done = done or {}
+    if type(tt) == "table" then
+        for key, value in pairs(tt) do
+            if type(value) == "table" and not done[value] then
+                done[value] = true
+                -- Console(string.format("<%s> => table", tostring(key)))
+                file:write("<"..tostring(key).."> => table\n")
+                table_print(value, done)
+            else
+                -- Console(string.format("[%s] => %s", tostring(key), tostring(value)))
+                file:write("["..tostring(key).."] => "..tostring(value).."\n")
             end
-        else 
-            -- Console(tt) 
-            file:write(tostring(tt).."\n")
         end
-        --file:close()
+    else 
+        -- Console(tt) 
+        file:write(tostring(tt).."\n")
     end
+    --file:close()
+end
 
 function PlayerManager:_setup()
 	setup_orig(self)
@@ -193,7 +195,7 @@ function PlayerManager:mod_movement_penalty(movement_penalty, upgrade_level)
 	return movement_penalty_orig(self, movement_penalty, upgrade_level)
 end
 
-function PlayerManager:on_headshot_dealt()
+function PlayerManager:on_headshot_dealt(damage_dealt)
 	local player_unit = self:player_unit()
 	if not player_unit then
 		return
@@ -207,8 +209,8 @@ function PlayerManager:on_headshot_dealt()
 	local regen_armor_bonus = managers.player:upgrade_value("player", "headshot_regen_armor_bonus", 0)
 	if damage_ext then
 		local old_max = damage_ext:_max_armor()
-		local upgrade = managers.player:upgrade_value("player", "headshot_add_max_armor_bonus", {0, 0})
-		local value = math.min(upgrade[1] * (damage_ext:_max_armor() - damage_ext:armor_bonus()), upgrade[2])
+		local upgrade = managers.player:upgrade_value("player", "headshot_add_max_armor_bonus", {0, 0, 0})
+		local value = math.min(upgrade[1] * (damage_dealt or 0), upgrade[3] * (damage_ext:_max_armor() - damage_ext:armor_bonus()), upgrade[2])
 		damage_ext:change_bonus_armor(value)
 		if regen_armor_bonus > 0 then
 			damage_ext:restore_armor(regen_armor_bonus)
@@ -216,7 +218,7 @@ function PlayerManager:on_headshot_dealt()
 	end
 end
 
-function PlayerManager:body_armor_value(category, override_value, default)
+function PlayerManager:body_armor_value(category, override_value, default, special)
 	Global._custom_armor = Global._custom_armor or CustomArmor:new()
 	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
 	local difficulty = Global.game_settings.difficulty
@@ -283,6 +285,9 @@ function PlayerManager:body_armor_value(category, override_value, default)
 		return tweak_data.upgrades.values.player.body_armor[category .. "_" .. difficulty]["level_" .. (override_value or armor_data.upgrade_level)]
 	end
 	local value = self:upgrade_value_by_level("player", "body_armor", category, {})[override_value or armor_data.upgrade_level] or default or 0
+	if category == "power_type_reduction" then
+		return value[special] or 1
+	end
 	local orig_value = type(value) == "table" and (type(value[1]) == "table" and value or {{0, 0},{0, 0}}) or {{0, 0},{0, 0}}
 	if tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty] and tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty][category] then
 		if category == "health_damage_reduction" or category == "deflect" then
@@ -307,4 +312,10 @@ function PlayerManager:body_armor_value(category, override_value, default)
 		end
 	end
 	return value
+end
+
+function PlayerManager:skill_dodge_chance(running, crouching, on_zipline, override_armor, detection_risk)
+	local chance = dodge_orig(self, running, crouching, on_zipline, override_armor, detection_risk)
+	chance = chance + self:upgrade_value("player", "all_dodge_addend", 0)
+	return chance
 end

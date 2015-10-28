@@ -1,8 +1,569 @@
 init_pd2 = UpgradesTweakData._init_pd2_values
 player_def = UpgradesTweakData._player_definitions
 
+function UpgradesTweakData:set_normal()
+	self.values.player.body_armor.armor_normal = {
+		level_1 = 2,
+		level_2 = 3,
+		level_3 = 4,
+		level_4 = 5,
+		level_5 = 7,
+		level_6 = 9,
+		level_7 = 12,
+		level_8 = 8,
+		level_9 = 10,
+		level_11 = 20
+	}
+	self.values.player.body_armor.regen_normal = {
+		level_1 = 2,		-- 1 second
+		level_2 = 2.5,		-- 1.2
+		level_3 = 3.076,	-- 1.3
+		level_4 = 3.571,	-- 1.4
+		level_5 = 4.375,	-- 1.6
+		level_6 = 5,		-- 1.8
+		level_7 = 6,		-- 2
+		level_8 = 5,		-- 1.6
+		level_9 = 8,		-- 1.25
+		level_11 = 6.667	-- 3
+	}
+	self.values.player.body_armor.health_damage_reduction_normal = {
+		level_1 = {
+			{0, 0},
+			{100, 0}
+		},
+		level_2 = {
+			{0, 0},
+			{20, 0.05}
+		},
+		level_3 = {
+			{0, 0},
+			{18, 0.09}
+		},
+		level_4 = {
+			{1, 0.02},
+			{17, 0.14}
+		},
+		level_5 = {
+			{1.5, 0.05},
+			{15.5, 0.19}
+		},
+		level_6 = {
+			{2, 0.1},
+			{14, 0.22}
+		},
+		level_7 = {
+			{2.5, 0.15},
+			{12.5, 0.25}
+		},
+		level_8 = {
+			{4, 0.2},
+			{10, 0.38}
+		},
+		level_9 = {
+			{2, 0.05},
+			{12, 0.25}
+		},
+		level_11 = {
+			{2, 0.05},
+			{16, 0.19}
+		}
+	}
+	self.values.player.body_armor.deflect_normal = {
+		level_1 = {
+			{0, 0},
+			{0, 0}
+		},
+		level_2 = {
+			{0, 0.05},
+			{4, 0}
+		},
+		level_3 = {
+			{0, 0.1},
+			{4.5, 0}
+		},
+		level_4 = {
+			{0, 0.15},
+			{5, 0}
+		},
+		level_5 = {
+			{0, 0.25},
+			{5.5, 0}
+		},
+		level_6 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_7 = {
+			{0, 0.35},
+			{7, 0}
+		},
+		level_8 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_9 = {
+			{1, 0.5},
+			{13, 0.1}
+		},
+		level_11 = {
+			{0.5, 0.4},
+			{7.5, 0.05}
+		}
+	}
+end
+
+function UpgradesTweakData:set_hard()
+	self.values.player.body_armor.armor_hard = {
+		level_1 = 2,
+		level_2 = 3,
+		level_3 = 4,
+		level_4 = 5,
+		level_5 = 7,
+		level_6 = 9,
+		level_7 = 12,
+		level_8 = 8,
+		level_9 = 10,
+		level_11 = 20
+	}
+	self.values.player.body_armor.regen_hard = {
+		level_1 = 2,		-- 1 second
+		level_2 = 2.4,		-- 1.25
+		level_3 = 2.963,	-- 1.35
+		level_4 = 3.333,	-- 1.5
+		level_5 = 4,		-- 1.75
+		level_6 = 4.5,		-- 2
+		level_7 = 4.8,		-- 2.5
+		level_8 = 4.5,		-- 2
+		level_9 = 6.667,	-- 1.5
+		level_11 = 5		-- 4
+	}
+	self.values.player.body_armor.health_damage_reduction_hard = {
+		level_1 = {
+			{0, 0},
+			{100, 0}
+		},
+		level_2 = {
+			{0, 0},
+			{20, 0.05}
+		},
+		level_3 = {
+			{0, 0},
+			{18, 0.09}
+		},
+		level_4 = {
+			{1, 0.02},
+			{17, 0.14}
+		},
+		level_5 = {
+			{1.5, 0.05},
+			{15.5, 0.19}
+		},
+		level_6 = {
+			{2, 0.1},
+			{14, 0.22}
+		},
+		level_7 = {
+			{2.5, 0.15},
+			{12.5, 0.25}
+		},
+		level_8 = {
+			{4, 0.2},
+			{10, 0.38}
+		},
+		level_9 = {
+			{2, 0.05},
+			{12, 0.25}
+		},
+		level_11 = {
+			{2, 0.05},
+			{16, 0.19}
+		}
+	}
+	self.values.player.body_armor.deflect_hard = {
+		level_1 = {
+			{0, 0},
+			{0, 0}
+		},
+		level_2 = {
+			{0, 0.05},
+			{4, 0}
+		},
+		level_3 = {
+			{0, 0.1},
+			{4.5, 0}
+		},
+		level_4 = {
+			{0, 0.15},
+			{5, 0}
+		},
+		level_5 = {
+			{0, 0.25},
+			{5.5, 0}
+		},
+		level_6 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_7 = {
+			{0, 0.35},
+			{7, 0}
+		},
+		level_8 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_9 = {
+			{1, 0.5},
+			{13, 0.1}
+		},
+		level_11 = {
+			{0.5, 0.4},
+			{7.5, 0.05}
+		}
+	}
+end
+
+function UpgradesTweakData:set_very_hard()
+	self.values.player.body_armor.armor_overkill = {
+		level_1 = 2,
+		level_2 = 3.5,
+		level_3 = 4.5,
+		level_4 = 5.5,
+		level_5 = 7.5,
+		level_6 = 10,
+		level_7 = 13,
+		level_8 = 9,
+		level_9 = 11,
+		level_11 = 22
+	}
+	self.values.player.body_armor.regen_overkill = {
+		level_1 = 2,		-- 1 second
+		level_2 = 2.59,		-- 1.35
+		level_3 = 3,		-- 1.5
+		level_4 = 3.14,		-- 1.75
+		level_5 = 3.75,		-- 2
+		level_6 = 4,		-- 2.5
+		level_7 = 4.333,	-- 3
+		level_8 = 3.6,		-- 2.5
+		level_9 = 6.286,	-- 1.75
+		level_11 = 4.4		-- 5
+	}
+	self.values.player.body_armor.health_damage_reduction_overkill = {
+		level_1 = {
+			{0, 0},
+			{100, 0}
+		},
+		level_2 = {
+			{0, 0},
+			{20, 0.05}
+		},
+		level_3 = {
+			{0, 0},
+			{18, 0.09}
+		},
+		level_4 = {
+			{1, 0.02},
+			{17, 0.14}
+		},
+		level_5 = {
+			{1.5, 0.05},
+			{15.5, 0.19}
+		},
+		level_6 = {
+			{2, 0.1},
+			{14, 0.22}
+		},
+		level_7 = {
+			{2.5, 0.15},
+			{12.5, 0.25}
+		},
+		level_8 = {
+			{4, 0.2},
+			{10, 0.38}
+		},
+		level_9 = {
+			{2, 0.05},
+			{12, 0.25}
+		},
+		level_11 = {
+			{2, 0.05},
+			{16, 0.19}
+		}
+	}
+	self.values.player.body_armor.deflect_overkill = {
+		level_1 = {
+			{0, 0},
+			{0, 0}
+		},
+		level_2 = {
+			{0, 0.05},
+			{4, 0}
+		},
+		level_3 = {
+			{0, 0.1},
+			{4.5, 0}
+		},
+		level_4 = {
+			{0, 0.15},
+			{5, 0}
+		},
+		level_5 = {
+			{0, 0.25},
+			{5.5, 0}
+		},
+		level_6 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_7 = {
+			{0, 0.35},
+			{7, 0}
+		},
+		level_8 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_9 = {
+			{1, 0.5},
+			{13, 0.1}
+		},
+		level_11 = {
+			{0.5, 0.4},
+			{7.5, 0.05}
+		}
+	}
+end
+
+function UpgradesTweakData:set_overkill()
+	self.values.player.body_armor.armor_overkill_145 = {
+		level_1 = 2,
+		level_2 = 4,
+		level_3 = 5,
+		level_4 = 6,
+		level_5 = 8,
+		level_6 = 10,
+		level_7 = 15,
+		level_8 = 10,
+		level_9 = 12,
+		level_11 = 25
+	}
+	self.values.player.body_armor.regen_overkill_145 = {
+		level_1 = 2,		-- 1 second
+		level_2 = 2.667,	-- 1.5
+		level_3 = 2.857,	-- 1.75
+		level_4 = 3,		-- 2
+		level_5 = 3.2,		-- 2.5
+		level_6 = 3.333,	-- 3
+		level_7 = 3.75,		-- 4
+		level_8 = 3.333,	-- 3
+		level_9 = 6,		-- 2
+		level_11 = 4.167	-- 6
+	}
+	self.values.player.body_armor.health_damage_reduction_overkill_145 = {
+		level_1 = {
+			{0, 0},
+			{100, 0}
+		},
+		level_2 = {
+			{0, 0},
+			{20, 0.05}
+		},
+		level_3 = {
+			{0, 0},
+			{18, 0.09}
+		},
+		level_4 = {
+			{1, 0.02},
+			{17, 0.14}
+		},
+		level_5 = {
+			{1.5, 0.05},
+			{15.5, 0.19}
+		},
+		level_6 = {
+			{2, 0.1},
+			{14, 0.22}
+		},
+		level_7 = {
+			{2.5, 0.15},
+			{12.5, 0.25}
+		},
+		level_8 = {
+			{4, 0.2},
+			{10, 0.38}
+		},
+		level_9 = {
+			{2, 0.05},
+			{12, 0.25}
+		},
+		level_11 = {
+			{2, 0.05},
+			{16, 0.19}
+		}
+	}
+	self.values.player.body_armor.deflect_overkill_145 = {
+		level_1 = {
+			{0, 0},
+			{0, 0}
+		},
+		level_2 = {
+			{0, 0.05},
+			{4, 0}
+		},
+		level_3 = {
+			{0, 0.1},
+			{4.5, 0}
+		},
+		level_4 = {
+			{0, 0.15},
+			{5, 0}
+		},
+		level_5 = {
+			{0, 0.25},
+			{5.5, 0}
+		},
+		level_6 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_7 = {
+			{0, 0.35},
+			{7, 0}
+		},
+		level_8 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_9 = {
+			{1, 0.5},
+			{13, 0.1}
+		},
+		level_11 = {
+			{0.5, 0.4},
+			{7.5, 0.05}
+		}
+	}
+end
+
+function UpgradesTweakData:set_deathwish()
+	self.values.player.body_armor.armor_overkill_290 = {
+		level_1 = 3,
+		level_2 = 5,
+		level_3 = 7,
+		level_4 = 8,
+		level_5 = 10,
+		level_6 = 12,
+		level_7 = 18,
+		level_8 = 11,
+		level_9 = 14,
+		level_11 = 35
+	}
+	self.values.player.body_armor.regen_overkill_290 = {
+		level_1 = 3,		-- 1 second
+		level_2 = 2.85,		-- 1.75
+		level_3 = 3.5,		-- 2
+		level_4 = 3.555,	-- 2.25
+		level_5 = 3.636,	-- 2.75
+		level_6 = 4,		-- 3
+		level_7 = 6,		-- 5
+		level_8 = 4.4,		-- 4
+		level_9 = 7,		-- 2.5
+		level_11 = 5		-- 7
+	}
+	self.values.player.body_armor.health_damage_reduction_overkill_290 = {
+		level_1 = {
+			{0, 0},
+			{100, 0}
+		},
+		level_2 = {
+			{0, 0},
+			{20, 0.05}
+		},
+		level_3 = {
+			{0, 0},
+			{18, 0.09}
+		},
+		level_4 = {
+			{1, 0.02},
+			{17, 0.14}
+		},
+		level_5 = {
+			{1.5, 0.05},
+			{15.5, 0.19}
+		},
+		level_6 = {
+			{2, 0.1},
+			{14, 0.22}
+		},
+		level_7 = {
+			{2.5, 0.15},
+			{12.5, 0.25}
+		},
+		level_8 = {
+			{4, 0.2},
+			{10, 0.38}
+		},
+		level_9 = {
+			{2, 0.05},
+			{12, 0.25}
+		},
+		level_11 = {
+			{2, 0.05},
+			{16, 0.19}
+		}
+	}
+	self.values.player.body_armor.deflect_overkill_290 = {
+		level_1 = {
+			{0, 0},
+			{0, 0}
+		},
+		level_2 = {
+			{0, 0.05},
+			{4, 0}
+		},
+		level_3 = {
+			{0, 0.1},
+			{4.5, 0}
+		},
+		level_4 = {
+			{0, 0.15},
+			{5, 0}
+		},
+		level_5 = {
+			{0, 0.25},
+			{5.5, 0}
+		},
+		level_6 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_7 = {
+			{0, 0.35},
+			{7, 0}
+		},
+		level_8 = {
+			{0, 0.3},
+			{6, 0}
+		},
+		level_9 = {
+			{1, 0.5},
+			{13, 0.1}
+		},
+		level_11 = {
+			{0.5, 0.4},
+			{7.5, 0.05}
+		}
+	}
+end
+
 function UpgradesTweakData:_init_pd2_values()
 	init_pd2(self)
+
+	self.values.player.hostage_health_regen_addend = {0.006, 0.02}
+	self.skill_descs.black_marketeer.multibasic = "0.6%"
+	self.skill_descs.black_marketeer.multipro = "2%"
+	self.values.player.passive_health_regen = {0.02}
+
 	self.values.player.body_armor.scaling_normal = {
 		armor = 1,
 		movement = 1,
@@ -103,11 +664,11 @@ function UpgradesTweakData:_init_pd2_values()
 		3.5,
 		4.5,
 		6.5,
-		10,
+		9,
 		5,
-		8,
+		7.5,
 		0,
-		20
+		16
 	}
 	--Increased Armor scaling (no cooldown version)
 	self.values.player.body_armor.scaling_hard.armor = 1.1
@@ -133,21 +694,6 @@ function UpgradesTweakData:_init_pd2_values()
 		-12,
 		48
 	}--]]
-	self.values.player.body_armor.armor_normal = {
-		level_1 = 2,
-	}
-	self.values.player.body_armor.armor_hard = {
-		level_1 = 2,
-	}
-	self.values.player.body_armor.armor_overkill = {
-		level_1 = 2,
-	}
-	self.values.player.body_armor.armor_overkill_145 = {
-		level_1 = 2,
-	}
-	self.values.player.body_armor.armor_overkill_290 = {
-		level_1 = 3,
-	}
 	self.values.player.body_armor.movement = {
 		1,
 		0.975,
@@ -176,10 +722,10 @@ function UpgradesTweakData:_init_pd2_values()
 	}
 	self.values.player.body_armor.dodge = {
 		0.4,
-		0.2,
+		0.25,
+		0.15,
 		0.05,
-		-0.1,
-		-0.25,
+		-0.2,
 		-0.4,
 		-0.5,
 		-0.4,
@@ -211,14 +757,14 @@ function UpgradesTweakData:_init_pd2_values()
 		0.55,
 		0.65,
 		1.1,
-		0.1
+		0.2
 	}
 	self.values.player.body_armor.skill_ammo_mul = {
 		1,
 		1,
 		1,
 		1,
-		1.35,
+		1.333,
 		1,
 		1,
 		1,
@@ -334,7 +880,7 @@ function UpgradesTweakData:_init_pd2_values()
 		2.7,
 		4,
 		0,
-		6.25
+		5
 	}
 	self.values.player.body_armor.explosion_damage_reduction = {
 		0,
@@ -429,6 +975,94 @@ function UpgradesTweakData:_init_pd2_values()
 		2,
 		15
 	}
+	self.values.player.body_armor.power_type_reduction = {
+		{
+
+		},
+		{
+
+		},
+		{
+
+		},
+		{
+
+		},
+		{
+
+		},
+		{
+
+		},
+		{
+			--m14 = 1.1,
+		},
+		{
+
+		},
+		{
+			m14 = 0.85,
+			raging_bull = 0.8
+		},
+		{
+
+		},
+		{
+			--[[m14 = 2,
+			mp9 = 1.25,
+			r870 = 1.35,
+			saiga = 0.9,
+			ak47 = 0.75,
+			m4 = 1.5]]
+		}
+	}
+	self.values.player.body_armor.doom_armor = {
+		0,
+		15,
+		25,
+		25,
+		27.5,
+		35,
+		40,
+		20,
+		30,
+		0,
+		10
+	}
+	self.values.player.body_armor.doom_absorption = {
+		0,
+		0.1,
+		0.15,
+		0.2,
+		0.25,
+		0.4,
+		0.5,
+		0.3,
+		0.25,
+		0,
+		0.75
+	}
+	--[[self.values.player.body_armor.doom_absorption = {
+		{
+			{0, 0}
+		},
+		{
+			{12, 0.1},
+			{10, 0.09},
+			{8, 0.075},
+			{6, 0.06},
+			{4, 0.04},
+			{2, 0.02}
+		}
+	}
+	]]
+
+	self:set_normal()
+	self:set_hard()
+	self:set_very_hard()
+	self:set_overkill()
+	self:set_deathwish()
+
 	self.values.player.level_8_hp_regen_addend = {0.2}
 	self.values.player.level_9_armor_regen_addend = {1}
 	self.values.player.level_9_armor_regen_delay_multiplier = {0.8}
@@ -437,14 +1071,25 @@ function UpgradesTweakData:_init_pd2_values()
 	self.values.player.level_11_edr_addend = {0.15}
 	self.values.player.level_11_hp_addend = {4}
 	self.values.player.level_11_movement_addend = {6}
-	self.values.player.level_11_stamina_multiplier = {5}
+	self.values.player.level_11_stamina_multiplier = {3}
 	self.values.player.headshot_add_max_armor_bonus = {
-		{0.01, 0.05},
-		{0.02, 0.1},
-		{0.03, 0.2},
-		{0.04, 0.35},
-		{0.05, 0.5}
+		{
+			0.01,
+			0.2,
+			0.01
+		},
+		{
+			0.03,
+			1,
+			0.05
+		}
 	}
+	self.values.player.all_dodge_addend = {0.01}
+	self.values.player.all_ammo_addend = {0.01}
+	self.values.player.all_deflect_addend = {0.01}
+	self.values.player.all_hdr_addend = {0.01}
+	self.values.player.all_edr_addend = {0.01}
+	self.values.player.all_jump_addend = {0.01}
 
 	self.values.crew = {}
 	self.values.crew.xp = {}
@@ -644,6 +1289,60 @@ function UpgradesTweakData:_player_definitions()
 		upgrade = {
 			category = "deflect_chance",
 			upgrade = "addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_dodge_addend = {
+		category = "feature",
+		name_id = "menu_player_all_dodge_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_dodge_addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_deflect_addend = {
+		category = "feature",
+		name_id = "menu_player_all_deflect_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_deflect_addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_ammo_addend = {
+		category = "feature",
+		name_id = "menu_player_all_ammo_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_ammo_addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_hdr_addend = {
+		category = "feature",
+		name_id = "menu_player_all_hdr_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_hdr_addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_edr_addend = {
+		category = "feature",
+		name_id = "menu_player_all_edr_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_edr_addend",
+			value = 1
+		}
+	}
+	self.definitions.player_all_jump_addend = {
+		category = "feature",
+		name_id = "menu_player_all_jump_addend",
+		upgrade = {
+			category = "player",
+			upgrade = "all_jump_addend",
 			value = 1
 		}
 	}

@@ -9,6 +9,8 @@ function string.remove_zeros(base_format, str)
 	return string_value
 end
 
+local ammo_info_orig = BlackMarketGui.get_weapon_ammo_info
+
 local is_win32 = SystemInfo:platform() == Idstring("WIN32")
 local NOT_WIN_32 = not is_win32
 local WIDTH_MULTIPLIER = NOT_WIN_32 and 0.68 or 0.71
@@ -1428,11 +1430,12 @@ function BlackMarketGui:_get_armor_stats(name)
 		elseif stat.name == "deflect_min_procent" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[1][2] * 100
 			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0) * 100
+			local skill_addend = managers.player:upgrade_value("player", "all_deflect_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = skill
+				value = skill + skill_addend
 			}
 		elseif stat.name == "deflect_max_dmg" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[2][1] * 10
@@ -1446,11 +1449,12 @@ function BlackMarketGui:_get_armor_stats(name)
 		elseif stat.name == "deflect_max_procent" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[2][2] * 100
 			local skill = managers.player:upgrade_value("player", name .. "_deflect_chance_addend", 0) * 100
+			local skill_addend = managers.player:upgrade_value("player", "all_deflect_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = skill
+				value = skill + skill_addend
 			}
 		elseif stat.name == "hdr_min_dmg" then
 			local base = managers.player:body_armor_value("health_damage_reduction", upgrade_level)[1][1] * 10
@@ -1464,11 +1468,12 @@ function BlackMarketGui:_get_armor_stats(name)
 		elseif stat.name == "hdr_min_procent" then
 			local base = managers.player:body_armor_value("health_damage_reduction", upgrade_level)[1][2] * 100
 			local skill = 0
+			local skill_addend = managers.player:upgrade_value("player", "all_hdr_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = base * skill
+				value = base * skill + skill_addend
 			}
 		elseif stat.name == "hdr_max_dmg" then
 			local base = managers.player:body_armor_value("health_damage_reduction", upgrade_level)[2][1] * 10
@@ -1482,32 +1487,45 @@ function BlackMarketGui:_get_armor_stats(name)
 		elseif stat.name == "hdr_max_procent" then
 			local base = managers.player:body_armor_value("health_damage_reduction", upgrade_level)[2][2] * 100
 			local skill = 0
+			local skill_addend = managers.player:upgrade_value("player", "all_hdr_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = base * skill
+				value = base * skill + skill_addend
 			}
 		elseif stat.name == "explosion_damage_reduction" then
 			local base = managers.player:body_armor_value("explosion_damage_reduction", upgrade_level) * 100
 			local skill = managers.player:upgrade_value("player", name .. "_edr_addend", 0) * 100
+			local skill_addend = managers.player:upgrade_value("player", "all_edr_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = skill
+				value = skill + skill_addend
 			}
 		elseif stat.name == "ammo_mul" then
 			local base = managers.player:body_armor_value("skill_ammo_mul", upgrade_level) * 100 - 100
 			local skill = 1
+			local skill_addend = managers.player:upgrade_value("player", "all_ammo_addend", 0) * 100
 			base_stats[stat.name] = {
 				value = base
 			}
 			skill_stats[stat.name] = {
-				value = base * (skill - 1)
+				value = base * (skill - 1) + skill_addend
 			}
 		elseif stat.name == "jump_speed_multiplier" then
 			local base = managers.player:body_armor_value("jump_speed_multiplier", upgrade_level) * 100 - 100
+			local skill = 1
+			local skill_addend = managers.player:upgrade_value("player", "all_jump_addend", 0) * 100
+			base_stats[stat.name] = {
+				value = base
+			}
+			skill_stats[stat.name] = {
+				value = base * (skill - 1) + skill_addend
+			}
+		elseif stat.name == "bleeding_reduction" then
+			local base = managers.player:body_armor_value("bleeding_reduction", upgrade_level) + 1
 			local skill = 1
 			base_stats[stat.name] = {
 				value = base
@@ -1515,8 +1533,17 @@ function BlackMarketGui:_get_armor_stats(name)
 			skill_stats[stat.name] = {
 				value = base * (skill - 1)
 			}
-		elseif stat.name == "bleeding_reduction" then
-			local base = managers.player:body_armor_value("bleeding_reduction", upgrade_level)
+		elseif stat.name == "doom_armor" then
+			local base = managers.player:body_armor_value("doom_armor", upgrade_level) * 10
+			local skill = 1
+			base_stats[stat.name] = {
+				value = base
+			}
+			skill_stats[stat.name] = {
+				value = base * (skill - 1)
+			}
+		elseif stat.name == "doom_absorption" then
+			local base = managers.player:body_armor_value("doom_absorption", upgrade_level) * 100
 			local skill = 1
 			base_stats[stat.name] = {
 				value = base
@@ -1640,7 +1667,8 @@ function BlackMarketGui:show_stats()
 			deflect_max_procent = true,
 			ammo_mul = true,
 			jump_speed_multiplier = true,
-			explosion_damage_reduction = true
+			explosion_damage_reduction = true,
+			doom_absorption = true
 		}
 
 		--self:_get_armor_page()
@@ -2219,7 +2247,9 @@ function BlackMarketGui:_get_armor_page()
 		self._armor_stats_shown = {
 			{name = "explosion_damage_reduction", procent = true, revert = true},
 			{name = "jump_speed_multiplier"},
-			{name = "bleeding_reduction"}
+			{name = "bleeding_reduction"},
+			{name = "doom_armor"},
+			{name = "doom_absorption"}
 		}
 	end
 	do
@@ -2331,4 +2361,51 @@ end
 
 function BlackMarketGui:armor_page_down(data)
 	self:change_armor_page(-1)
+end
+
+function BlackMarketGui:get_weapon_ammo_info(weapon_id, extra_ammo, total_ammo_mod)
+	--[[local clip, max, data = ammo_info_orig(self, weapon_id, extra_ammo, total_ammo_mod)
+	local ammo_max_multiplier = managers.player:upgrade_value("player", "all_ammo_addend", 0) + 0.05
+	return clip, max * ammo_max_multiplier, data]]
+	local weapon_tweak_data = tweak_data.weapon[weapon_id]
+	local ammo_max_multiplier = managers.player:upgrade_value("player", "extra_ammo_multiplier", 1)
+	ammo_max_multiplier = ammo_max_multiplier * managers.player:upgrade_value(weapon_tweak_data.category, "extra_ammo_multiplier", 1)
+	if managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul") then
+		ammo_max_multiplier = ammo_max_multiplier * managers.player:body_armor_value("skill_ammo_mul", nil, 1)
+	end
+	ammo_max_multiplier = ammo_max_multiplier + managers.player:upgrade_value("player", "all_ammo_addend", 0)
+	local function get_ammo_max_per_clip(weapon_id)
+		local function upgrade_blocked(category, upgrade)
+			if not weapon_tweak_data.upgrade_blocks then
+				return false
+			end
+			if not weapon_tweak_data.upgrade_blocks[category] then
+				return false
+			end
+			return table.contains(weapon_tweak_data.upgrade_blocks[category], upgrade)
+		end
+
+		local clip_base = weapon_tweak_data.CLIP_AMMO_MAX
+		local clip_mod = extra_ammo and tweak_data.weapon.stats.extra_ammo[extra_ammo] or 0
+		local clip_skill = managers.player:upgrade_value(weapon_id, "clip_ammo_increase")
+		if not upgrade_blocked("weapon", "clip_ammo_increase") then
+			clip_skill = clip_skill + managers.player:upgrade_value("weapon", "clip_ammo_increase", 0)
+		end
+		if not upgrade_blocked(weapon_tweak_data.category, "clip_ammo_increase") then
+			clip_skill = clip_skill + managers.player:upgrade_value(weapon_tweak_data.category, "clip_ammo_increase", 0)
+		end
+		return clip_base + clip_mod + clip_skill
+	end
+
+	local ammo_max_per_clip = get_ammo_max_per_clip(weapon_id)
+	local ammo_max = tweak_data.weapon[weapon_id].AMMO_MAX
+	local ammo_from_mods = math.round(ammo_max * (total_ammo_mod and tweak_data.weapon.stats.total_ammo_mod[total_ammo_mod] or 0))
+	ammo_max = math.round((ammo_max + ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip) * ammo_max_multiplier)
+	ammo_max_per_clip = math.min(ammo_max_per_clip, ammo_max)
+	local ammo_data = {}
+	ammo_data.base = tweak_data.weapon[weapon_id].AMMO_MAX
+	ammo_data.mod = ammo_from_mods + managers.player:upgrade_value(weapon_id, "clip_amount_increase") * ammo_max_per_clip
+	ammo_data.skill = math.round((ammo_data.base + ammo_data.mod) * ammo_max_multiplier) - ammo_data.base - ammo_data.mod
+	ammo_data.skill_in_effect = managers.player:has_category_upgrade("player", "extra_ammo_multiplier") or managers.player:has_category_upgrade(weapon_tweak_data.category, "extra_ammo_multiplier") or managers.player:has_category_upgrade("player", "add_armor_stat_skill_ammo_mul")
+	return ammo_max_per_clip, ammo_max, ammo_data
 end

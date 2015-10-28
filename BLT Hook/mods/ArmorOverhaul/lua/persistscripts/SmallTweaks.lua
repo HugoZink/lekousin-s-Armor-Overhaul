@@ -40,5 +40,8 @@ tweak_data.upgrades.specialization_descs[Global.spec_length] = {
 		multiperk3 = "10%"
 	}
 }
+tweak_data.weapon.swat_van_turret_module.SPREAD = 2--0.5
+tweak_data.weapon.swat_van_turret_module.DAMAGE_MUL_RANGE[4] = {2500, 0.5}
+--tweak_data.weapon.swat_van_turret_module.auto.fire_rate = 0.1
 
 SmallTweaks = true

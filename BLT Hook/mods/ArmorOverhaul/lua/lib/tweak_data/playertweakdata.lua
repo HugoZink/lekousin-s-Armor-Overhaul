@@ -40,7 +40,7 @@ function PlayerTweakData:_set_overkill_290()
 	self.damage.MIN_DAMAGE_INTERVAL = 0
 end
 
-function PlayerTweakData:init()
+--[[function PlayerTweakData:init()
 	local is_console = SystemInfo:platform() ~= Idstring("WIN32")
 	self.arrest = {arrest_timeout = 240, aggression_timeout = 60}
 	self.put_on_mask_time = 2
@@ -259,4 +259,4 @@ function PlayerTweakData:init()
 
 	
 	self.damage.ARMOR_INIT = 0
-end
+end]]

@@ -12,12 +12,19 @@
 	"bm_menu_explosion_damage_reduction" : "Explosion damage reduction",
 	"bm_menu_jump_speed_multiplier" : "Jump speed bonus",
 	"bm_menu_bleeding_reduction" : "Bleeding reduction",
+	"bm_menu_doom_armor" : "Durability",
+	"bm_menu_doom_absorption" : "Max absorb",
 
 	"bm_armor_level_8": "Lifa Vest",
+	"bm_armor_level_8_desc": "Lifa Vest\n\nMedium-heavy-weight armor\n\nIt shines by its exclusive regenerative properties",
 	"bm_armor_level_9": "Lightweight Tactical Vest",
+	"bm_armor_level_9_desc": "Lightweight Tactical Vest\n\nMedium-weight but quite protective\n\nA lightweight version of the CTV than has a tendancy to deflect bullets",
 	"bm_armor_level_10": "Thin Vest",
+	"bm_armor_level_10_desc": "Thin Vest\n\nVery light, but no defense\n\nThe Thin Vest allows its user to move very quickly and dodge bullet",
 	"bm_armor_level_11": "EOD Suit",
+	"bm_armor_level_11_desc": "EOD Suit\n\nVery heavy but durable armor\n\nThe EOD Suit is a suit made to endure explosions",
 	"bm_armor_level_12": "Custom Armor",
+	"bm_armor_level_12_desc": "Custom Armor\n\nA hand-made armor\n\nCan be ver yefficient or completely useless, depends on how the creator made it",
 
 	"bm_menu_skill_locked_level_7": "Requires the Tough Guy skill",
 	"bm_menu_skill_locked_level_8": "Requires the Curaga skill",
@@ -128,7 +135,7 @@
 
 	"menu_stockholm_syndrome_desc": "BASIC:\nUnlocks the Lifa Vest.\nThis vest nets you a ##100## HP bonus on normal difficulty (up to ##250## on DW) and a HP regen of ##1## per second.\n\nACE:\nImproves your Lifa Vest, which now regenerates ##3## HP per second.",
 	"menu_tough_guy_desc": "BASIC:\nUnlock the Improved Combined Tactical Vest.\n\nACE:\nYou can now shoot while running.\nYou can now melee shields to make them stumble.",
-	"menu_juggernaut_desc": "BASIC:\nUnlocks the EOD Suit.\n\nACE:\nImproves your EOD Suit, lowering explosion dmaage to ##10%##, increasing maximum HP by ##40## on normal (up to ##100## on DW), movement speed by ##6## and stamina by ##400%##.\n\nNote: EOD Suit is unaffected by Blending In. When your EOD Suit is under suppression effect, it cannot regenerate more than ##75%## of its maximum regeneration rate.",
+	"menu_juggernaut_desc": "BASIC:\nUnlocks the EOD Suit.\n\nACE:\nImproves your EOD Suit, lowering explosion dmaage to ##10%##, increasing maximum HP by ##40## on normal (up to ##100## on DW), movement speed by ##6## and stamina by ##200%##.\n\nNote: EOD Suit is unaffected by Blending In. When your EOD Suit is under suppression effect, it cannot regenerate more than ##75%## of its maximum regeneration rate.",
 	"menu_sentry_targeting_package_desc": "BASIC:\nUnlocks the LightWeight Tactical Vest.\n\nACE:\nImproves your Lightweight Tactical Vest, decreasing armor regeneration delay by ##20%##, increasing armor regeneraton rate by ##10## per second and deflection chance by ##10%##.",
 	"menu_sentry_2_0_desc": "BASIC:\nYou can now reload your sentry gun with your own ammo.\nYour sentry gun's accuracy is increased by ##100%##.\n\nACE:\nYour sentry gun receives a protective shield.\nYour sentry gun's rotational speed is increased by ##150%##.\nYour sentry gun contains ##50%## more ammo.",
 	"menu_moving_target_desc": "BASIC:\nYou can now run while strafing.\nUnlocks the Thin Vest.\n\nACE:\nYou can now run in any direction.\nYour Thin Vest's dodge value is increased by ##15%##",

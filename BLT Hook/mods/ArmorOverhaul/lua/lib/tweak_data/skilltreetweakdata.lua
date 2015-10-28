@@ -149,6 +149,39 @@ function SkillTreeTweakData:init()
 		"iron_man"
 	}
 
+	self.skills.op_please_nerf = {
+		["name_id"] = "menu_op_please_nerf",
+		["desc_id"] = "menu_op_please_nerf_desc",
+		["icon_xy"] = {3, 1},
+		[1] = {
+			upgrades = {
+				"first_aid_kit"
+			},
+			cost = self.costs.unlock_tree,
+			desc_id = "menu_hoxton_tier_1"
+		},
+		[2] = {
+			upgrades = {},
+			desc_id = "menu_hoxton_tier_2"
+		},
+		[3] = {
+			upgrades = {},
+			desc_id = "menu_hoxton_tier_3"
+		},
+		[4] = {
+			upgrades = {},
+			desc_id = "menu_hoxton_tier_4"
+		},
+		[5] = {
+			upgrades = {},
+			desc_id = "menu_hoxton_tier_5"
+		},
+		[6] = {
+			upgrades = {},
+			desc_id = "menu_hoxton_tier_6"
+		}
+	}
+
 	local armor_drainer = {
 		name_id = "menu_st_spec_armor_drainer",
 		desc_id = "menu_st_spec_armor_drainer_desc",
@@ -239,6 +272,6 @@ function SkillTreeTweakData:init()
 		}
 	}
 
-	self.specializations[#self.specializations + 1] = armor_drainer
+	--self.specializations[#self.specializations + 1] = armor_drainer
 	Global.spec_length = #self.specializations
 end

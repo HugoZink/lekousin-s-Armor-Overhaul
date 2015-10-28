@@ -191,7 +191,10 @@ for equipment, _ in pairs(CustomArmor.equipment.arms) do
         type = "MenuItemLevel",
         text_id = "custom_" .. equipment,
         help_id = "custom_" .. equipment .. "_help",
+        level_title_id = "A title",
+        level_text_id = "A text",
         callback = function(self, item)
+        LAOUtils.table_print(item)
             Global._custom_armor:change_equipment("arms", equipment)
             Global._custom_armor:save()
         end
@@ -224,7 +227,7 @@ local custom_armor_menu = menu_item{
     end,
 }
 
---menu_after('safehouse', custom_armor_menu)
+menu_after('safehouse', custom_armor_menu)
 
 local m = {}
 

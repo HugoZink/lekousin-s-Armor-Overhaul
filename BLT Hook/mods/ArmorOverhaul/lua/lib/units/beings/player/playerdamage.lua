@@ -15,6 +15,18 @@ function PlayerDamage:init(unit)
 	end
 	self._armor_reduction_index = 1
 	self._bonus_armor = 0
+	self:calculate_max_doom_armor()
+	self._doom_armor = self:get_max_doom_armor()
+	managers.hud:update_armor_overhaul_values({
+		current_health = self:get_real_health(),
+		total_health = self:_max_health(),
+		current_armor = self:get_real_armor(),
+		total_armor = self:_max_armor(),
+		doom = self:get_doom_armor(),
+		doom_max = self:get_max_doom_armor(),
+		doom_absorb = self:doom_damage_mitigation(),
+		bleeding = self:get_bleeding()
+	})
 end
 
 function PlayerDamage:update(unit, t, dt)
@@ -62,7 +74,7 @@ function PlayerDamage:update(unit, t, dt)
 	
 	local armor_data = managers.blackmarket:equipped_armor(true)
 	if self.bleeding and self.bleeding > 0 then
-		self.bleeding = self.bleeding - managers.player:body_armor_value("bleeding_reduction") * self:armor_ratio() * dt
+		self.bleeding = self.bleeding - (managers.player:body_armor_value("bleeding_reduction") * self:armor_ratio() + 1) * dt
 	else
 		self.bleeding = 0
 		managers.hud:set_player_health({
@@ -105,7 +117,16 @@ function PlayerDamage:update(unit, t, dt)
 
 				if self.fully_regened ~= 1 then
 					local regen = dt * managers.player:ap_regen_value(armor_data, self._armor_suppress / self._armor_suppress_MAX)
-					self:restore_armor(regen)
+					if self._regenerating_from_break and self._fake_armor / self:_max_armor() < 0.2 then
+						self:restore_fake_armor(regen)
+					else
+						if self._regenerating_from_break then
+							self:set_armor(self._fake_armor)
+							self._fake_armor = self:_max_armor()
+							self._regenerating_from_break = false
+						end
+						self:restore_armor(regen)
+					end
 					self._armor_regenerating = true
 				else
 					self._armor_regenerating = false
@@ -184,8 +205,7 @@ function PlayerDamage:update(unit, t, dt)
 		managers.hud:set_player_health({
 			current = self:get_real_health(),
 			total = self:_max_health(),
-			revives = Application:digest_value(self._revives, false),
-			bleeding = self.bleeding and self.bleeding > 0 or false
+			revives = Application:digest_value(self._revives, false)
 		})
 
 	end
@@ -193,14 +213,28 @@ function PlayerDamage:update(unit, t, dt)
 	if self._dead or self._bleed_out then
 		self.Bleeding = 0
 	end
+
+	managers.hud:update_armor_overhaul_values({
+		current_health = self:get_real_health(),
+		total_health = self:_max_health(),
+		current_armor = self:get_real_armor(),
+		total_armor = self:_max_armor(),
+		doom = self:get_doom_armor(),
+		doom_max = self:get_max_doom_armor(),
+		doom_absorb = self:doom_damage_mitigation(),
+		bleeding = self:get_bleeding()
+	})
 end
 
 function PlayerDamage:damage_bullet(attack_data)
+	LAOUtils.table_debug(attack_data)
+	LAOUtils.print(attack_data.attacker_unit)
 	if self:_chk_dmg_too_soon(attack_data.damage) then
 		return
 	end
 	self._last_received_dmg = attack_data.damage
 
+	local moving = self._unit:movement():current_state()._moving
 
 
 	local damage_info = {
@@ -217,16 +251,36 @@ function PlayerDamage:damage_bullet(attack_data)
 	attack_data.damage = attack_data.damage * dmg_mul
 
 
-	-- Dodge mechanic changed to PoE Evasion's entropy mechanic (you force dodge <dodge_value * 0.1>% bullets; if you have 50 dodge, you'll force dodge one bullet every 20 one)
+	-- Dodge mechanic changed to PoE Evasion's entropy mechanic (you force dodge <dodge_value * 0.2>% bullets; if you have 50 dodge, you'll force dodge one bullet every 20 one)
 
-	if not self._dodge_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
+	if not self._dodge_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 10) then
 		self._dodge_entropy = math.rand(1)
 	end
 
 	local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
 	local armor_dodge_chance = managers.player:body_armor_value("dodge")
 	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-	dodge_value = math.min(dodge_value + armor_dodge_chance + skill_dodge_chance, 0.95)
+	dodge_value = math.min((dodge_value + armor_dodge_chance + skill_dodge_chance) * (moving and 1 or 0.35), 0.95)
+
+	-- Original dodge
+
+	local dodge_roll = math.rand(1)
+	--local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
+	local armor_dodge_chance = managers.player:body_armor_value("dodge")
+	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
+	--dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
+	LAOUtils.debug("dodge: " .. dodge_value .. "; roll: " .. dodge_roll .. (dodge_roll < dodge_value and "dodged" or "hit") .. "\n")
+	if dodge_roll < dodge_value then
+		if attack_data.damage > 0 then
+			self:_send_damage_drama(attack_data, 0)
+		end
+		self:_call_listeners(damage_info)
+		self:play_whizby(attack_data.col_ray.position)
+		self:_hit_direction(attack_data.col_ray)
+		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
+		self._last_received_dmg = attack_data.damage
+		return
+	end
 
 	self._dodge_entropy = self._dodge_entropy + 1 - (math.min(math.max(dodge_value + armor_dodge_chance + skill_dodge_chance, 0) * 0.2, 0.5))
 	LAOUtils.debug("entropy:\n\tdodge: " .. self._dodge_entropy .. " => " .. (self._dodge_entropy >= 1 and "hit" or "dodged") .. "\n")
@@ -245,15 +299,23 @@ function PlayerDamage:damage_bullet(attack_data)
 		return
 	end
 
-	-- Original dodge, if entropy dodge didn't help you dodge
 
-	local dodge_roll = math.rand(1)
-	--local dodge_value = tweak_data.player.damage.DODGE_INIT or 0
-	local armor_dodge_chance = managers.player:body_armor_value("dodge")
-	local skill_dodge_chance = managers.player:skill_dodge_chance(self._unit:movement():running(), self._unit:movement():crouching(), self._unit:movement():zipline_unit())
-	--dodge_value = dodge_value + armor_dodge_chance + skill_dodge_chance
-	LAOUtils.debug("dodge: " .. dodge_value .. "; roll: " .. dodge_roll .. "\n")
-	if dodge_roll < dodge_value then
+	-- Deflection check (if armor > 0), clasic system
+
+
+	local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
+	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
+	deflect_chance = deflect_chance + managers.player:upgrade_value("player", "level_" .. armor_data.upgrade_level .. "_deflect_chance_addend", 0)
+	local armor_deflect = managers.player:body_armor_value("deflect")
+	if attack_data.damage <= armor_deflect[1][1] then
+		deflect_chance = deflect_chance + armor_deflect[1][2]
+	elseif attack_data.damage >= armor_deflect[2][1] then
+		deflect_chance = deflect_chance + armor_deflect[2][2]
+	else
+		local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
+		deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
+	end
+	if deflect_chance * (self:get_real_armor() > 0 and 1 or 0.4) > math.rand(1) then
 		if attack_data.damage > 0 then
 			self:_send_damage_drama(attack_data, 0)
 		end
@@ -262,76 +324,43 @@ function PlayerDamage:damage_bullet(attack_data)
 		self:_hit_direction(attack_data.col_ray)
 		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
 		self._last_received_dmg = attack_data.damage
+		self._last_hit_time = managers.player:player_timer():time()
 		return
 	end
-
 
 	-- Deflection check (if armor > 0), also uses PoE Evasion's entropy
 
 
-	if self:get_real_armor() > 0 then
-		if not self._armor_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
-			self._armor_entropy = math.rand(1)
-		end
-
-		local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
-		local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
-		deflect_chance = deflect_chance + managers.player:upgrade_value("player", armor_data.upgrade_level .. "_deflect_chance_addend", 0)
-		local armor_deflect = managers.player:body_armor_value("deflect")
-		if attack_data.damage <= armor_deflect[1][1] then
-			deflect_chance = deflect_chance + armor_deflect[1][2]
-		elseif attack_data.damage >= armor_deflect[2][1] then
-			deflect_chance = deflect_chance + armor_deflect[2][2]
-		else
-			local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
-			deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
-		end
-		self._armor_entropy = self._armor_entropy + 1 - (deflect_chance * 0.2)
-		LAOUtils.debug("entropy:\n\tarmor: " .. self._armor_entropy .. " => " .. (self._armor_entropy >= 1 and "hit" or "deflected") .. "\n")
-		if self._armor_entropy >= 1 then
-			self._armor_entropy = self._armor_entropy - 1
-		else
-			if attack_data.damage > 0 then
-				self:_send_damage_drama(attack_data, 0)
-			end
-			self:_call_listeners(damage_info)
-			self:play_whizby(attack_data.col_ray.position)
-			self:_hit_direction(attack_data.col_ray)
-			self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
-			self._last_received_dmg = attack_data.damage
-			self._last_hit_time = managers.player:player_timer():time()
-			return
-		end
+	if not self._armor_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
+		self._armor_entropy = math.rand(1)
 	end
 
-	-- Deflection check (if armor > 0), clasic system
-
-
-	if self:get_real_armor() > 0 then
-		local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
-		local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
-		deflect_chance = deflect_chance + managers.player:upgrade_value("player", armor_data.upgrade_level .. "_deflect_chance_addend", 0)
-		local armor_deflect = managers.player:body_armor_value("deflect")
-		if attack_data.damage <= armor_deflect[1][1] then
-			deflect_chance = deflect_chance + armor_deflect[1][2]
-		elseif attack_data.damage >= armor_deflect[2][1] then
-			deflect_chance = deflect_chance + armor_deflect[2][2]
-		else
-			local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
-			deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
+	local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
+	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
+	deflect_chance = deflect_chance + managers.player:upgrade_value("player", armor_data.upgrade_level .. "_deflect_chance_addend", 0)
+	local armor_deflect = managers.player:body_armor_value("deflect")
+	if attack_data.damage <= armor_deflect[1][1] then
+		deflect_chance = deflect_chance + armor_deflect[1][2]
+	elseif attack_data.damage >= armor_deflect[2][1] then
+		deflect_chance = deflect_chance + armor_deflect[2][2]
+	else
+		local damage = (attack_data.damage - armor_deflect[1][1]) / (armor_deflect[2][1] - armor_deflect[1][1])
+		deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
+	end
+	self._armor_entropy = self._armor_entropy + 1 - (deflect_chance * 0.2 * (self:get_real_armor() > 0 and 1 or 0.4))
+	if self._armor_entropy >= 1 then
+		self._armor_entropy = self._armor_entropy - 1
+	else
+		if attack_data.damage > 0 then
+			self:_send_damage_drama(attack_data, 0)
 		end
-		if deflect_chance > math.rand(1) then
-			if attack_data.damage > 0 then
-				self:_send_damage_drama(attack_data, 0)
-			end
-			self:_call_listeners(damage_info)
-			self:play_whizby(attack_data.col_ray.position)
-			self:_hit_direction(attack_data.col_ray)
-			self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
-			self._last_received_dmg = attack_data.damage
-			self._last_hit_time = managers.player:player_timer():time()
-			return
-		end
+		self:_call_listeners(damage_info)
+		self:play_whizby(attack_data.col_ray.position)
+		self:_hit_direction(attack_data.col_ray)
+		self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
+		self._last_received_dmg = attack_data.damage
+		self._last_hit_time = managers.player:player_timer():time()
+		return
 	end
 
 	self._last_hit_time = managers.player:player_timer():time()
@@ -389,6 +418,19 @@ function PlayerDamage:damage_bullet(attack_data)
 	local potential_damage = attack_data.damage
 
 
+	local doom_mitigation = self:doom_damage_mitigation()
+
+	local doom_reduction = math.min(attack_data.damage * doom_mitigation, self._doom_armor)
+
+	LAOUtils.print("doom: " .. self._doom_armor .. "\tdoom_reduction: " .. doom_reduction .. "\tdamage: " .. attack_data.damage)
+
+	self._doom_armor = self._doom_armor - doom_reduction
+	if self._doom_armor < 0 then
+		self._doom_armor = 0
+	end
+	attack_data.damage = attack_data.damage - doom_reduction
+
+
 	local health_subtracted = self:_calc_armor_damage(attack_data)
 	if attack_data.armor_piercing then
 		attack_data.damage = attack_data.damage - health_subtracted
@@ -407,15 +449,28 @@ function PlayerDamage:damage_bullet(attack_data)
 		managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt", attack_data), TimerManager:game():time() + tweak_data.timespeed.downed.fade_in + tweak_data.timespeed.downed.sustain + tweak_data.timespeed.downed.fade_out)
 	end
 	self:_call_listeners(damage_info)
+
+	managers.hud:update_armor_overhaul_values({
+		current_health = self:get_real_health(),
+		total_health = self:_max_health(),
+		current_armor = self:get_real_armor(),
+		total_armor = self:_max_armor(),
+		doom = self:get_doom_armor(),
+		doom_max = self:get_max_doom_armor(),
+		doom_absorb = self:doom_damage_mitigation(),
+		bleeding = self:get_bleeding()
+	})
 end
 
 function PlayerDamage:_calc_armor_damage(attack_data)
+	local power_reduction = managers.player:body_armor_value("power_type_reduction",tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)].upgrade_level, {[attack_data.power_type or ""] = 1}, attack_data.power_type or "")
 	local health_subtracted = 0
 	local old_armor = self:get_real_armor()
 	if 0 < self:get_real_armor() then
-		health_subtracted = self:get_real_armor()
-		self:set_armor(self:get_real_armor() - attack_data.damage)
-		health_subtracted = health_subtracted - self:get_real_armor()
+		health_subtracted = self:get_real_armor() > attack_data.damage and attack_data.damage or self:get_real_armor()
+		LAOUtils.debug("damage: " .. attack_data.damage .. "\tpower_reduction: " .. power_reduction)
+		self:set_armor(self:get_real_armor() - attack_data.damage * power_reduction)
+		--health_subtracted = health_subtracted - self:get_real_armor()
 		self:_damage_screen()
 		managers.hud:set_player_armor({
 			current = self:get_real_armor(),
@@ -461,16 +516,17 @@ function PlayerDamage:_calc_health_damage(attack_data)
 	self:change_health(-attack_data.damage)
 	health_subtracted = health_subtracted - self:get_real_health()
 	local bullet_or_explosion_or_melee = attack_data.variant and (attack_data.variant == "bullet" or attack_data.variant == "explosion") or attack_data.variant == "melee"
-	if self:get_real_health() == 0 and bullet_or_explosion_or_melee then
+	if self:get_real_health() == 0 and bullet_or_explosion_or_melee and self:get_real_armor() <= 0 then
 		self:_chk_cheat_death()
 	end
 	self:_damage_screen()
-	self:_check_bleed_out(bullet_or_explosion_or_melee)
+	if self:get_real_armor() <= 0 then
+		self:_check_bleed_out(bullet_or_explosion_or_melee)
+	end
 	managers.hud:set_player_health({
 		current = self:get_real_health(),
 		total = self:_max_health(),
-		revives = Application:digest_value(self._revives, false),
-		bleeding = self.bleeding > 0
+		revives = Application:digest_value(self._revives, false)
 	})
 	self:_send_set_health()
 	self:_set_health_effect()
@@ -530,7 +586,73 @@ local damage_fall_orig = PlayerDamage.damage_fall
 
 function PlayerDamage:damage_fall(data)
 	self.fully_regened = 0
-	return damage_fall_orig(self, data)
+	local damage_info = {
+		result = {type = "hurt", variant = "fall"}
+	}
+	if self._god_mode or self._invulnerable then
+		self:_call_listeners(damage_info)
+		return
+	elseif self:incapacitated() then
+		return
+	end
+	local height_limit = 400--300
+	local death_limit = 800--631
+	if height_limit > data.height then
+		return
+	end
+	local die = death_limit < data.height
+	self._unit:sound():play("player_hit")
+	managers.environment_controller:hit_feedback_down()
+	managers.hud:on_hit_direction("down")
+	if self._bleed_out then
+		return
+	end
+	local health_damage_multiplier = 0
+	if die then
+		self._check_berserker_done = false
+		self:set_health(0)
+	else
+		health_damage_multiplier = managers.player:upgrade_value("player", "fall_damage_multiplier", 1) * managers.player:upgrade_value("player", "fall_health_damage_multiplier", 1)
+		health_damage_multiplier = health_damage_multiplier * (data.height - height_limit) / (death_limit - height_limit)
+		self:change_health(-(tweak_data.player.fall_health_damage * health_damage_multiplier))
+	end
+	if die or health_damage_multiplier > 0 then
+		local alert_rad = tweak_data.player.fall_damage_alert_size or 500
+		local new_alert = {
+			"vo_cbt",
+			self._unit:movement():m_head_pos(),
+			alert_rad,
+			self._unit:movement():SO_access(),
+			self._unit
+		}
+		managers.groupai:state():propagate_alert(new_alert)
+	end
+	local max_armor = self:_max_armor()
+	if die then
+		self:set_armor(0)
+	else
+		self:set_armor(self:get_real_armor() - max_armor * managers.player:upgrade_value("player", "fall_damage_multiplier", 1))
+	end
+	managers.hud:set_player_armor({
+		current = self:get_real_armor(),
+		total = self:_total_armor(),
+		max = max_armor,
+		no_hint = true
+	})
+	SoundDevice:set_rtpc("shield_status", 0)
+	self:_send_set_armor()
+	managers.hud:set_player_health({
+		current = self:get_real_health(),
+		total = self:_max_health(),
+		revives = Application:digest_value(self._revives, false)
+	})
+	self:_send_set_health()
+	self:_set_health_effect()
+	self:_damage_screen()
+	self:_check_bleed_out()
+	self:_call_listeners(damage_info)
+	return true
+	--return damage_fall_orig(self, data)
 end
 
 function PlayerDamage:_max_health()
@@ -590,6 +712,8 @@ end
 function PlayerDamage:armor_break()
 	self._bonus_armor = 0
 	self._armor_reduction_index = self._armor_reduction_index + 1
+	self._fake_armor = 0
+	self._regenerating_from_break = true
 end
 
 function PlayerDamage:armor_speed_multiplier()
@@ -641,4 +765,70 @@ function PlayerDamage:restore_armor(armor_restored)
 		max = max_armor,
 		no_hint = true
 	})
+end
+
+function PlayerDamage:get_doom_armor()
+	return self._doom_armor or 0
+end
+
+function PlayerDamage:get_max_doom_armor()
+	return self._max_doom_armor or 0
+end
+
+function PlayerDamage:calculate_max_doom_armor()
+	local value = managers.player:body_armor_value("doom_armor")
+	local addend = managers.player:upgrade_value("player", "doom_armor_addend", 0)
+	local multiplier = 1
+
+	self._max_doom_armor = value * multiplier + addend
+end
+
+function PlayerDamage:doom_armor_ratio()
+	return self._doom_armor / self._max_doom_armor
+end
+
+function PlayerDamage:doom_damage_mitigation()
+	local ratio = self:doom_armor_ratio()
+	local doom_multiplier = managers.player:body_armor_value("doom_absorption")
+	if ratio <= 0 then
+		return 0
+	elseif ratio == 1 then
+		return doom_multiplier
+	elseif ratio < 0.25 then
+		return 0.4 * doom_multiplier
+	elseif ratio < 0.50 then
+		return 0.5 * doom_multiplier
+	elseif ratio < 0.75 then
+		return 0.75 * doom_multiplier
+	elseif ratio < 0.90 then
+		return 0.9 * doom_multiplier
+	else
+		return 1 * doom_multiplier
+	end
+end
+
+function PlayerDamage:restore_doom(value, relative)
+	if relative then
+		self._doom_armor = self._doom_armor + value * self:get_max_doom_armor()
+	else
+		self._doom_armor = self._doom_armor + value
+	end
+	if self._doom_armor < 0 then
+		self._doom_armor = 0
+	elseif self._doom_armor > self._max_doom_armor then
+		self._doom_armor = self._max_doom_armor
+	end
+end
+
+function PlayerDamage:restore_fake_armor(value, relative)
+	if relative then
+		self._fake_armor = self._fake_armor + value * self:_max_armor()
+	else
+		self._fake_armor = self._fake_armor + value
+	end
+	if self._fake_armor < 0 then
+		self._fake_armor = 0
+	elseif self._fake_armor > self:_max_armor() then
+		self._fake_armor = self:_max_armor()
+	end
 end

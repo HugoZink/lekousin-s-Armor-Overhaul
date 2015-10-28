@@ -9,9 +9,10 @@ function string.remove_zeros(base_format, str)
 	return string_value
 end
 
-local init_orig = HUDTeammate.init
+--if not HUDTeammate then return end
+--local init_orig = HUDTeammate.init
 if not ArmorOverhaul or not ArmorOverhaul.options.gui_enabled then return end
-HUDTeammate = HUDTeammate or class()
+--[[HUDTeammate = HUDTeammate or class()
 function HUDTeammate:init(i, teammates_panel, is_player, width)
 	self._id = i
 	local small_gap = 8
@@ -287,8 +288,16 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 		})
 		condition_timer:set_shape(radial_health_panel:shape())
 
+		local numbers_panel = self._player_panel:panel({
+			name = "numbers_panel",
+			layer = 1,
+			w = radial_size + 4,
+			h = radial_size + 4,
+			x = 0,
+			y = mask:y() - radial_size - 4
+		})
 		if ArmorOverhaul.options.gui_health then
-			local hp_text = radial_health_panel:text({
+			local hp_text = numbers_panel:text({
 				name = "hp_text",
 				visible = true,
 				text = "",
@@ -303,7 +312,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 		end
 
 		if ArmorOverhaul.options.gui_armor then
-			local armor_text = radial_health_panel:text({
+			local armor_text = numbers_panel:text({
 				name = "armor_text",
 				visible = true,
 				text = "",
@@ -316,6 +325,18 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 				font = tweak_data.hud_players.timer_font
 			})
 		end
+			local doom_armor_text = numbers_panel:text({
+				name = "doom_armor_text",
+				visible = true,
+				text = "doom",
+				layer = 5,
+				color = Color.red,
+				y = 48,
+				align = "right",
+				vertical = "top",
+				font_size = 16,
+				font = tweak_data.hud_players.timer_font
+			})
 
 		local w_selection_w = 12
 		local weapon_panel_w = 80
@@ -793,7 +814,7 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 		self._interact:set_position(4, 4)
 		self._special_equipment = {}
 		
-		--[[local bar_health_panel = self._player_panel:panel({
+		ocal bar_health_panel = self._player_panel:panel({
 			name = "bar_health_panel",
 			layer = 1,
 			w = radial_size + 4,
@@ -825,13 +846,13 @@ function HUDTeammate:init(i, teammates_panel, is_player, width)
 			vertical = "center",
 			font_size = 16,
 			font = tweak_data.hud_players.timer_font
-		})]]
+		})]]--[[
 
 		self._panel = teammate_panel
 	end
-end
+end]]
 
-function HUDTeammate:set_health(data)
+--[[function HUDTeammate:set_health(data)
 	local teammate_panel = self._panel:child("player")
 	local radial_health_panel = teammate_panel:child("radial_health_panel")
 	local radial_health = radial_health_panel:child("radial_health")
@@ -843,17 +864,18 @@ function HUDTeammate:set_health(data)
 	end
 	radial_health:set_color(Color(1, red, 1, 1))
 
+	local hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
 	if ArmorOverhaul.options.gui_health then
 
 		local cur_health = string.remove_zeros("%0.2f", data.current*10)
 		local max_health = string.remove_zeros("%0.2f", data.total*10)
-		if radial_health_panel:child("hp_text") then
-			radial_health_panel:child("hp_text"):set_text(cur_health .. " / " .. max_health)
+		if hud.panel:child("ArmorOverhaul"):child("hp_text") then
+			hud.panel:child("ArmorOverhaul"):child("hp_text"):set_text(cur_health .. " / " .. max_health)
 		end
 	end
 
-	local bleeding_panel = radial_health_panel:child("bleeding_bg")
-	if bleeding_panel then bleeding_panel:set_visible(data.bleeding) end
+	local bleeding_panel = hud.panel:child("bleeding_text")
+	if bleeding_panel then bleeding_panel:set_text(data.bleeding and "Bleeding !" or "") end
 end
 
 function HUDTeammate:set_armor(data)
@@ -869,11 +891,12 @@ function HUDTeammate:set_armor(data)
 	radial_shield:set_color(Color(1, red, 1, 1))
 
 	if ArmorOverhaul.options.gui_armor then
+	local hud = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2)
 
 		local cur_armor = string.remove_zeros("%0.2f", data.current*10)
 		local max_armor = string.remove_zeros("%0.2f", data.total*10)
-		if radial_health_panel:child("armor_text") then
-			radial_health_panel:child("armor_text"):set_text(cur_armor .. " / " .. max_armor)
+		if hud.panel:child("ArmorOverhaul"):child("armor_text") then
+			hud.panel:child("ArmorOverhaul"):child("armor_text"):set_text(cur_armor .. " / " .. max_armor)
 		end
 	end
-end
+end]]
