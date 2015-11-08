@@ -2,6 +2,12 @@ LAOUtils = {}
 
 LAOUtils.options_file = ArmorOverhaul.ROOT .. "lua/options.lua"
 
+function LAOUtils.table_debug(tt)
+    if ArmorOverhaul.options.debug then
+        LAOUtils.table_print(tt)
+    end
+end
+
 function LAOUtils.table_print(tt, done)
     if ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_HOXHUD then
         LAOUtils.table_print_HoxHUD(tt, done)
@@ -49,11 +55,16 @@ function LAOUtils.table_print_BLT(tt, done)
     end
 end
 
-function LAOUtils.print(text)
-    if ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_HOXHUD then
-        if io then io.stdout:write(text) end
-    elseif ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_BLT then
-        if log then log(text, "") end
+function LAOUtils.print(text, debug)
+    if type(text) == "table" then
+        LAOUtils.print(debug and "[ArmorOverhaul][debug] " or "[ArmorOverhaul] ")
+        LAOUtils.table_print(text)
+    else
+        if ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_HOXHUD then
+            if io then io.stdout:write((debug and "[ArmorOverhaul][debug] " or "[ArmorOverhaul] ") .. tostring(text) .. "\n") end
+        elseif ArmorOverhaul.ARMOR_OVERHAUL_HOOK == ArmorOverhaul.HOOK_BLT then
+            if log then log((debug and "[ArmorOverhaul][debug] " or "[ArmorOverhaul] ") .. tostring(text), "") end
+        end
     end
 end
 

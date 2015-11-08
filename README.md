@@ -84,6 +84,33 @@ Note: if you already use DMCWO (or another mod touching to localizationmanager),
 
 <h4>Changelog</h4>
 
+<h5>Crimefest 2</h5>
+
+<h6>Fixes</h6>
+
+- Fixed blackmarket issues
+	- Could not change character
+	- Could not mod weapons
+	- Could not do anything in Steam inventory
+
+<h6>HUD</h6>
+
+- You can now change the position of the numerical values
+	- Only changeable in options.lua
+	- This change allows more compatibility with HUD mods
+- Added a "Bleeding!" text when you are bleeding
+	- You can also see current bleeding rate
+
+<h6>Gameplay</h6>
+
+- Interverted dodge checks
+	- Now entropy dodge will trigger only when you didn't dodge through classic dodge
+- When not moving, dodge is reduced to 35% of its original value
+- When down, your armor's deflect is reduced to 40% of its original value
+- Fall damage now starts at 4m (originally 3m), and is fatal at 8m (originally 6.31m)
+	- It is also progressive. The higher your fall, the higher the fall damage (so you lose neglictible amount of HP from a 4.1m fall)
+	
+
 <h5>Evolution</h5>
 
 <h6>Armor regeneration</h6>

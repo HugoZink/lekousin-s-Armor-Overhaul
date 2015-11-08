@@ -37,6 +37,10 @@
 		{
 			"global": "SmallTweaks",
 			"script_path": "lua/persistscripts/SmallTweaks.lua"
+		},
+		{
+			"global": "HUDTweak",
+			"script_path": "lua/persistscripts/HUDTweak.lua"
 		}
 	],
 	"hooks": [
@@ -85,12 +89,12 @@
 			"script_path": "lua/lib/menuhelper.lua"
 		},
 		{
-			"hook_id": "lib/managers/menu/blackmarketgui",
-			"script_path": "lua/lib/managers/menu/blackmarketgui.lua"
+			"hook_id": "lib/managers/hudmanager",
+			"script_path": "lua/lib/managers/HUDManager.lua"
 		},
 		{
-			"hook_id": "lib/managers/hud/hudteammate",
-			"script_path": "lua/lib/managers/hud/HUDTeammate.lua"
+			"hook_id": "lib/managers/menu/blackmarketgui",
+			"script_path": "lua/lib/managers/menu/blackmarketgui.lua"
 		},
 		{
 			"hook_id": "lib/network/handlers/unitnetworkhandler",

@@ -21,13 +21,14 @@ ArmorOverhaul.options.localize = true
 ArmorOverhaul.options.gui_enabled = true
 ArmorOverhaul.options.gui_health = true
 ArmorOverhaul.options.gui_armor = true
+ArmorOverhaul.options.panel_x = 200
+ArmorOverhaul.options.panel_y = 200
 
 dofile(ArmorOverhaul.ROOT .. "lua/options.lua")
-dofile(ArmorOverhaul.ROOT .. "lua/lib/managers/hud/HUDTeammate.lua")
 
 LocalizationManager:load_localization_file(ArmorOverhaul.ROOT .. "lang/" .. ArmorOverhaul.options.lang .. ".json")
 
-ArmorOverhaul.max_index = 3
+ArmorOverhaul.max_index = 2
 ArmorOverhaul.index = 0
 
 --dofile("mods/ArmorOverhaul/lua/lib/Utils.lua")
