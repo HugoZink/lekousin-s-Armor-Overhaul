@@ -880,7 +880,8 @@ function UpgradesTweakData:_init_pd2_values()
 		2.7,
 		4,
 		0,
-		5
+		5,
+		0
 	}
 	self.values.player.body_armor.explosion_damage_reduction = {
 		0,
@@ -893,7 +894,8 @@ function UpgradesTweakData:_init_pd2_values()
 		0.2,
 		0.25,
 		0,
-		0.75
+		0.75,
+		0.2
 	}
 	-- Amount of HP regen per second
 	self.values.player.body_armor.hp_regen = {
@@ -905,6 +907,7 @@ function UpgradesTweakData:_init_pd2_values()
 		0,
 		0,
 		0.1,
+		0,
 		0,
 		0,
 		0
@@ -920,7 +923,8 @@ function UpgradesTweakData:_init_pd2_values()
 		level_8 = 0.1,
 		level_9 = 0.015,
 		level_10 = 0,
-		level_11 = 0.025
+		level_11 = 0.025,
+		level_12 = 0.05
 	}
 	-- Amount of max HP bonus (factored before skills)
 	self.values.player.body_armor.hp_addend = {
@@ -934,6 +938,7 @@ function UpgradesTweakData:_init_pd2_values()
 		10,
 		0,
 		-3,
+		0,
 		0
 	}
 	self.values.player.body_armor.jump_speed_multiplier = {
@@ -947,7 +952,8 @@ function UpgradesTweakData:_init_pd2_values()
 		0.94,
 		0.96,
 		1.1,
-		0.9
+		0.9,
+		0.95
 	}
 	self.values.player.body_armor.ap_regen_suppressed_max_multiplier = {
 		1,
@@ -960,7 +966,8 @@ function UpgradesTweakData:_init_pd2_values()
 		1,
 		1,
 		1,
-		0.75
+		0.75,
+		1
 	}
 	self.values.player.body_armor.bleeding_reduction = {
 		6,
@@ -973,7 +980,8 @@ function UpgradesTweakData:_init_pd2_values()
 		20,
 		13.5,
 		2,
-		15
+		15,
+		6
 	}
 	self.values.player.body_armor.power_type_reduction = {
 		{
@@ -1018,16 +1026,17 @@ function UpgradesTweakData:_init_pd2_values()
 	}
 	self.values.player.body_armor.doom_armor = {
 		0,
+		5,
+		10,
+		12.5,
+		15,
+		20,
+		25,
 		15,
 		25,
-		25,
-		27.5,
-		35,
-		40,
-		20,
-		30,
 		0,
-		10
+		10,
+		40
 	}
 	--[[self.values.player.body_armor.doom_absorption = {
 		0,

@@ -811,7 +811,7 @@ function PlayerDamage:doom_damage_mitigation()
 			return doom_absorb[i][2]
 		end
 	end
-	return self.doom_armor > 0 and doom_absorb[#doom_absorb][2] or 0
+	return self._doom_armor > 0 and doom_absorb[#doom_absorb][2] or 0
 end
 
 function PlayerDamage:restore_doom(value, relative)
