@@ -85,7 +85,8 @@ function LAOUtils.parse_options()
 
     for line in io.lines(LAOUtils.options_file) do
         local value = line:sub(line:find("=") + 1)
-        ArmorOverhaul.options[line:sub(1, line:find("=") - 1)] = value == "true" and true or (value == "false" and false or value)
+        local number = tonumber(value)
+        ArmorOverhaul.options[line:sub(1, line:find("=") - 1)] = number and number or (value == "true" and true or (value == "false" and false or value))
     end
     ArmorOverhaul.options.debug = ArmorOverhaul.options.debug:lower() == "true" and true or false
 
@@ -101,10 +102,13 @@ function LAOUtils.save_options()
 
     for option, value in pairs(ArmorOverhaul.options) do
         local svalue = tostring(value)
-        if svalue == "off" then
+        local number = tonumber(svalue)
+        if svalue == "off" or svalue == "false" then
             svalue = "false"
-        elseif svalue == "on" then
+        elseif svalue == "on" or svalue == "true" then
             svalue = "true"
+        elseif number then
+            svalue = number
         else
             svalue = '"' .. svalue .. '"'
         end
@@ -128,6 +132,6 @@ function LAOUtils.change_option(option, value)
         end
         ArmorOverhaul.options.lang = lang
     else
-        ArmorOverhaul.options[option] = value
+        ArmorOverhaul.options[option] = (value ~= "on" and value ~= "off") and value or (value == "on" and true or false)
     end
 end

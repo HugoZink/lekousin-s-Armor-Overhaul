@@ -44,8 +44,10 @@ function HUDManager:set_bleeding(data)
 end
 
 function HUDManager:update_armor_overhaul_values(data)
-	self:set_health(data)
-	self:set_armor(data)
-	--self:set_doom_armor(data)
-	self:set_bleeding(data)
+	if ArmorOverhaul.options.gui_enabled then
+		if ArmorOverhaul.options.gui_health then self:set_health(data) end
+		if ArmorOverhaul.options.gui_armor then self:set_armor(data) end
+		--self:set_doom_armor(data)
+		self:set_bleeding(data)
+	end
 end

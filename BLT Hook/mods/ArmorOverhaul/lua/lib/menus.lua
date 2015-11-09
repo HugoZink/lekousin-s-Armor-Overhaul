@@ -391,7 +391,7 @@ m[#m+1] = menu_checkbox{
     text_id = "armor_overhaul_options_debug",
     help_id = "armor_overhaul_options_debug_help",
     key = 'example',
-    default = ArmorOverhaul and ArmorOverhaul.options.debug or 'on',
+    --default = ArmorOverhaul and (ArmorOverhaul.options.debug and 'on' or 'off') or 'on',
     callback = function(self, item)
         LAOUtils.change_option("debug", item:value())
         LAOUtils.save_options()
@@ -420,7 +420,7 @@ m[#m+1] = menu_checkbox{
     text_id = "armor_overhaul_options_gui",
     help_id = "armor_overhaul_options_gui_help",
     key = 'example',
-    default = ArmorOverhaul and ArmorOverhaul.options.gui_enabled or 'on',
+    --default = ArmorOverhaul and (ArmorOverhaul.options.gui_enabled and 'on' or 'off') or 'on',
     callback = function(self, item)
         LAOUtils.change_option("gui_enabled", item:value())
         LAOUtils.save_options()
@@ -430,7 +430,7 @@ m[#m+1] = menu_checkbox{
     text_id = "armor_overhaul_options_gui_health",
     help_id = "armor_overhaul_options_gui_health_help",
     key = 'example',
-    default = ArmorOverhaul and ArmorOverhaul.options.gui_health or 'on',
+    --default = ArmorOverhaul and (ArmorOverhaul.options.gui_health and 'on' or 'off') or 'on',
     callback = function(self, item)
         LAOUtils.change_option("gui_health", item:value())
         LAOUtils.save_options()
@@ -440,7 +440,7 @@ m[#m+1] = menu_checkbox{
     text_id = "armor_overhaul_options_gui_armor",
     help_id = "armor_overhaul_options_gui_armor_help",
     key = 'example',
-    default = ArmorOverhaul and ArmorOverhaul.options.gui_enabled or 'on',
+    --default = ArmorOverhaul and (ArmorOverhaul.options.gui_armor and 'on' or 'off') or 'on',
     callback = function(self, item)
         LAOUtils.change_option("gui_armor", item:value())
         LAOUtils.save_options()
@@ -453,7 +453,7 @@ m = menu_item{
     next_node = menu_submenu(m)
 }
 
-menu_after('mods', m)
+--menu_after('mods', m)
 
 local m = {}
 
