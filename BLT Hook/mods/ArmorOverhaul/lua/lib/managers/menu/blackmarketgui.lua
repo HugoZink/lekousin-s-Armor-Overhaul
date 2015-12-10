@@ -275,7 +275,7 @@ function BlackMarketGui:show_stats()
 	if self._slot_data.dont_compare_stats then
 		local selection_index = tweak_data:get_raw_value("weapon", self._slot_data.weapon_id, "use_data", "selection_index") or 1
 		local category = selection_index == 1 and "secondaries" or "primaries"
-		local base_stats, mods_stats, skill_stats = self:_get_stats(self._slot_data.weapon_id, nil, nil, self._slot_data.default_blueprint)
+		local base_stats, mods_stats, skill_stats = WeaponDescription._get_stats(self._slot_data.weapon_id, nil, nil, self._slot_data.default_blueprint)
 		self._rweapon_stats_panel:show()
 		self:hide_armor_stats()
 		self:hide_melee_weapon_stats()
@@ -324,8 +324,8 @@ function BlackMarketGui:show_stats()
 	elseif tweak_data.weapon[self._slot_data.name] or self._slot_data.default_blueprint then
 		local equipped_item = managers.blackmarket:equipped_item(category)
 		local equipped_slot = managers.blackmarket:equipped_weapon_slot(category)
-		local equip_base_stats, equip_mods_stats, equip_skill_stats = self:_get_stats(equipped_item.weapon_id, category, equipped_slot)
-		local base_stats, mods_stats, skill_stats = self:_get_stats(name, category, slot, self._slot_data.default_blueprint)
+		local equip_base_stats, equip_mods_stats, equip_skill_stats = WeaponDescription._get_stats(equipped_item.weapon_id, category, equipped_slot)
+		local base_stats, mods_stats, skill_stats = WeaponDescription._get_stats(name, category, slot, self._slot_data.default_blueprint)
 		self._rweapon_stats_panel:show()
 		self:hide_armor_stats()
 		self:hide_melee_weapon_stats()

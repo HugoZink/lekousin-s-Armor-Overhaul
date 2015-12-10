@@ -256,6 +256,7 @@ function PlayerTweakData:init()
 	self.omniscience.interval_t = 1
 	self.omniscience.sense_radius = 1000
 	self.omniscience.target_resense_t = 15
+	self:_init_parachute()
 
 	
 	self.damage.ARMOR_INIT = 0
