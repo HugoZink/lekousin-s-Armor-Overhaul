@@ -1,3 +1,5 @@
+dofile(ModPath .. "armoroverhaulcore.lua")
+
 function string.remove_zeros(base_format, str)
 	local string_value = string.format(base_format, str)
 	while string.sub(string_value, -1) == "0" do
@@ -49,6 +51,7 @@ function BlackMarketGui:_get_armor_stats(name)
 			}
 		elseif stat.name == "health" then
 			local base = tweak_data.player.damage.HEALTH_INIT
+			-- Thick skin value is an old unused value related to steadiness or HP bonus or something?
 			local mod = managers.player:thick_skin_value()
 			local overhaul_addend = managers.player:body_armor_value("hp_addend", upgrade_level)
 			local hp_addend_mul = tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty] and (tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty].hp_addend or 1) or 1
@@ -838,18 +841,11 @@ function BlackMarketGui:populate_armors(data)
 		end
 		index = index + 1
 		new_data = {}
-		local changed = false
-		local armor_bitmap
-		for i, armor in ipairs(Global.real_armor) do
-			if armor_id == armor then
-				armor_bitmap = Global.spoof_armor[i]
-				changed = true
-				break
-			end
+		armor_bitmap = armor_id
+		if ArmorOverhaul.spoof[armor_id] then
+			armor_bitmap = ArmorOverhaul.spoof[armor_id]
 		end
-		if not changed then
-			armor_bitmap = armor_id
-		end
+
 		new_data.name = armor_id
 		new_data.name_localized = managers.localization:text(name_id)
 		new_data.category = "armors"
@@ -901,45 +897,38 @@ function BlackMarketGui:populate_armors(data)
 end
 
 function BlackMarketGui:_get_armor_page()
-	if ArmorOverhaul.index == 0 then
-		self._armor_stats_shown = {
-			{name = "armor"},
-			{name = "health"},
-			{
-				name = "concealment",
-				index = true
-			},
-			{name = "movement", procent = true},
-			{
-				name = "dodge",
-				revert = true,
-				procent = true
-			},
-			{
-				name = "damage_shake"
-			},
-			{name = "stamina"},
-			{name = "ammo_mul", procent = true, revert = true},
-		}
-	elseif ArmorOverhaul.index == 1 then
-		self._armor_stats_shown = {
-			{name = "regen", procent = true, revert = true},
-			{name = "deflect_min_dmg"},
-			{name = "deflect_min_procent", procent = true, revert = true},
-			{name = "deflect_max_dmg"},
-			{name = "deflect_max_procent", procent = true, revert = true},
-			{name = "hdr_min_dmg"},
-			{name = "hdr_min_procent", procent = true, revert = true},
-			{name = "hdr_max_dmg"},
-			{name = "hdr_max_procent", procent = true, revert = true},
-		}
-	else
-		self._armor_stats_shown = {
-			{name = "explosion_damage_reduction", procent = true, revert = true},
-			{name = "jump_speed_multiplier"},
-			{name = "bleeding_reduction"}
-		}
-	end
+	-- It's too big, and all this deflection is just noise anyway
+	-- It's still gonna be used, just not shown
+	self._armor_stats_shown = {
+		{name = "armor"},
+		{name = "health"},
+		{
+			name = "concealment",
+			index = true
+		},
+		{name = "movement", procent = true},
+		{
+			name = "dodge",
+			revert = true,
+			procent = true
+		},
+		--{
+		--	name = "damage_shake"
+		--},
+		{name = "stamina"},
+		{name = "ammo_mul", procent = true, revert = true},
+		{name = "regen", procent = true, revert = true},
+		--{name = "deflect_min_dmg"},
+		--{name = "deflect_min_procent", procent = true, revert = true},
+		--{name = "deflect_max_dmg"},
+		--{name = "deflect_max_procent", procent = true, revert = true},
+		--{name = "hdr_min_dmg"},
+		--{name = "hdr_min_procent", procent = true, revert = true},
+		--{name = "hdr_max_dmg"},
+		--{name = "hdr_max_procent", procent = true, revert = true},
+		{name = "explosion_damage_reduction", procent = true, revert = true},
+		{name = "bleeding_reduction"}
+	}
 	do
 		local x = 0
 		local y = 20

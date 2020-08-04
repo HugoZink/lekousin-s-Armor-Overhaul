@@ -1,3 +1,4 @@
+--[[
 function string.remove_zeros(base_format, str)
 	local string_value = string.format(base_format, str)
 	while string.sub(string_value, -1) == "0" do
@@ -51,3 +52,4 @@ function HUDManager:update_armor_overhaul_values(data)
 		self:set_bleeding(data)
 	end
 end
+]]

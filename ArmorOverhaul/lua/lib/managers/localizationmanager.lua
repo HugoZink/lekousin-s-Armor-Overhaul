@@ -1,1 +1,1 @@
-LocalizationManager:load_localization_file("lang/localizationmanager_" .. ArmorOverhaul.options.lang .. ".lua")
+LocalizationManager:load_localization_file(ModPath .. "lang/en.json")

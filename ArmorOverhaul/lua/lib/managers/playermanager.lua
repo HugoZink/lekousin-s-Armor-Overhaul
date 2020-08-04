@@ -1,3 +1,4 @@
+--[[
 local armor_regen_orig = PlayerManager.body_armor_regen_multiplier
 local stamina_orig = PlayerManager.stamina_multiplier
 local movement_penalty_orig = PlayerManager.mod_movement_penalty
@@ -108,7 +109,9 @@ function PlayerManager:get_skill_exp_multiplier(whisper_mode)
 
 	return multiplier
 end
+]]
 
+local armor_regen_orig = PlayerManager.body_armor_regen_multiplier
 function PlayerManager:body_armor_regen_multiplier(moving)
 	local multiplier = armor_regen_orig(self, moving)
 	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
@@ -116,13 +119,20 @@ function PlayerManager:body_armor_regen_multiplier(moving)
 	return multiplier
 end
 
-function PlayerManager:explosion_damage_multiplier()
-	local mul = 1
-	mul = mul - managers.player:body_armor_value("explosion_damage_reduction")
-	mul = mul - managers.player:upgrade_value("player", tostring(managers.blackmarket:equipped_armor(true)) .. "_edr_addend", 0)
-	return mul
+local damage_reduction_skill_mul_orig = PlayerManager.damage_reduction_skill_multiplier
+function PlayerManager:damage_reduction_skill_multiplier(damage_type)
+	local multiplier = damage_reduction_skill_mul_orig(self, damage_type)
+
+	if damage_type == "explosion" then
+		multiplier = multiplier - self:body_armor_value("explosion_damage_reduction")
+		multiplier = multiplier - self:upgrade_value("player", tostring(managers.blackmarket:equipped_armor(true)) .. "_edr_addend", 0)
+	end
+
+	return multiplier
 end
 
+-- TODO: Is replacing this function even necessary?
+--[[
 function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, upgrade_level)
 	local multiplier = 1
 	local armor_level_s = (upgrade_level and ("level_" .. upgrade_level) or tostring(managers.blackmarket:equipped_armor(true)))
@@ -151,7 +161,10 @@ function PlayerManager:movement_speed_multiplier(speed_state, bonus_multiplier, 
 	end
 	return multiplier
 end
+]]
 
+-- Crew bonuses currently aren't used
+--[[
 function PlayerManager:health_skill_multiplier()
 	local multiplier = health_mul_orig(self)
 
@@ -159,7 +172,9 @@ function PlayerManager:health_skill_multiplier()
 
 	return multiplier
 end
+]]
 
+local stamina_orig = PlayerManager.stamina_multiplier
 function PlayerManager:stamina_multiplier(upgrade_level)
 	local multiplier = stamina_orig(self, upgrade_level)
 	multiplier = multiplier + self:upgrade_value("player", (upgrade_level and ("level_" .. upgrade_level) or tostring(managers.blackmarket:equipped_armor(true))) .. "_stamina_multiplier", 1) - 1
@@ -186,13 +201,17 @@ function PlayerManager:hp_regen_value(armor_data)
 	return value
 end
 
+--[[
+local movement_penalty_orig = PlayerManager.mod_movement_penalty
 function PlayerManager:mod_movement_penalty(movement_penalty, upgrade_level)
 	if upgrade_level and upgrade_level == 11 then
 		return movement_penalty
 	end
 	return movement_penalty_orig(self, movement_penalty, upgrade_level)
 end
+]]
 
+--[[
 function PlayerManager:on_headshot_dealt()
 	local player_unit = self:player_unit()
 	if not player_unit then
@@ -215,51 +234,17 @@ function PlayerManager:on_headshot_dealt()
 		end
 	end
 end
+]]
 
+-- This function contains both custom armor stuff and difficulty scaling, neither of which I particularly want to do at this moment.
+-- Ideally the player should not be buffed or nerfed based on difficulty, only the enemies should.
+--[[
 function PlayerManager:body_armor_value(category, override_value, default)
 	Global._custom_armor = Global._custom_armor or CustomArmor:new()
 	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
 	local difficulty = Global.game_settings.difficulty
 	local difficulty_multiplier = tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty] and (tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty][category] or 1) or 1
 	if override_value == -1 or (not override_value and armor_data.upgrade_level == -1) then
-		--[[if category == "health_damage_reduction" then
-			local t = {
-				{0, 0},
-				{0, 0}
-			}
-			t[1][1] = Global.custom_armor[Global.custom_armor.index][category .. "_min_dmg"] * (Global.custom_armor.stats[category .. "_min_dmg"] and Global.custom_armor.stats[category .. "_min_dmg"] or 1)
-			t[1][2] = Global.custom_armor[Global.custom_armor.index][category .. "_min_value"] * (Global.custom_armor.stats[category .. "_min_value"] and Global.custom_armor.stats[category .. "_min_value"] or 1)
-			t[2][1] = Global.custom_armor[Global.custom_armor.index][category .. "_max_dmg"] * (Global.custom_armor.stats[category .. "_max_dmg"] and Global.custom_armor.stats[category .. "_max_dmg"] or 1)
-			t[2][2] = Global.custom_armor[Global.custom_armor.index][category .. "_max_value"] * (Global.custom_armor.stats[category .. "_max_value"] and Global.custom_armor.stats[category .. "_max_value"] or 1)
-			return t
-		elseif category == "deflect" then
-			local t = {
-				{0, 0},
-				{0, 0}
-			}
-			t[1][1] = Global.custom_armor[Global.custom_armor.index][category .. "_min_dmg"] * (Global.custom_armor.stats[category .. "_min_dmg"] and Global.custom_armor.stats[category .. "_min_dmg"] or 1)
-			t[1][2] = Global.custom_armor[Global.custom_armor.index][category .. "_min_value"] * (Global.custom_armor.stats[category .. "_min_value"] and Global.custom_armor.stats[category .. "_min_value"] or 1)
-			t[2][1] = 10 - (Global.custom_armor[Global.custom_armor.index][category .. "_max_dmg"] * (Global.custom_armor.stats[category .. "_max_dmg"] and Global.custom_armor.stats[category .. "_max_dmg"] or 1))
-			t[2][2] = Global.custom_armor[Global.custom_armor.index][category .. "_max_value"] * (Global.custom_armor.stats[category .. "_max_value"] and Global.custom_armor.stats[category .. "_max_value"] or 1)
-			return t
-		elseif category == "concealment" then
-			return Global.custom_armor.stats.concealment[Global.custom_armor[Global.custom_armor.index][category]]
-		--[[else
-			local value = Global.custom_armor[Global.custom_armor.index][category]
-			if category == "movement" then
-				value = value / 35
-			elseif category == "stamina" then
-				value = value / 20
-			elseif category == "damage_shake" then
-				value = 1 - value
-			--elseif category == "jump_speed_multiplier" then
-			--	value = 0.75 + value
-			elseif category == "regen" then
-				value = value + 1
-			end
-			return value
-		end
-		return Global.custom_armor[Global.custom_armor.index][category]]
 		if category == "health_damage_reduction" or category == "deflect" then
 			local t = {
 				{0, 0},
@@ -293,12 +278,6 @@ function PlayerManager:body_armor_value(category, override_value, default)
 					value[i][j] = orig_value[i][j] * tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty][category]
 				end
 			end
-		--[[elseif category == "armor" then
-			value = 0--tweak_data.upgrades.values.player.body_armor[category .. "_" .. difficulty].level_1
-			for i = 1, (override_value or armor_data.upgrade_level) do
-				value = value + (self:upgrade_value_by_level("player", "body_armor", category, {})[i] or default or 0) * tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty].armor
-				log("armor at level " .. i .. ": " .. value)
-			end]]
 		else
 			value = value * tweak_data.upgrades.values.player.body_armor["scaling_" .. difficulty][category]
 			if category == "ap_regen_suppressed_max_multiplier" then
@@ -307,4 +286,10 @@ function PlayerManager:body_armor_value(category, override_value, default)
 		end
 	end
 	return value
+end
+]]
+
+-- Old function that was since removed?
+function PlayerManager:thick_skin_value()
+	return 1
 end

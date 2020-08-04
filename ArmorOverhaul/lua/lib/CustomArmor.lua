@@ -278,7 +278,7 @@ end
 
 function CustomArmor:change_equipment(type, new)
 	if not CustomArmor.equipment[type] then return end
-	if not CustomArmor.equipment[type][new] then LAOUtils.debug("no item matching this name for category " .. type .. ": " .. new .. "\n") end
+	if not CustomArmor.equipment[type][new] then log("no new armor overhaul equipment") end
 	self._set[type] = CustomArmor.equipment[type][new] or self._set[type]
 	self:calculate_level()
 end
@@ -324,5 +324,7 @@ function CustomArmor:save()
 	end]]
 end
 
+--[[
 Global._custom_armor =  CustomArmor:new()
 Global._custom_armor:load()
+]]

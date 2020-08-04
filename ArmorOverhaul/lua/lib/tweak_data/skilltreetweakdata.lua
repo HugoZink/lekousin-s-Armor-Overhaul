@@ -1,7 +1,7 @@
-init_orig = SkillTreeTweakData.init
+Hooks:PostHook(SkillTreeTweakData, "init", "armoroverhaul_skilltreetweak_init", function(self)
 
-function SkillTreeTweakData:init()
-	init_orig(self)
+	-- Old skilltree stuff, remove for now
+	--[[
 	self.skills.stockholm_syndrome = {
 		["name_id"] = "menu_stockholm_syndrome",
 		["desc_id"] = "menu_stockholm_syndrome_desc",
@@ -148,7 +148,9 @@ function SkillTreeTweakData:init()
 		"sentry_targeting_package",
 		"iron_man"
 	}
+	]]
 
+	-- Armor drainer perk deck
 	local armor_drainer = {
 		name_id = "menu_st_spec_armor_drainer",
 		desc_id = "menu_st_spec_armor_drainer_desc",
@@ -239,6 +241,21 @@ function SkillTreeTweakData:init()
 		}
 	}
 
-	self.specializations[#self.specializations + 1] = armor_drainer
-	Global.spec_length = #self.specializations
-end
+	-- WIP, not adding Armor Drainer deck until I can spoof it
+	--table.insert(self.specializations, armor_drainer)
+end)
+
+-- Add default upgrades
+Hooks:PostHook(SkillTreeTweakData, "init", "armoroverhaul_initskilltreetweak", function(self, params)
+	-- Add "armor affects ammo capacity" upgrade
+	if not table.contains(self.default_upgrades, "player_add_armor_stat_skill_ammo_mul") then
+		table.insert(self.default_upgrades, "player_add_armor_stat_skill_ammo_mul")
+	end
+
+	-- Add other armor overhaul specific upgrades
+	-- Armor11 actually refers to unlocking armor12 which does not exist
+	-- Also, crew bonuses are currently out
+	--table.insert(self.default_upgrades, "body_armor11")
+	--table.insert(self.default_upgrades, "crew_deflect_chance_addend")
+	--table.insert(self.default_upgrades, "crew_health_multiplier")
+end)

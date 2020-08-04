@@ -1,3 +1,6 @@
+-- This jump stuff probably just breaks heists like Undercover and Brooklyn 10-10 now.
+
+--[[
 local max_speed_orig = PlayerStandard._get_max_walk_speed
 
 function PlayerStandard:_check_action_jump(t, input)
@@ -43,3 +46,4 @@ function PlayerStandard:_get_max_walk_speed(t)
 	local multiplier = self._ext_damage:armor_speed_multiplier()
 	return movement_speed * multiplier
 end
+]]

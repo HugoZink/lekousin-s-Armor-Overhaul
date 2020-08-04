@@ -1,10 +1,19 @@
+--[[
 init_orig = PlayerTweakData.init
 set_normal = PlayerTweakData._set_normal
 set_hard = PlayerTweakData._set_hard
 set_very_hard = PlayerTweakData._set_overkill
 set_overkill = PlayerTweakData._set_overkill_145
 set_deathwish = PlayerTweakData._set_overkill_290
+]]
 
+Hooks:PostHook(PlayerTweakData, "init", "armoroverhaul_init_playertweak", function(self)
+	-- Deflection chance init
+	self.damage.ARMOR_INIT = 0
+	self.damage.DEFLECT_CHANCE_INIT = 0
+end)
+
+--[[
 function PlayerTweakData:_set_normal()
 	set_normal(self)
 	self.damage.HEALTH_INIT = 20
@@ -261,3 +270,4 @@ function PlayerTweakData:init()
 	
 	self.damage.ARMOR_INIT = 0
 end
+]]

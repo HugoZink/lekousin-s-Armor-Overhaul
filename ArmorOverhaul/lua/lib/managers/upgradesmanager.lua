@@ -1,26 +1,4 @@
-
-    function print_table(tt, done)
-        local file = io.stdout--io.open("TableDump.txt", "a+")
-        done = done or {}
-        if type(tt) == "table" then
-            for key, value in pairs(tt) do
-                if type(value) == "table" and not done[value] then
-                    done[value] = true
-                    -- Console(string.format("<%s> => table", tostring(key)))
-                    file:write("<"..tostring(key).."> => table\n")
-                    print_table(value, done)
-                else
-                    -- Console(string.format("[%s] => %s", tostring(key), tostring(value)))
-                    file:write("["..tostring(key).."] => "..tostring(value).."\n")
-                end
-            end
-        else 
-            -- Console(tt) 
-            file:write(tostring(tt).."\n")
-        end
-        --file:close()
-    end
-
+--[[
 function UpgradesManager:_aquire_upgrade(upgrade, id, loading)
 	if upgrade.category == "weapon" then
 		self:_aquire_weapon(upgrade, id, loading)
@@ -78,3 +56,4 @@ end
 function UpgradesManager:_unaquire_crew(team, id)
 	managers.player:unaquire_crew_bonus(team.upgrade, id)
 end
+]]

@@ -1,8 +1,4 @@
-init_pd2 = UpgradesTweakData._init_pd2_values
-player_def = UpgradesTweakData._player_definitions
-
-function UpgradesTweakData:_init_pd2_values()
-	init_pd2(self)
+Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2values_upgradestweak", function(self)
 	self.values.player.body_armor.scaling_normal = {
 		armor = 1,
 		movement = 1,
@@ -455,10 +451,9 @@ function UpgradesTweakData:_init_pd2_values()
 	self.values.crew.armor.multiplier = {1.2}
 	self.values.crew.health.multiplier = {1.2}
 	self.values.crew.deflect_chance.addend = {0.1}
-end
+end)
 
-function UpgradesTweakData:_player_definitions()
-	player_def(self)
+Hooks:PostHook(UpgradesTweakData, "_player_definitions", "armoroverhaul_playerdefinitions_upgradestweak", function(self)
 	self.definitions.body_armor7 = {
 		category = "armor",
 		armor_id = "level_8",
@@ -647,4 +642,4 @@ function UpgradesTweakData:_player_definitions()
 			value = 1
 		}
 	}
-end
+end)
