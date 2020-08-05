@@ -48,7 +48,9 @@ function PlayerDamage:init(unit)
 		bleeding = self:get_bleeding()
 	})
 end
+]]
 
+--[[
 function PlayerDamage:update(unit, t, dt)
 	local is_berserker_active = managers.player:has_activate_temporary_upgrade("temporary", "berserker_damage_multiplier")
 	if self._check_berserker_done then
@@ -454,15 +456,35 @@ function PlayerDamage:damage_bullet(attack_data)
 end
 ]]
 
-function PlayerDamage:damage_bullet(attack_data)
-	log("[ArmorOverhaul_dmgbullet] Damage_bullet called.")
+-- Instead of hijacking the whole update function, it turns out that _update_regenerate_timer is the part we actually want to change.
+-- As a bonus, it even allows us to tell whether our armor is currently fully regenerated
+-- Also maintains Anarchist compatibility
+function PlayerDamage:_update_regenerate_timer(t, dt)
+	-- Suppression slows regeneration
+	if self._armor_suppress and self._armor_suppress > 0 then
+		self._armor_suppress = self._armor_suppress - dt
+	else
+		self._armor_suppress = 0
+	end
 
-	if not self:_chk_can_take_dmg() then
-		log("[ArmorOverhaul_dmgbullet] Too soon for damage.")
+	if not self._armor_suppress_MAX then
+		self._armor_suppress_MAX = 10 * managers.player:body_armor_regen_multiplier(alive(self._unit) and self._unit:movement():current_state()._moving)
+	end
+
+	-- If the player was hit in the past 3 seconds, do not regenerate any armor
+	local cur_time = managers.player:player_timer():time()
+	if self._last_hit_time and (cur_time - self._last_hit_time) < (ArmorOverhaul.tweak.armor_regeneration_delay_s) then
 		return
 	end
 
-	log("[ArmorOverhaul_dmgbullet] NOT too soon for damage, applying damage.")
+	local regen = dt * managers.player:ap_regen_value(armor_data, self._armor_suppress / self._armor_suppress_MAX)
+	self:restore_armor(regen)
+end
+
+function PlayerDamage:damage_bullet(attack_data)
+	if not self:_chk_can_take_dmg() then
+		return
+	end
 
 	local damage_info = {
 		result = {
@@ -519,10 +541,9 @@ function PlayerDamage:damage_bullet(attack_data)
 		return
 	end
 
-	log("[ArmorOverhaul_dmgbullet] Reached dodge entropy calculations")
-
 	self._last_received_dmg = attack_data.damage
 	self._next_allowed_dmg_t = Application:digest_value(pm:player_timer():time() + self._dmg_interval, true)
+	self._last_hit_time = managers.player:player_timer():time()
 
 	-- Dodge mechanic changed to PoE Evasion's entropy mechanic (you force dodge <dodge_value * 0.2>% bullets; if you have 50 dodge, you'll force dodge one bullet every 20 one)
 	if not self._dodge_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 10) then
@@ -548,8 +569,6 @@ function PlayerDamage:damage_bullet(attack_data)
 	end
 
 	local smoke_dodge = 0
-
-	log("[ArmorOverhaul_dmgbullet] Reached sicario smoke dodge calcs")
 
 	for _, smoke_screen in ipairs(managers.player._smoke_screen_effects or {}) do
 		if smoke_screen:is_in_smoke(self._unit) then
@@ -578,8 +597,6 @@ function PlayerDamage:damage_bullet(attack_data)
 		return
 	end
 
-	log("[ArmorOverhaul_dmgbullet] Attack not dodged, checking dodge entropy")
-
 	-- If we got this far, the attack was not dodged normally. Calculate dodge entropy and perhaps dodge anyway.
 	self._dodge_entropy = self._dodge_entropy + 1 - (math.min(math.max(dodge_value + armor_dodge_chance + skill_dodge_chance, 0) * 0.2, 0.5))
 	if self._dodge_entropy >= 1 then
@@ -602,16 +619,10 @@ function PlayerDamage:damage_bullet(attack_data)
 		return
 	end
 
-	log("[ArmorOverhaul_dmgbullet] Attack not dodged with dodge entropy either, checking deflection")
-
 	-- Deflection check (if armor > 0), clasic system
-	log("[ArmorOverhaul_dmgbullet] Getting deflect chance init from tweakdata")
 	local deflect_chance = tweak_data.player.damage.DEFLECT_CHANCE_INIT or 0
-	log("[ArmorOverhaul_dmgbullet] Getting equipped armor")
 	local armor_data = tweak_data.blackmarket.armors[managers.blackmarket:equipped_armor(true)]
-	log("[ArmorOverhaul_dmgbullet] Getting current armor level deflect chance from upgrade")
 	deflect_chance = deflect_chance + managers.player:upgrade_value("player", "level_" .. armor_data.upgrade_level .. "_deflect_chance_addend", 0)
-	log("[ArmorOverhaul_dmgbullet] Getting current armor level deflect chance from armor")
 	local armor_deflect = managers.player:body_armor_value("deflect")
 	if attack_data.damage <= armor_deflect[1][1] then
 		deflect_chance = deflect_chance + armor_deflect[1][2]
@@ -622,9 +633,7 @@ function PlayerDamage:damage_bullet(attack_data)
 		deflect_chance = deflect_chance + (armor_deflect[2][2] - armor_deflect[1][2]) * damage + armor_deflect[1][2]
 	end
 
-	log("[ArmorOverhaul_dmgbullet] Checking actual deflect")
 	if deflect_chance * (self:get_real_armor() > 0 and 1 or 0.4) > math.rand(1) then
-		log("[ArmorOverhaul_dmgbullet] Bullet successfully deflected!")
 		if attack_data.damage > 0 then
 			self:_send_damage_drama(attack_data, 0)
 		end
@@ -636,8 +645,6 @@ function PlayerDamage:damage_bullet(attack_data)
 		self._last_hit_time = managers.player:player_timer():time()
 		return
 	end
-
-	log("[ArmorOverhaul_dmgbullet] Damage not deflected, check deflect entropy")
 
 	-- Entropy deflection check (if armor > 0), also uses PoE Evasion's entropy
 	if not self._armor_entropy or (self._last_hit_time and managers.player:player_timer():time() - self._last_hit_time >= 6) then
@@ -673,8 +680,6 @@ function PlayerDamage:damage_bullet(attack_data)
 
 		return
 	end
-
-	log("[ArmorOverhaul_dmgbullet] Deflect entropy not successful either.")
 
 	if attack_data.attacker_unit:base()._tweak_table == "tank" then
 		managers.achievment:set_script_data("dodge_this_fail", true)
@@ -712,11 +717,7 @@ function PlayerDamage:damage_bullet(attack_data)
 		return
 	end
 
-	log("[ArmorOverhaul_dmgbullet] Checking kingpin heal.")
-
 	self:_check_chico_heal(attack_data)
-
-	log("[ArmorOverhaul_dmgbullet] Kingpin heal checked.")
 
 	local armor_reduction_multiplier = 0
 
@@ -724,14 +725,10 @@ function PlayerDamage:damage_bullet(attack_data)
 		armor_reduction_multiplier = 1
 	end
 
-	log("[ArmorOverhaul_dmgbullet] About to calculate armor damage.")
 	local health_subtracted = self:_calc_armor_damage(attack_data)
-	log("[ArmorOverhaul_dmgbullet] Armor damage calculated.")
 
 	-- Is this even still used?
-	log("[ArmorOverhaul_dmgbullet] Going to activate wolverine health regen temp upgrade.")
 	managers.player:activate_temporary_upgrade("temporary", "wolverine_health_regen")
-	log("[ArmorOverhaul_dmgbullet] Wolverine temp upgrade activated.")
 	
 	-- Armor Overhaul has this here for some reason, is this still necessary?
 	-- self._next_allowed_dmg_t = Application:digest_value(managers.player:player_timer():time() + self._dmg_interval, true)
@@ -742,9 +739,7 @@ function PlayerDamage:damage_bullet(attack_data)
 		attack_data.damage = attack_data.damage * armor_reduction_multiplier
 	end
 
-	log("[ArmorOverhaul_dmgbullet] About to calculate health damage.")
 	health_subtracted = health_subtracted + self:_calc_health_damage(attack_data)
-	log("[ArmorOverhaul_dmgbullet] Health damage calculated.")
 
 	if not self._bleed_out and health_subtracted > 0 then
 		self:_send_damage_drama(attack_data, health_subtracted)
@@ -754,12 +749,9 @@ function PlayerDamage:damage_bullet(attack_data)
 		managers.enemy:add_delayed_clbk(self._kill_taunt_clbk_id, callback(self, self, "clbk_kill_taunt", attack_data), TimerManager:game():time() + tweak_data.timespeed.downed.fade_in + tweak_data.timespeed.downed.sustain + tweak_data.timespeed.downed.fade_out)
 	end
 
-	log("[ArmorOverhaul_dmgbullet] About to send message and notify listeners.")
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
-
-	log("[ArmorOverhaul_dmgbullet] End of damage_bullet reached!")
-end
+end 
 
 function PlayerDamage:_calc_armor_damage(attack_data)
 	local health_subtracted = 0
@@ -1016,6 +1008,7 @@ function PlayerDamage:armor_speed_multiplier()
 	return self._armor_speed[math.min(self._armor_reduction_index, #self._armor_speed)] or 1
 end
 
+--[[
 function PlayerDamage:armor_ratio()
 	local ratio = self:_max_armor() > 0 and self:get_real_armor() / self:_max_armor() or 1
 	ratio = ratio > 0 and ratio or 0
@@ -1024,6 +1017,7 @@ function PlayerDamage:armor_ratio()
 	end
 	return ratio
 end
+]]
 
 function PlayerDamage:armor_bonus()
 	return self._bonus_armor
@@ -1065,3 +1059,13 @@ function PlayerDamage:restore_armor(armor_restored)
 	})
 end
 ]]
+
+-- Instead we can now check if self._current_state is nil, which is what we do to halt the armor regeneration updater once armor is full
+Hooks:PostHook(PlayerDamage, "restore_armor", "armoroverhaul_armorrestored_haltupdate", function(self, armor_restored)
+	if self:armor_ratio() >= 1 then
+		self._current_state = nil
+		if self._unit:sound() then
+			self._unit:sound():play("shield_full_indicator")
+		end
+	end
+end)

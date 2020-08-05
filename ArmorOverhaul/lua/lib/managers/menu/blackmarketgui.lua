@@ -250,6 +250,7 @@ function BlackMarketGui:_get_armor_stats(name)
 	return base_stats, mods_stats, skill_stats
 end
 
+--[[
 function BlackMarketGui:show_stats()
 	if not self._stats_panel or not self._rweapon_stats_panel or not self._armor_stats_panel or not self._mweapon_stats_panel then
 		return
@@ -801,6 +802,7 @@ function BlackMarketGui:show_stats()
 	modslist_panel:set_top(y + 10)
 	self._stats_panel:show()
 end
+]]
 
 function BlackMarketGui:populate_armors(data)
 	local new_data = {}

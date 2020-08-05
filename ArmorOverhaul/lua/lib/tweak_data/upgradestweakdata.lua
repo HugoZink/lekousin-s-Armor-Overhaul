@@ -79,7 +79,7 @@ Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2valu
 		jump_speed_multiplier = 1,
 		ap_regen_suppressed_max_multiplier = 1
 	}
-	self.values.player.body_armor.armor = { -- Level-independant armor values -- Old values
+	self.values.player.body_armor.armor = { -- Level-independent armor values -- Old values
 		2,
 		3,
 		4,

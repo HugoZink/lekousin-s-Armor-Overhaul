@@ -14,6 +14,7 @@ if not ArmorOverhaul then
         health_dmg_bleed_threshold = 30,
         health_dmg_max_bleed_value = 20,
         standstill_dodge_mult = 0.8,
-        max_dodge_chance = 0.95
+        max_dodge_chance = 0.95,
+        armor_regeneration_delay_s = 3,
     }
 end
