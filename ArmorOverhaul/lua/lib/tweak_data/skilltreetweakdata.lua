@@ -150,6 +150,24 @@ Hooks:PostHook(SkillTreeTweakData, "init", "armoroverhaul_skilltreetweak_init", 
 	}
 	]]
 
+	-- Add Lifa Vest to Hostage Taker
+	table.insert(self.skills.black_marketeer[1].upgrades, "body_armor7")
+
+	-- Add EOD Suit to Iron Man Ace, add ICTV to Basic instead
+	self.skills.juggernaut[1].upgrades = {
+		"player_armor_multiplier",
+		"body_armor6"
+	}
+	self.skills.juggernaut[2].upgrades = {
+		"body_armor10"
+	}
+
+	-- Add Lightweight Tactical Vest to Fully Loaded
+	table.insert(self.skills.bandoliers[1].upgrades, "body_armor8")
+
+	-- Add Thin Vest to Sneaky Bastard
+	table.insert(self.skills.jail_diet[1].upgrades, "body_armor9")
+
 	-- Armor drainer perk deck
 	local armor_drainer = {
 		name_id = "menu_st_spec_armor_drainer",

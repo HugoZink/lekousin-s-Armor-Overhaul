@@ -19,15 +19,18 @@
 	"bm_armor_level_11": "EOD Suit",
 	"bm_armor_level_12": "Custom Armor",
 
-	"bm_menu_skill_locked_level_7": "Requires the Tough Guy skill",
-	"bm_menu_skill_locked_level_8": "Requires the Curaga skill",
-	"bm_menu_skill_locked_level_9": "Requires the Materia skill",
-	"bm_menu_skill_locked_level_10": "Requires the Moving Target skill",
-	"bm_menu_skill_locked_level_11": "Requires the Bomb Disposal Expert skill",
+	"bm_menu_skill_locked_level_7": "",
+	"bm_menu_skill_locked_level_8": "",
+	"bm_menu_skill_locked_level_9": "",
+	"bm_menu_skill_locked_level_10": "",
+	"bm_menu_skill_locked_level_11": "",
 
-	"menu_stockholm_syndrome": "Curaga",
-	"menu_sentry_targeting_package": "Materia",
-	"menu_juggernaut": "Bomb Disposal Expert",
+	"menu_black_marketeer_beta_desc": "BASIC: ##$basic##\nHaving at least one of your own hostage or converted law enforcer makes you regenerate ##1.5%## health every ##5## seconds. Unlocks the Lifa Vest.\n\nACE: ##$pro##\nHaving at least one of your own hostage or converted law enforcer makes you regenerate ##4.5%## health every ##5## seconds.",
+	"menu_juggernaut_beta_desc": "BASIC: ##$basic##\nYour total armor value is increased by ##30%##. Unlocks the Improved Combined Tactical Vest.\n\nACE: ##$pro##\nUnlocks the ability to wear the EOD Suit.",
+	"menu_bandoliers_desc": "BASIC: ##$basic##\nYour total ammo capacity is increased by ##50%##. Unlocks the Lightweight Tactical Vest.\n\nACE: ##$pro##\nIncreases your ammo pickup to ##175%## of the normal rate.\n\nNote: ACE version does not work with custom shotgun ammo types.",
+	"menu_bandoliers_beta_desc": "BASIC: ##$basic##\nYour total ammo capacity is increased by ##50%##. Unlocks the Lightweight Tactical Vest.\n\nACE: ##$pro##\nIncreases your ammo pickup to ##175%## of the normal rate.\n\nNote: ACE version does not work with custom shotgun ammo types.",
+	"menu_jail_diet_desc": "BASIC: ##$basic##\nYou gain a ##1%## dodge chance for every ##3## points of detection rate under ##35## up to ##10%##. Unlocks the Thin Vest.\n\nACE: ##$pro##\nYou gain a ##1%## dodge chance for every ##1## point of detection rate under ##35## up to ##10##.",
+	"menu_jail_diet_beta_desc": "BASIC: ##$basic##\nYou gain a ##1%## dodge chance for every ##3## points of detection rate under ##35## up to ##10%##. Unlocks the Thin Vest.\n\nACE: ##$pro##\nYou gain a ##1%## dodge chance for every ##1## point of detection rate under ##35## up to ##10##.",
 
 	"menu_st_spec_armor_drainer": "Armor Drainer",
 	"menu_st_spec_armor_drainer_desc": "The armor drainer allows the shooter to increases its armor pool by leading headshots.\n\nNote: when leading a headshot, a cooldown starts in which headshots don't increase the bonus.",
@@ -126,15 +129,10 @@
 
 	"description_new_armor_drainer_desc":  "A new perk deck has been introduced: Armor drainer.\nWhen you deal a headshot, you are granted some bonus max armor. It has a 3.5 seconds cooldwon.\nThis bonus is lost when your armor breaks.",
 
-	"menu_stockholm_syndrome_desc": "BASIC:\nUnlocks the Lifa Vest.\nThis vest nets you a ##100## HP bonus on normal difficulty (up to ##250## on DW) and a HP regen of ##1## per second.\n\nACE:\nImproves your Lifa Vest, which now regenerates ##3## HP per second.",
-	"menu_tough_guy_desc": "BASIC:\nUnlock the Improved Combined Tactical Vest.\n\nACE:\nYou can now shoot while running.\nYou can now melee shields to make them stumble.",
-	"menu_juggernaut_desc": "BASIC:\nUnlocks the EOD Suit.\n\nACE:\nImproves your EOD Suit, lowering explosion dmaage to ##10%##, increasing maximum HP by ##40## on normal (up to ##100## on DW), movement speed by ##6## and stamina by ##400%##.\n\nNote: EOD Suit is unaffected by Blending In. When your EOD Suit is under suppression effect, it cannot regenerate more than ##75%## of its maximum regeneration rate.",
-	"menu_sentry_targeting_package_desc": "BASIC:\nUnlocks the LightWeight Tactical Vest.\n\nACE:\nImproves your Lightweight Tactical Vest, decreasing armor regeneration delay by ##20%##, increasing armor regeneraton rate by ##10## per second and deflection chance by ##10%##.",
-	"menu_sentry_2_0_desc": "BASIC:\nYou can now reload your sentry gun with your own ammo.\nYour sentry gun's accuracy is increased by ##100%##.\n\nACE:\nYour sentry gun receives a protective shield.\nYour sentry gun's rotational speed is increased by ##150%##.\nYour sentry gun contains ##50%## more ammo.",
-	"menu_moving_target_desc": "BASIC:\nYou can now run while strafing.\nUnlocks the Thin Vest.\n\nACE:\nYou can now run in any direction.\nYour Thin Vest's dodge value is increased by ##15%##",
-	"menu_deck_armor_drainer_1_desc": "You hain ##1## maximum armor per headshot, with a maximum of ##0.5## per headshot.",
-	"menu_deck_armor_drainer_3_desc": "You hain ##2## maximum armor per headshot, with a maximum of ##1## per headshot.",
-	"menu_deck_armor_drainer_5_desc": "You hain ##3## maximum armor per headshot, with a maximum of ##2## per headshot.",
-	"menu_deck_armor_drainer_7_desc": "You hain ##4## maximum armor per headshot, with a maximum of ##3.5## per headshot.",
-	"menu_deck_armor_drainer_9_desc": "You hain ##5## maximum armor per headshot, with a maximum of ##5## per headshot.",
+	
+	"menu_deck_armor_drainer_1_desc": "You gain ##1## maximum armor per headshot, with a maximum of ##0.5## per headshot.",
+	"menu_deck_armor_drainer_3_desc": "You gain ##2## maximum armor per headshot, with a maximum of ##1## per headshot.",
+	"menu_deck_armor_drainer_5_desc": "You gain ##3## maximum armor per headshot, with a maximum of ##2## per headshot.",
+	"menu_deck_armor_drainer_7_desc": "You gain ##4## maximum armor per headshot, with a maximum of ##3.5## per headshot.",
+	"menu_deck_armor_drainer_9_desc": "You gain ##5## maximum armor per headshot, with a maximum of ##5## per headshot."
 }

@@ -474,11 +474,13 @@ Hooks:PostHook(UpgradesTweakData, "_player_definitions", "armoroverhaul_playerde
 		armor_id = "level_11",
 		name_id = "bm_armor_level_11"
 	}
+	--[[
 	self.definitions.body_armor11 = {
 		category = "armor",
 		armor_id = "level_12",
 		name_id = "bm_armor_level_12"
 	}
+	]]
 	self.definitions.player_level_8_hp_regen_addend = {
 		category = "feature",
 		name_id = "menu_player_level_8_hp_regen_addend",
