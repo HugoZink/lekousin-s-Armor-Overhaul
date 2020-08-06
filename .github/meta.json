@@ -2,7 +2,7 @@
     {
         "ident" : "armoroverhaul_rokk",
         "hash" : "%HASH%",
-        "patchnotes_url" : "TODO",
-        "download_url" : "TODO"
+        "patchnotes_url" : "https://github.com/HugoZink/lekousin-s-Armor-Overhaul/commits/master",
+        "download_url" : "https://github.com/HugoZink/lekousin-s-Armor-Overhaul/releases/download/pd2mod_release/armoroverhaul.zip"
     }
 ]

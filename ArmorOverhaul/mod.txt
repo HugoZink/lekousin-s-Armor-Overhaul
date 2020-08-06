@@ -71,7 +71,7 @@
 		{
 			"identifier" : "armoroverhaul_rokk",
 			"host" : {
-				"meta" : "TODO"
+				"meta" : "https://github.com/HugoZink/lekousin-s-Armor-Overhaul/releases/download/pd2mod_release/meta.json"
 			}
 		}
 	]
