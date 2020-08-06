@@ -333,6 +333,10 @@ function BlackMarketGui:populate_armors(data)
 		if new_data.unlocked and not new_data.equipped then
 			table.insert(new_data, "a_equip")
 		end
+
+		if i ~= 1 and (game_state_machine and game_state_machine:current_state_name()) ~= "ingame_waiting_for_players" then
+			table.insert(new_data, "a_mod")
+		end
 		data[index] = new_data
 	end
 	local max_armors = data.override_slots[1] * data.override_slots[2]

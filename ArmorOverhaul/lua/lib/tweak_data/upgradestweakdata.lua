@@ -171,9 +171,9 @@ Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2valu
 		1
 	}
 	self.values.player.body_armor.dodge = {
-		0.4,
-		0.2,
+		0.15,
 		0.05,
+		0,
 		-0.1,
 		-0.25,
 		-0.4,
