@@ -15,9 +15,5 @@ Hooks:PostHook(BlackMarketTweakData, "_init_armors", "armoroverhaul_init_armors_
 	self.armors.level_11.name_id = "bm_armor_level_11"
 	self.armors.level_11.sequence = "var_model_07"
 	self.armors.level_11.upgrade_level = 11
-	--[[self.armors.level_12 = {}
-	self.armors.level_12.name_id = "bm_armor_level_12"
-	self.armors.level_12.sequence = "var_model_07"
-	self.armors.level_12.upgrade_level = -1]]
 	self:_add_desc_from_name_macro(self.armors)
 end)
