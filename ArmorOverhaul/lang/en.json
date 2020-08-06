@@ -19,11 +19,17 @@
 	"bm_armor_level_11": "EOD Suit",
 	"bm_armor_level_12": "Custom Armor",
 
-	"bm_menu_skill_locked_level_7": "",
-	"bm_menu_skill_locked_level_8": "",
-	"bm_menu_skill_locked_level_9": "",
-	"bm_menu_skill_locked_level_10": "",
-	"bm_menu_skill_locked_level_11": "",
+	"bm_armor_level_8_desc": "Moderate movement penalty and visiblity.\n\nAt the cost of some armor, this vest increases your maximum health and gives you innate health regeneration. This regeneration only works while your armor is full.",
+	"bm_armor_level_9_desc": "Moderate movement penalty and visiblity.\n\nA modified Combined Tactical Vest that boasts very quick armor regeneration as well as +40% max ammo capacity.",
+	"bm_armor_level_10_desc": "Absolutely no movement penalty. Very low visiblity.\n\nOffering literally no protection, the Thin Vest allows the wearer to move very quickly and weave through bullets with ease. No armor means that every hit counts.",
+	"bm_armor_level_11_desc": "Very high movement penalty and visiblity.\n\nThe best of the best. Offers a very high protection rate by boosting both health and armor, but slows down the wearer a lot. Takes a while to recharge.\n\nWhile others are up against the wall, you become the wall.",
+	"bm_armor_level_12_desc": "Custom Armor allows the wearer to customize their own armor to their liking. A true jack of all trades, but also a master of none.",
+
+	"bm_menu_skill_locked_level_7": "Requires Iron Man",
+	"bm_menu_skill_locked_level_8": "Requires Hostage Taker",
+	"bm_menu_skill_locked_level_9": "Requires Fully Loaded",
+	"bm_menu_skill_locked_level_10": "Requires Sneaky Bastard",
+	"bm_menu_skill_locked_level_11": "Requires Iron Man Aced",
 
 	"menu_black_marketeer_beta_desc": "BASIC: ##$basic##\nHaving at least one of your own hostage or converted law enforcer makes you regenerate ##1.5%## health every ##5## seconds. Unlocks the Lifa Vest.\n\nACE: ##$pro##\nHaving at least one of your own hostage or converted law enforcer makes you regenerate ##4.5%## health every ##5## seconds.",
 	"menu_juggernaut_beta_desc": "BASIC: ##$basic##\nYour total armor value is increased by ##30%##. Unlocks the Improved Combined Tactical Vest.\n\nACE: ##$pro##\nUnlocks the ability to wear the EOD Suit.",

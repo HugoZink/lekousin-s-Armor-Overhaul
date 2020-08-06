@@ -159,14 +159,22 @@ Hooks:PostHook(SkillTreeTweakData, "init", "armoroverhaul_skilltreetweak_init", 
 		"body_armor6"
 	}
 	self.skills.juggernaut[2].upgrades = {
-		"body_armor10"
+		"body_armor10",
+		"player_level_11_edr_addend",
+		"player_level_11_hp_addend",
+		"player_level_11_movement_addend",
+		"player_level_11_stamina_multiplier"
 	}
 
 	-- Add Lightweight Tactical Vest to Fully Loaded
 	table.insert(self.skills.bandoliers[1].upgrades, "body_armor8")
+	table.insert(self.skills.bandoliers[1].upgrades, "player_level_9_armor_regen_addend")
+	table.insert(self.skills.bandoliers[1].upgrades, "player_level_9_armor_regen_delay_multiplier")
+	table.insert(self.skills.bandoliers[1].upgrades, "player_level_9_deflect_chance_addend")
 
 	-- Add Thin Vest to Sneaky Bastard
 	table.insert(self.skills.jail_diet[1].upgrades, "body_armor9")
+	table.insert(self.skills.jail_diet[1].upgrades, "player_level_10_dodge_addend")
 
 	-- Armor drainer perk deck
 	local armor_drainer = {
