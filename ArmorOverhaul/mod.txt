@@ -66,5 +66,13 @@
 			"hook_id": "lib/managers/localizationmanager",
 			"script_path": "lua/lib/managers/localizationmanager.lua"
 		}
+	],
+	"updates" : [
+		{
+			"identifier" : "armoroverhaul_rokk",
+			"host" : {
+				"meta" : "TODO"
+			}
+		}
 	]
 }
