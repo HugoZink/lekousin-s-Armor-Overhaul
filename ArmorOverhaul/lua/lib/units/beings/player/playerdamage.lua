@@ -1082,7 +1082,7 @@ end)
 -- Update armor health regen
 Hooks:PostHook(PlayerDamage, "_upd_health_regen", "armoroverhaul_update_armor_health_regen", function(self, t, dt)
 	if self:armor_ratio() >= 1 then
-		local hp_regen = managers.player:body_armor_value("bleeding_reduction") * dt * 0.03
+		local hp_regen = managers.player:body_armor_value("hp_regen") * dt
 		if hp_regen > 0 then
 			self:restore_health(hp_regen, true)
 		end

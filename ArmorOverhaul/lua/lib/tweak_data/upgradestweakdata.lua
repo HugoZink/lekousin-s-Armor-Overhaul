@@ -354,7 +354,7 @@ Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2valu
 		0,
 		0,
 		0,
-		0.1,
+		0.4,
 		0,
 		0,
 		0
