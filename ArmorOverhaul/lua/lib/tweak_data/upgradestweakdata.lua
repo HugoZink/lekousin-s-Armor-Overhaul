@@ -94,9 +94,9 @@ Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2valu
 	}
 	self.values.player.body_armor.armor = { -- Normal armor
 		2,
-		2.5,
 		3,
 		3.5,
+		4,
 		4.5,
 		6.5,
 		10,
