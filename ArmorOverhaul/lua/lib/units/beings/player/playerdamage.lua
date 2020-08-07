@@ -751,7 +751,16 @@ function PlayerDamage:damage_bullet(attack_data)
 
 	pm:send_message(Message.OnPlayerDamage, nil, attack_data)
 	self:_call_listeners(damage_info)
-end 
+end
+
+-- Reset the last hit time on fire, fall or "simple" damage
+local function update_hit_time(self)
+	self._last_hit_time = managers.player:player_timer():time()
+end
+Hooks:PostHook(PlayerDamage, "damage_melee", "armoroverhaul_damagemelee_updatelasthittime", update_hit_time)
+Hooks:PostHook(PlayerDamage, "damage_simple", "armoroverhaul_damagesimple_updatelasthittime", update_hit_time)
+Hooks:PostHook(PlayerDamage, "damage_fire", "armoroverhaul_damagefire_updatelasthittime", update_hit_time)
+Hooks:PostHook(PlayerDamage, "damage_killzone", "armoroverhaul_damagekillzone_updatelasthittime", update_hit_time)
 
 function PlayerDamage:_calc_armor_damage(attack_data)
 	local health_subtracted = 0
