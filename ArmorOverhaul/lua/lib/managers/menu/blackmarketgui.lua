@@ -126,6 +126,15 @@ function BlackMarketGui:_get_armor_stats(name)
 			skill_stats[stat.name] = {
 				value = base * (skill - 1)
 			}
+		elseif stat.name == "regen_delay" then
+			local base = managers.player:body_armor_value("regen_delay", upgrade_level)
+			local skill = 0
+			base_stats[stat.name] = {
+				value = base
+			}
+			skill_stats[stat.name] = {
+				value = base * skill
+			}
 		elseif stat.name == "deflect_min_dmg" then
 			local base = managers.player:body_armor_value("deflect", upgrade_level)[1][1] * 10
 			local skill = 0
@@ -376,6 +385,7 @@ function BlackMarketGui:_get_armor_page()
 		{name = "stamina"},
 		{name = "ammo_mul", procent = true, revert = true},
 		{name = "regen", procent = true, revert = true},
+		{name = "regen_delay"},
 		--{name = "deflect_min_dmg"},
 		--{name = "deflect_min_procent", procent = true, revert = true},
 		--{name = "deflect_max_dmg"},
@@ -384,7 +394,7 @@ function BlackMarketGui:_get_armor_page()
 		--{name = "hdr_min_procent", procent = true, revert = true},
 		--{name = "hdr_max_dmg"},
 		--{name = "hdr_max_procent", procent = true, revert = true},
-		{name = "explosion_damage_reduction", procent = true, revert = true},
+		--{name = "explosion_damage_reduction", procent = true, revert = true},
 		--{name = "bleeding_reduction"}
 	}
 	do

@@ -1,6 +1,7 @@
 {
 	"bm_menu_ammo_mul": "Ammo bonus",
 	"bm_menu_regen": "Regen per second",
+	"bm_menu_regen_delay": "Regen delay (s)",
 	"bm_menu_deflect_min_dmg" : "Min deflect dmg",
 	"bm_menu_deflect_min_procent" : "Max deflect chance",
 	"bm_menu_deflect_max_dmg" : "Max deflect dmg",

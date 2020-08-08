@@ -332,6 +332,22 @@ Hooks:PostHook(UpgradesTweakData, "_init_pd2_values", "armoroverhaul_initpd2valu
 		0,
 		6.25
 	}
+
+	-- Armor regeneration delays in seconds
+	-- After non-fall damage is taken, you must wait at least this many seconds before armor *starts* regenerating.
+	self.values.player.body_armor.regen_delay = {
+		3,
+		3,
+		2.5,
+		3,
+		3,
+		3,
+		3,
+		3,
+		2.5,
+		0,
+		5
+	}
 	self.values.player.body_armor.explosion_damage_reduction = {
 		0,
 		0.02,

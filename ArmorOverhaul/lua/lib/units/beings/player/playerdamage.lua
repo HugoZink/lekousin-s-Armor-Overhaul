@@ -473,7 +473,7 @@ function PlayerDamage:_update_regenerate_timer(t, dt)
 
 	-- If the player was hit in the past 3 seconds, do not regenerate any armor
 	local cur_time = managers.player:player_timer():time()
-	if self._last_hit_time and (cur_time - self._last_hit_time) < (ArmorOverhaul.tweak.armor_regeneration_delay_s) then
+	if self._last_hit_time and (cur_time - self._last_hit_time) < (managers.player:body_armor_value("regen_delay")) then
 		return
 	end
 
