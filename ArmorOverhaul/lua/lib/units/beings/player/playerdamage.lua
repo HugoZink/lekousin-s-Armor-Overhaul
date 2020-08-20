@@ -770,11 +770,6 @@ function PlayerDamage:_calc_armor_damage(attack_data)
 		self:set_armor(self:get_real_armor() - attack_data.damage)
 		--health_subtracted = health_subtracted - self:get_real_armor()
 		self:_damage_screen()
-		managers.hud:set_player_armor({
-			current = self:get_real_armor(),
-			total = self:_total_armor(),
-			max = self:_max_armor()
-		})
 		SoundDevice:set_rtpc("shield_status", self:get_real_armor() / self:_total_armor() * 100)
 		self:_send_set_armor()
 		if 0 >= self:get_real_armor() then
@@ -800,6 +795,8 @@ function PlayerDamage:_calc_armor_damage(attack_data)
 	if old_armor > 0 and self:get_real_armor() <= 0 then
 		self:armor_break()
 	end
+
+	managers.hud:damage_taken()
 
 	return health_subtracted
 end
@@ -832,11 +829,6 @@ function PlayerDamage:_calc_health_damage(attack_data)
 		self:_check_bleed_out(trigger_skills)
 	end
 
-	managers.hud:set_player_health({
-		current = self:get_real_health(),
-		total = self:_max_health(),
-		revives = Application:digest_value(self._revives, false)
-	})
 	self:_send_set_health()
 	self:_set_health_effect()
 	managers.statistics:health_subtracted(health_subtracted)
@@ -861,6 +853,8 @@ function PlayerDamage:_calc_health_damage(attack_data)
 	if self:get_real_health() <= 0 then
 		self.bleeding = 0
 	end
+
+	managers.hud:damage_taken()
 
 	return health_subtracted
 end
